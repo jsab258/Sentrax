@@ -9,14 +9,21 @@
 export const simConfig = {
   /** Fixed simulation step (SPEC section 6: 10 Hz). Rendering interpolates between steps. */
   stepHz: 10,
+  /**
+   * Simulation time run off-screen before the first rendered frame of any scene, story or teaser, so every
+   * tag is already located and visitors never see the startup grace period (rules.warmupS).
+   */
+  preRollS: 30,
   /** Upper bound on steps per rendered frame, so a slow frame cannot trigger a catch-up spiral. */
   maxStepsPerAdvance: 80,
 
   rf: {
     /** Received power at 1 m from a tag, line of sight. Typical BLE beacon value. */
     rssiAt1mDbm: -59,
-    /** Log-distance path loss exponent for the true propagation. */
+    /** Log-distance path loss exponent for the true propagation, indoors. */
     pathLossExponent: 2.3,
+    /** Outdoors (both ends outside the building) the signal falls off more slowly. */
+    pathLossExponentOutdoor: 2.0,
     /** Fast fading and measurement noise per received packet (Gaussian, dB). */
     noiseSigmaDb: 3.5,
     /** Slow shadowing per tag-receiver link (dB), spatially correlated as the tag moves. */

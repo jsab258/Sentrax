@@ -43,6 +43,14 @@ export const claims = {
     verifiedAt: '2026-09-26',
     note: 'Quoted in SPEC section 2. Appears on the brochure cover and in an image alt text on the BiLink page, not in the page copy.',
   },
+  rssiHospitalLens: {
+    id: 'rssiHospitalLens',
+    text: "RSSI with corridor gateways only can't tell rooms apart. A full gateway grid gives 3 to 5 m. BiLink gives room-level without one.",
+    sourceUrl: links.technology,
+    approved: true,
+    verifiedAt: '2026-09-26',
+    note: 'Wording set at the M1 review. Shown on the RSSI lens in the hospital instead of a meter figure.',
+  },
   searchTime: {
     id: 'searchTime',
     text: 'Clinical staff spend around 30 minutes per shift, sometimes up to 60 minutes, searching for equipment.',

@@ -229,10 +229,12 @@ function nav() {
 function devices(): InfraDeviceDef[] {
   const d: InfraDeviceDef[] = [];
   let k = 0;
-  // AoA locators over the racking: one row above every aisle, 7.5 m apart, 10.5 m up (hall 11 m, racks
-  // about 9 m). Top-level pallets sit only about 2 m below the ceiling, so each needs locators close by.
+  // AoA locators over the racking: one row above every aisle and one above each outer rack face, 7.5 m
+  // apart, 10.5 m up (hall 11 m, racks about 9 m). Top-level pallets sit only about 2 m below the ceiling,
+  // so every rack face needs locators close by for full coverage at all five levels.
+  const outerFaces = [(RACK.aisles.A ?? 0) - RACK.faceOffset, (RACK.aisles.D ?? 0) + RACK.faceOffset];
   for (const x of [37, 44.5, 52, 59.5, 67, 74.5]) {
-    for (const y of Object.values(RACK.aisles)) {
+    for (const y of [...Object.values(RACK.aisles), ...outerFaces]) {
       d.push({
         id: `lon2-r${++k}`,
         model: 'ZENIX LON-2',
@@ -374,9 +376,10 @@ function assetsAndTags(): { assets: AssetDef[]; tags: TagDef[] } {
   ].forEach(([x, y], i) =>
     tow1({ id: `wip-0${i + 1}`, cls: 'wip_carrier', position: vec3(x as number, y as number, 0) }, 0.8),
   );
-  // Trailers: three docked, three parked in the yard. Each carries an asset tag on its nose.
+  // Trailers: three docked, three parked in the yard. Each carries an asset tag on the outside of its nose
+  // (a tag inside the metal box would not be heard). The asset position is the nose.
   DOCKS.forEach((x, i) =>
-    tow1({ id: `trailer-0${i + 1}`, cls: 'trailer', position: vec3(x, -13.5, 0), headingDeg: 90 }, 3),
+    tow1({ id: `trailer-0${i + 1}`, cls: 'trailer', position: vec3(x, -14.4, 0), headingDeg: 90 }, 3),
   );
   [44, 50, 56].forEach((x, i) =>
     tow1({ id: `trailer-0${i + 4}`, cls: 'trailer', position: vec3(x, -30, 0), headingDeg: 90 }, 3),

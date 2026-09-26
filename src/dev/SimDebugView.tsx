@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { assetLabel, roleLabels, techLabels, zoneLabels } from '../content/scenes';
 import { ui } from '../content/ui';
+import { simConfig } from '../sim/config';
 import { Simulation } from '../sim/engine';
 import type { AlertInfo, SimEvent } from '../sim/events';
 import { dist2, median } from '../sim/geometry';
@@ -36,7 +37,8 @@ function params() {
     scene: scene in worlds ? scene : 'hospital',
     seed: Number(p.get('seed') ?? 1) || 1,
     speed: Number(p.get('speed') ?? 1),
-    startAt: Number(p.get('t') ?? 0),
+    // Same pre-roll as the 3D scenes unless ?t= is given.
+    startAt: Number(p.get('t') ?? simConfig.preRollS),
     scenario: p.get('scenario'),
     scenarioAt: Number(p.get('at') ?? 25),
     select: p.get('select'),

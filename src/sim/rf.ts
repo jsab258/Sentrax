@@ -1,7 +1,8 @@
 import type { SimConfig } from './config';
 import { dist3, segmentsIntersect, type Vec2, type Vec3 } from './geometry';
 import type { Rng } from './rng';
-import type { WorldDef } from './world';
+import type { WorldDef, ZoneDef } from './world';
+import { pointInPolygon } from './geometry';
 
 interface RfObstacle {
   a: Vec2;
@@ -17,6 +18,7 @@ interface RfObstacle {
  */
 export class RadioModel {
   private obstacles: RfObstacle[] = [];
+  private readonly indoorZones: ZoneDef[];
   private readonly shadow = new Map<string, { value: number; at: Vec3 }>();
 
   constructor(
@@ -24,7 +26,13 @@ export class RadioModel {
     private readonly cfg: SimConfig,
     private readonly rng: Rng,
   ) {
+    this.indoorZones = world.zones.filter((z) => z.kind !== 'outdoor' && !z.parent);
     this.rebuild();
+  }
+
+  /** True when the point lies outside every top-level indoor zone. */
+  isOutdoor(p: Vec2): boolean {
+    return !this.indoorZones.some((z) => pointInPolygon(p, z.polygon));
   }
 
   /** Recompute obstacles, for example after a door opened or closed. */
@@ -60,7 +68,8 @@ export class RadioModel {
   meanRssi(tx: Vec3, rx: Vec3): number {
     const rf = this.cfg.rf;
     const d = Math.max(0.3, dist3(tx, rx));
-    return rf.rssiAt1mDbm - 10 * rf.pathLossExponent * Math.log10(d) - this.obstacleLossDb(tx, rx);
+    const n = this.isOutdoor(tx) && this.isOutdoor(rx) ? rf.pathLossExponentOutdoor : rf.pathLossExponent;
+    return rf.rssiAt1mDbm - 10 * n * Math.log10(d) - this.obstacleLossDb(tx, rx);
   }
 
   /** One received packet's RSSI for the link `linkKey` (tag id plus receiver id). */

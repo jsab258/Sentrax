@@ -5,7 +5,10 @@ import type { Claim } from './types';
  *
  * Verified on 2026-09-26 against the live product pages and the official datasheets
  * (reference/devices/<model>/). Descriptions are the product descriptors from the sentrax.com main menu,
- * verbatim. Physical data comes from the datasheets. See docs/device-reference.md for sources.
+ * verbatim, approved at the M1 review. Physical data comes from the datasheets. See docs/device-reference.md.
+ *
+ * Product cards show only the one-line description, the scene role and the product link. Datasheet values
+ * (size, weight, battery, range, IP rating) are for modelling only and must never appear on a card.
  */
 
 export type DeviceFamily = 'NODIX' | 'ZENIX' | 'PINIX';
@@ -39,7 +42,8 @@ export interface DeviceSpec {
 }
 
 const verifiedAt = '2026-09-26';
-const menuNote = 'Main menu product descriptor on sentrax.com, verbatim. Verified on the live site.';
+const menuNote =
+  'Main menu product descriptor on sentrax.com, verbatim. Verified on the live site; approved at the M1 review.';
 const datasheet = (file: string) => `https://sentrax.com/docs/datasheets/${encodeURIComponent(file)}.pdf`;
 
 export const devices = {
@@ -54,7 +58,7 @@ export const devices = {
       id: 'device.cen1.description',
       text: 'BiLink BLE Relay Anchor - Battery Operated Scanner and Beacon',
       sourceUrl: 'https://sentrax.com/product/nodix-cen-1/',
-      approved: false,
+      approved: true,
       verifiedAt,
       note: menuNote,
     },
@@ -81,7 +85,7 @@ export const devices = {
       id: 'device.len1.description',
       text: 'BLE (RSSI) Indoor Gateway for Proximity Positioning',
       sourceUrl: 'https://sentrax.com/product/zenix-len-1/',
-      approved: false,
+      approved: true,
       verifiedAt,
       note: menuNote,
     },
@@ -107,7 +111,7 @@ export const devices = {
       id: 'device.len2.description',
       text: 'BLE (RSSI) Indoor Gateway for Proximity Positioning + Environmental Sensing',
       sourceUrl: 'https://sentrax.com/product/zenix-len-2/',
-      approved: false,
+      approved: true,
       verifiedAt,
       note: menuNote,
     },
@@ -134,7 +138,7 @@ export const devices = {
       id: 'device.lon2.description',
       text: 'BLE (AoA) Indoor Scanner for Precise Submeter Location Tracking',
       sourceUrl: 'https://sentrax.com/product/zenix-lon-2/',
-      approved: false,
+      approved: true,
       verifiedAt,
       note: `${menuNote} Trailing period dropped.`,
     },
@@ -161,7 +165,7 @@ export const devices = {
       id: 'device.lef3.description',
       text: 'BLE (RSSI) Outdoor Gateway for Proximity Positioning with Wi-Fi, LTE Connectivity & GPS',
       sourceUrl: 'https://sentrax.com/product/zenix-lef-3/',
-      approved: false,
+      approved: true,
       verifiedAt,
       note: menuNote,
     },
@@ -188,7 +192,7 @@ export const devices = {
       id: 'device.tow1.description',
       text: 'Hybrid BLE (AoA) & (RSSI) Asset Tag',
       sourceUrl: 'https://sentrax.com/product/pinix-tow-1/',
-      approved: false,
+      approved: true,
       verifiedAt,
       note: menuNote,
     },
@@ -215,7 +219,7 @@ export const devices = {
       id: 'device.tow5.description',
       text: 'BLE (AoA) Asset Tag with Multi-Sensors',
       sourceUrl: 'https://sentrax.com/product/pinix-tow-5/',
-      approved: false,
+      approved: true,
       verifiedAt,
       note: menuNote,
     },
@@ -241,7 +245,7 @@ export const devices = {
       id: 'device.tok1.description',
       text: 'Smart Badge BLE (AoA) Tag with Temperature Sensor',
       sourceUrl: 'https://sentrax.com/product/pinix-tok-1/',
-      approved: false,
+      approved: true,
       verifiedAt,
       note: menuNote,
     },
@@ -267,7 +271,7 @@ export const devices = {
       id: 'device.tob1.description',
       text: 'BLE AoA Wearable Beacon Tag with SoS Button and Accelerometer',
       sourceUrl: 'https://sentrax.com/product/pinix-tob-1/',
-      approved: false,
+      approved: true,
       verifiedAt,
       note: menuNote,
     },

@@ -5,7 +5,7 @@
  * The site defines two palettes:
  * - the Woodmart theme, which the live site actually renders (buttons, links, logo, hero), and
  * - the Elementor global kit (--e-global-color-*), which is defined but barely visible on the homepage.
- * UI tokens follow what the site renders. Kit colors are kept for the Radio, Data and Insight overlays.
+ * UI tokens follow what the site renders. Overlays are tints and shades of the three visible colors only.
  */
 
 export type BrandStatus = 'placeholder' | 'extracted';
@@ -39,16 +39,33 @@ export interface Brand {
     accent: string;
   };
   /**
-   * Overlay colors for the Radio, Data and Insight layers, all taken from the brand palette above.
-   * Mapping is a proposal until the M3 checkpoint (see BRAND.md).
+   * Overlay colors for the Radio, Data and Insight layers. Every value is a tint or shade of the three
+   * colors visitors actually see on sentrax.com (logo blue, wordmark purple, button red), derived below.
+   * Marks (lines, dots, outlines) meet 3:1 against the scene; fills are translucent and need not.
    */
   overlay: {
+    /** RSSI range rings, trilateration circles and uncertainty disk (translucent fill). */
     rssi: string;
+    /** RSSI strokes. */
+    rssiLine: string;
+    /** AoA rays and estimate dot. */
     aoa: string;
+    /** BiLink relay arc and room outline. */
     bilink: string;
+    /** BiLink room volume glow (translucent fill). */
+    bilinkFill: string;
+    /** Data packets, network plane, protocol labels. */
     data: string;
+    /** In-scene labels and highlight outlines. */
     insight: string;
-    alert: string;
+    /** Halo behind a highlighted asset (translucent). */
+    highlight: string;
+    /** Dwell heatmap ramp, low to high. */
+    heatmap: [string, string, string, string];
+    /** Warnings: standard amber (not a brand color). */
+    warning: string;
+    /** Critical alerts only. Red is otherwise reserved for the Book a meeting button. */
+    critical: string;
   };
   radius: {
     button: string;
@@ -75,13 +92,31 @@ const palette = {
   purple: '#352E86',
   /** Logo signal waves (sampled from the header logo). */
   blue: '#6683C2',
-  /** Elementor kit --e-global-color-primary. */
-  kitPink: '#ED5087',
-  /** Elementor kit --e-global-color-secondary. */
-  kitViolet: '#520088',
-  /** Elementor kit --e-global-color-accent. */
-  kitDeepPurple: '#2E0075',
 } as const;
+
+/** Standard amber for warnings (not a brand color). */
+const AMBER = '#F59E0B';
+
+function toRgb(hex: string): [number, number, number] {
+  const n = parseInt(hex.slice(1), 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+function toHex(rgb: number[]): string {
+  return `#${rgb
+    .map((v) => Math.round(v).toString(16).padStart(2, '0'))
+    .join('')
+    .toUpperCase()}`;
+}
+
+/** Mix a color towards white (tint) or black (shade) by k in [0, 1]. */
+export function tint(hex: string, k: number): string {
+  return toHex(toRgb(hex).map((v) => v + (255 - v) * k));
+}
+
+export function shade(hex: string, k: number): string {
+  return toHex(toRgb(hex).map((v) => v * (1 - k)));
+}
 
 export const brand: Brand = {
   status: 'extracted',
@@ -104,18 +139,23 @@ export const brand: Brand = {
     onPrimary: '#FFFFFF',
   },
   kit: {
-    primary: palette.kitPink,
-    secondary: palette.kitViolet,
+    primary: '#ED5087',
+    secondary: '#520088',
     text: '#000000',
-    accent: palette.kitDeepPurple,
+    accent: '#2E0075',
   },
   overlay: {
-    rssi: palette.blue,
-    aoa: palette.kitPink,
-    bilink: palette.kitViolet,
-    data: palette.purple,
-    insight: palette.kitDeepPurple,
-    alert: palette.red,
+    rssi: tint(palette.blue, 0.2),
+    rssiLine: shade(palette.blue, 0.25),
+    aoa: tint(palette.purple, 0.2),
+    bilink: palette.purple,
+    bilinkFill: tint(palette.purple, 0.55),
+    data: shade(palette.blue, 0.45),
+    insight: shade(palette.purple, 0.35),
+    highlight: tint(palette.blue, 0.55),
+    heatmap: [tint(palette.blue, 0.6), palette.blue, tint(palette.purple, 0.2), palette.purple],
+    warning: AMBER,
+    critical: palette.red,
   },
   radius: {
     /** Computed border radius of the CTA buttons. */
@@ -134,7 +174,9 @@ export const brand: Brand = {
 export function applyBrandTokens(root: HTMLElement, b: Brand = brand): void {
   const set = (name: string, value: string) => root.style.setProperty(name, value);
   for (const [key, value] of Object.entries(b.colors)) set(`--color-${kebab(key)}`, value);
-  for (const [key, value] of Object.entries(b.overlay)) set(`--overlay-${kebab(key)}`, value);
+  for (const [key, value] of Object.entries(b.overlay)) {
+    if (typeof value === 'string') set(`--overlay-${kebab(key)}`, value);
+  }
   set('--radius-button', b.radius.button);
   set('--font-heading', fontStack(b.fonts.heading));
   set('--font-body', fontStack(b.fonts.body));

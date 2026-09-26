@@ -13,6 +13,13 @@ export const ui = {
     hospital: 'Hospital',
     warehouse: 'Warehouse and Manufacturing',
   },
+  quality: {
+    label: 'Quality',
+    auto: 'Auto',
+    high: 'High',
+    medium: 'Medium',
+    low: 'Low',
+  },
   loading: {
     label: 'Loading scene',
     percent: (p: number) => `${Math.round(p)} percent`,

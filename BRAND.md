@@ -54,7 +54,7 @@ Other computed values: CTA buttons `#D31F4C` background, `#FFFFFF` text, 10 px r
 | fonts.body        | Lato 400, 700                                | `--wd-text-font`; computed body                                               |
 | logo              | `public/brand/sentrax-logo.png`, 250 x 95 px | Header logo `https://sentrax.com/wp-content/uploads/2023/10/sentrax_logo.png` |
 
-Choice made: the UI follows what the site renders (Woodmart colors), not the barely visible Elementor kit colors. The kit colors are kept verbatim and used for overlays.
+Choice made: the UI follows what the site renders (Woodmart colors), not the barely visible Elementor kit colors. The kit colors are recorded verbatim but not used.
 
 Body text: the site's `#777777` on white is 4.48:1, just under WCAG AA (4.5:1) for normal text, so the UI uses `#333333` (also a theme value) for secondary text.
 
@@ -64,20 +64,25 @@ Lato and Poppins are Google Fonts under the SIL Open Font License 1.1. They are 
 
 Logo: only a PNG (250 x 95 px) is served in the header. An SVG would be sharper on high-DPI screens; if Sentrax has one, it can replace the PNG without code changes.
 
-## Overlay colors (proposed mapping, to confirm at M3)
+## Overlay colors (set at the M1 review)
 
-The 3D world uses realistic colors. Brand colors are reserved for the Radio, Data and Insight overlays (SPEC section 10). All six overlay colors come from the palette above; no new colors were added.
+The 3D world uses realistic colors. Brand colors are reserved for the Radio, Data and Insight overlays (SPEC section 10). Overlays use only tints and shades of the three colors visitors actually see: logo blue `#6683C2`, wordmark purple `#352E86` and button red `#D31F4C`. The Elementor kit colors are not used. Red is reserved for the Book a meeting button and critical alerts; warnings use a standard amber. Values are derived in code (`tint()` and `shade()` in src/brand/brand.ts).
 
-| Overlay token   | Used for                                          | Value     | Palette entry           |
-| --------------- | ------------------------------------------------- | --------- | ----------------------- |
-| overlay.rssi    | RSSI range rings, trilateration, uncertainty disk | `#6683C2` | Logo signal blue        |
-| overlay.aoa     | AoA rays and estimate dot                         | `#ED5087` | Elementor kit primary   |
-| overlay.bilink  | BiLink room glow and relay arc                    | `#520088` | Elementor kit secondary |
-| overlay.data    | Data packets, network plane, protocol labels      | `#352E86` | Theme alternative       |
-| overlay.insight | Dashboard highlights, in-scene labels, heatmap    | `#2E0075` | Elementor kit accent    |
-| overlay.alert   | Alerts                                            | `#D31F4C` | Theme primary           |
+| Token              | Value     | Derivation               | Role                                               |
+| ------------------ | --------- | ------------------------ | -------------------------------------------------- |
+| overlay.rssi       | `#859CCE` | blue, 20 percent tint    | RSSI uncertainty disk and ring fills (translucent) |
+| overlay.rssiLine   | `#4D6292` | blue, 25 percent shade   | RSSI ring and circle strokes                       |
+| overlay.aoa        | `#5D589E` | purple, 20 percent tint  | AoA rays and estimate dot                          |
+| overlay.bilink     | `#352E86` | purple                   | BiLink relay arc and room outline                  |
+| overlay.bilinkFill | `#A4A1C9` | purple, 55 percent tint  | BiLink room volume glow (translucent)              |
+| overlay.data       | `#38486B` | blue, 45 percent shade   | Data packets, network plane, protocol labels       |
+| overlay.insight    | `#221E57` | purple, 35 percent shade | In-scene labels and highlight outlines             |
+| overlay.highlight  | `#BAC7E4` | blue, 55 percent tint    | Halo behind a highlighted asset (translucent)      |
+| overlay.heatmap    | ramp      | blue tint to purple      | Dwell heatmap, low to high                         |
+| overlay.warning    | `#F59E0B` | standard amber           | Warnings                                           |
+| overlay.critical   | `#D31F4C` | red                      | Critical alerts only                               |
 
-Three of these are close purples. If they are hard to tell apart in the 3D view, tints of these palette colors will be proposed at the M3 checkpoint rather than new colors being added silently.
+Marks (lines, dots, outlines) are checked at 3:1 or more against the scene; translucent fills are not. The M2 checkpoint measures every value against colors sampled from the rendered hospital.
 
 ## Contrast
 

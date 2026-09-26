@@ -1,0 +1,151 @@
+{
+  "textures": {
+    "vinyl": {
+      "source": "https://polyhaven.com/a/terrazzo_tiles",
+      "polyHavenId": "terrazzo_tiles",
+      "title": "Terrazzo Tiles",
+      "authors": ["Amal Kumar"],
+      "license": "CC0",
+      "sizeM": [2, 2],
+      "modified": "desaturate-light",
+      "maps": {
+        "diff": {
+          "high": "assets/textures/vinyl/diff-2048.ktx2",
+          "low": "assets/textures/vinyl/diff-1024.ktx2"
+        },
+        "nor": {
+          "high": "assets/textures/vinyl/nor-2048.ktx2",
+          "low": "assets/textures/vinyl/nor-1024.ktx2"
+        },
+        "rough": {
+          "high": "assets/textures/vinyl/rough-2048.ktx2",
+          "low": "assets/textures/vinyl/rough-1024.ktx2"
+        }
+      }
+    },
+    "plaster": {
+      "source": "https://polyhaven.com/a/painted_plaster_wall",
+      "polyHavenId": "painted_plaster_wall",
+      "title": "Painted Plaster Wall",
+      "authors": ["Amal Kumar"],
+      "license": "CC0",
+      "sizeM": [2, 2],
+      "modified": null,
+      "maps": {
+        "diff": {
+          "high": "assets/textures/plaster/diff-1024.ktx2",
+          "low": "assets/textures/plaster/diff-512.ktx2"
+        },
+        "nor": {
+          "high": "assets/textures/plaster/nor-1024.ktx2",
+          "low": "assets/textures/plaster/nor-512.ktx2"
+        },
+        "rough": {
+          "high": "assets/textures/plaster/rough-1024.ktx2",
+          "low": "assets/textures/plaster/rough-512.ktx2"
+        }
+      }
+    },
+    "bath-tiles": {
+      "source": "https://polyhaven.com/a/interior_tiles",
+      "polyHavenId": "interior_tiles",
+      "title": "Interior Tiles",
+      "authors": ["Charlotte Baglioni"],
+      "license": "CC0",
+      "sizeM": [1.8999998569488525, 1.8999998569488525],
+      "modified": null,
+      "maps": {
+        "diff": {
+          "high": "assets/textures/bath-tiles/diff-1024.ktx2",
+          "low": "assets/textures/bath-tiles/diff-512.ktx2"
+        },
+        "nor": {
+          "high": "assets/textures/bath-tiles/nor-1024.ktx2",
+          "low": "assets/textures/bath-tiles/nor-512.ktx2"
+        },
+        "rough": {
+          "high": "assets/textures/bath-tiles/rough-1024.ktx2",
+          "low": "assets/textures/bath-tiles/rough-512.ktx2"
+        }
+      }
+    },
+    "veneer": {
+      "source": "https://polyhaven.com/a/grey_oak_veneer_01",
+      "polyHavenId": "grey_oak_veneer_01",
+      "title": "Grey Oak Veneer 01",
+      "authors": ["Jenelle van Heerden"],
+      "license": "CC0",
+      "sizeM": [1, 1],
+      "modified": null,
+      "maps": {
+        "diff": {
+          "high": "assets/textures/veneer/diff-1024.ktx2",
+          "low": "assets/textures/veneer/diff-512.ktx2"
+        },
+        "nor": {
+          "high": "assets/textures/veneer/nor-1024.ktx2",
+          "low": "assets/textures/veneer/nor-512.ktx2"
+        },
+        "rough": {
+          "high": "assets/textures/veneer/rough-1024.ktx2",
+          "low": "assets/textures/veneer/rough-512.ktx2"
+        }
+      }
+    },
+    "leather": {
+      "source": "https://polyhaven.com/a/fabric_leather_01",
+      "polyHavenId": "fabric_leather_01",
+      "title": "Fabric Leather 01",
+      "authors": ["Rob Tuytel"],
+      "license": "CC0",
+      "sizeM": [0.4000000059604645, 0.40000003576278687],
+      "modified": "desaturate",
+      "maps": {
+        "diff": {
+          "high": "assets/textures/leather/diff-1024.ktx2",
+          "low": "assets/textures/leather/diff-512.ktx2"
+        },
+        "nor": {
+          "high": "assets/textures/leather/nor-1024.ktx2",
+          "low": "assets/textures/leather/nor-512.ktx2"
+        },
+        "rough": {
+          "high": "assets/textures/leather/rough-1024.ktx2",
+          "low": "assets/textures/leather/rough-512.ktx2"
+        }
+      }
+    },
+    "linen": {
+      "source": "https://polyhaven.com/a/cotton_jersey",
+      "polyHavenId": "cotton_jersey",
+      "title": "Cotton Jersey",
+      "authors": ["colormass", "Rico Cilliers"],
+      "license": "CC0",
+      "sizeM": [0.2636027473872483, 0.2637999951839447],
+      "modified": "desaturate-light",
+      "maps": {
+        "diff": {
+          "high": "assets/textures/linen/diff-1024.ktx2",
+          "low": "assets/textures/linen/diff-512.ktx2"
+        },
+        "nor": {
+          "high": "assets/textures/linen/nor-1024.ktx2",
+          "low": "assets/textures/linen/nor-512.ktx2"
+        },
+        "rough": {
+          "high": "assets/textures/linen/rough-1024.ktx2",
+          "low": "assets/textures/linen/rough-512.ktx2"
+        }
+      }
+    }
+  },
+  "hdri": {
+    "hospital_room": {
+      "source": "https://polyhaven.com/a/hospital_room",
+      "title": "Hospital Room",
+      "authors": ["Oliksiy Yakovlyev"],
+      "license": "CC0",
+      "path": "assets/hdri/hospital_room-1k.hdr"
+    }
+  }
+}

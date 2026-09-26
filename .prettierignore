@@ -6,3 +6,5 @@ test-results
 reference
 docs/screenshots
 SPEC.md
+.asset-cache
+public/basis

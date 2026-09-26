@@ -23,7 +23,7 @@ export function BrandSheet() {
       </section>
 
       <section>
-        <h2>Elementor global kit (verbatim)</h2>
+        <h2>Elementor global kit (verbatim, not used)</h2>
         <div className="swatches">
           {Object.entries(brand.kit).map(([name, value]) => (
             <Swatch key={name} name={name} value={value} />
@@ -32,11 +32,17 @@ export function BrandSheet() {
       </section>
 
       <section>
-        <h2>Overlay colors for Radio, Data and Insight (proposed mapping)</h2>
+        <h2>Overlay colors for Radio, Data and Insight (tints and shades of the visible brand colors)</h2>
         <div className="swatches">
-          {Object.entries(brand.overlay).map(([name, value]) => (
-            <Swatch key={name} name={name} value={value} />
-          ))}
+          {Object.entries(brand.overlay).flatMap(([name, value]) =>
+            (Array.isArray(value) ? value : [value]).map((v, i) => (
+              <Swatch
+                key={`${name}-${i}`}
+                name={Array.isArray(value) ? `${name} ${i + 1}` : name}
+                value={v}
+              />
+            )),
+          )}
         </div>
       </section>
 

@@ -97,12 +97,12 @@ export function drawScene(
       poly(ctx, v, z.polygon);
       if (kind === 'area') {
         ctx.setLineDash([4, 4]);
-        ctx.strokeStyle = z.tags?.includes('restricted') ? alpha(o.alert, 0.7) : 'rgba(80,90,100,0.35)';
+        ctx.strokeStyle = z.tags?.includes('restricted') ? alpha(o.critical, 0.7) : 'rgba(80,90,100,0.35)';
         ctx.lineWidth = 1;
         ctx.stroke();
         ctx.setLineDash([]);
         if (z.tags?.includes('restricted')) {
-          ctx.fillStyle = alpha(o.alert, 0.06);
+          ctx.fillStyle = alpha(o.critical, 0.06);
           ctx.fill();
         }
       } else {

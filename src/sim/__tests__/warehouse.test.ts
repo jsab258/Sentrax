@@ -72,6 +72,30 @@ describe('warehouse scene data (SPEC section 8)', () => {
     expect(med).toBeLessThanOrEqual(5.5);
   });
 
+  it('covers every rack level, including level 5, with AoA', () => {
+    const sim = new Simulation(world, { seed: 5 });
+    sim.runUntil(30);
+    const racked = world.assets.filter((a) => a.slot);
+    const byLevel = new Map<number, { aoa: number; n: number }>();
+    while (sim.time < 120) {
+      sim.step();
+      if (sim.steps % 5) continue;
+      for (const a of racked) {
+        const level = a.slot?.level ?? 0;
+        const s = byLevel.get(level) ?? { aoa: 0, n: 0 };
+        s.n++;
+        if (sim.report(`tag-${a.id}`)?.tech === 'aoa') s.aoa++;
+        byLevel.set(level, s);
+      }
+    }
+    for (const level of [1, 2, 3, 4, 5]) {
+      const s = byLevel.get(level);
+      if (!s) continue;
+      expect(s.aoa / s.n, `level ${level}`).toBe(1);
+    }
+    expect(byLevel.has(5)).toBe(true);
+  });
+
   it('has a connected nav graph', () => {
     const nav = new Navigator(world.nav);
     expect(nav.reachable('staging-1').size).toBe(world.nav.nodes.length);

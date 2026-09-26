@@ -455,7 +455,7 @@ a {
 }
 
 .simdebug-alerts li {
-  color: var(--overlay-alert);
+  color: var(--overlay-critical);
   font-weight: 700;
 }
 
