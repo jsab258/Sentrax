@@ -1,0 +1,57 @@
+{
+  "model": "PINIX TOW-5",
+  "sourceUrl": "https://sentrax.com/product/pinix-tow-5/",
+  "fetchedAt": "2026-09-26T09:03:22.076Z",
+  "images": [
+    {
+      "file": "tow5-view1-min.png",
+      "url": "https://sentrax.com/wp-content/uploads/2024/04/tow5-view1-min.png"
+    },
+    {
+      "file": "tow5-view2-min.png",
+      "url": "https://sentrax.com/wp-content/uploads/2024/04/tow5-view2-min.png"
+    },
+    {
+      "file": "tow5-view4-min.png",
+      "url": "https://sentrax.com/wp-content/uploads/2024/04/tow5-view4-min.png"
+    },
+    {
+      "file": "tow-5-final.png",
+      "url": "https://sentrax.com/wp-content/uploads/2024/04/tow-5-final.png"
+    },
+    {
+      "file": "TOW-5-Technical-Diagram.png",
+      "url": "https://sentrax.com/wp-content/uploads/2025/12/TOW-5-Technical-Diagram.png"
+    },
+    {
+      "file": "TOW-5-line-diagram.png",
+      "url": "https://sentrax.com/wp-content/uploads/2025/12/TOW-5-line-diagram.png"
+    }
+  ],
+  "pdfs": [
+    {
+      "file": "PINIX TOW-5 Device Specifications.pdf",
+      "url": "https://sentrax.com/docs/datasheets/PINIX%20TOW-5%20Device%20Specifications.pdf"
+    }
+  ],
+  "specLines": [
+    "NODIX CEN-1 BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon",
+    "IP65-rated rugged enclosure, resistant to dust and low-pressure water jets.",
+    "Battery Life",
+    "Replaceable lithium battery with up to 4 years of low-maintenance operation.",
+    "Accessories Double Sided Tape, Mounting Screw",
+    "Dimensions 51 mm x 51 mm x 20 mm",
+    "Protection Class IP65",
+    "Weight 45g",
+    "Antenna Type Chip antenna, Omni Directional",
+    "BATTERY",
+    "Battery Type",
+    "Battery Life:",
+    "(Advertisement Rate) (Battery Life)",
+    "Temperature Range -30°C to 85°C",
+    "You can discover nearby beacons, check their battery levels, and view their current settings,",
+    "Asset BLE 5.1 AoA Beacon for precision tracking of equipment and wares with a replaceable 2000 mAh lithium battery (up to 4 years battery life), with temperature, humidity, and accelerometer sensors, a button, an LED, and IP65 protection."
+  ],
+  "errors": [],
+  "title": "PINIX TOW-5 - Asset BLE AoA Tag with Multi-Sensors"
+}

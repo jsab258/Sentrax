@@ -1,13 +1,11 @@
 /**
- * Sentrax brand tokens.
+ * Sentrax brand tokens, extracted from https://sentrax.com/ on 2026-09-26 with `npm run brand:extract`.
+ * Every value and its source is documented in BRAND.md. Do not change these values (SPEC section 10).
  *
- * STATUS: PLACEHOLDER. None of the values below are Sentrax brand values yet.
- *
- * SPEC section 10 requires colors, fonts and the logo to be extracted from sentrax.com (Elementor global kit
- * CSS, computed homepage styles, header logo). sentrax.com is blocked by the build environment's network
- * policy, so extraction has not run. The neutral values below only keep the UI readable during setup.
- * Run `npm run brand:extract` once the site is reachable, then replace this file with the extracted values
- * and document every source in BRAND.md. After that, do not change them.
+ * The site defines two palettes:
+ * - the Woodmart theme, which the live site actually renders (buttons, links, logo, hero), and
+ * - the Elementor global kit (--e-global-color-*), which is defined but barely visible on the homepage.
+ * UI tokens follow what the site renders. Kit colors are kept for the Radio, Data and Insight overlays.
  */
 
 export type BrandStatus = 'placeholder' | 'extracted';
@@ -29,10 +27,21 @@ export interface Brand {
     textMuted: string;
     background: string;
     surface: string;
+    surfaceAlt: string;
     border: string;
     onPrimary: string;
   };
-  /** Overlay colors for the Radio, Data and Insight layers. Must be taken from the brand palette. */
+  /** Elementor global kit colors, verbatim. */
+  kit: {
+    primary: string;
+    secondary: string;
+    text: string;
+    accent: string;
+  };
+  /**
+   * Overlay colors for the Radio, Data and Insight layers, all taken from the brand palette above.
+   * Mapping is a proposal until the M3 checkpoint (see BRAND.md).
+   */
   overlay: {
     rssi: string;
     aoa: string;
@@ -41,46 +50,84 @@ export interface Brand {
     insight: string;
     alert: string;
   };
+  radius: {
+    button: string;
+  };
   fonts: {
     heading: BrandFont;
     body: BrandFont;
   };
   logo: {
-    /** Path under /public once the header logo has been downloaded. */
+    /** Path relative to the app root (public/). */
     src: string | null;
     alt: string;
+    width: number;
+    height: number;
   };
 }
 
-const systemStack =
-  'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif';
+const fallbackStack = 'Arial, Helvetica, sans-serif';
+
+const palette = {
+  /** Woodmart --wd-primary-color; computed background of every CTA button; logo "x". */
+  red: '#D31F4C',
+  /** Woodmart --wd-alternative-color; logo wordmark. */
+  purple: '#352E86',
+  /** Logo signal waves (sampled from the header logo). */
+  blue: '#6683C2',
+  /** Elementor kit --e-global-color-primary. */
+  kitPink: '#ED5087',
+  /** Elementor kit --e-global-color-secondary. */
+  kitViolet: '#520088',
+  /** Elementor kit --e-global-color-accent. */
+  kitDeepPurple: '#2E0075',
+} as const;
 
 export const brand: Brand = {
-  status: 'placeholder',
+  status: 'extracted',
   colors: {
-    primary: '#1F4E79',
-    secondary: '#3A6EA5',
-    accent: '#2A9D8F',
-    text: '#1A1D21',
-    textMuted: '#5B6470',
-    background: '#F5F6F8',
+    primary: palette.red,
+    secondary: palette.purple,
+    accent: palette.blue,
+    /** Elementor kit --e-global-color-text; computed color of h1 to h3 and paragraphs. */
+    text: '#000000',
+    /** Woodmart --wd-entities-title-color and --wd-link-color. */
+    textMuted: '#333333',
+    /** Computed body background. */
+    background: '#FFFFFF',
     surface: '#FFFFFF',
-    border: '#D9DDE3',
+    /** Computed background of the theme's light buttons. */
+    surfaceAlt: '#F3F3F3',
+    /** Computed border of the theme's light buttons. */
+    border: '#E9E9E9',
+    /** Computed text color of the CTA buttons. */
     onPrimary: '#FFFFFF',
   },
+  kit: {
+    primary: palette.kitPink,
+    secondary: palette.kitViolet,
+    text: '#000000',
+    accent: palette.kitDeepPurple,
+  },
   overlay: {
-    rssi: '#3A86FF',
-    aoa: '#8338EC',
-    bilink: '#06D6A0',
-    data: '#00B4D8',
-    insight: '#FFB703',
-    alert: '#E63946',
+    rssi: palette.blue,
+    aoa: palette.kitPink,
+    bilink: palette.kitViolet,
+    data: palette.purple,
+    insight: palette.kitDeepPurple,
+    alert: palette.red,
+  },
+  radius: {
+    /** Computed border radius of the CTA buttons. */
+    button: '10px',
   },
   fonts: {
-    heading: { family: 'system-ui', fallback: systemStack, weights: [600, 700] },
-    body: { family: 'system-ui', fallback: systemStack, weights: [400, 500] },
+    /** Woodmart --wd-title-font and --wd-entities-title-font; computed font of h1 to h3. */
+    heading: { family: 'Poppins', fallback: fallbackStack, weights: [500, 600] },
+    /** Woodmart --wd-text-font and --wd-header-el-font; computed font of body and paragraphs. */
+    body: { family: 'Lato', fallback: fallbackStack, weights: [400, 700] },
   },
-  logo: { src: null, alt: 'Sentrax' },
+  logo: { src: './brand/sentrax-logo.png', alt: 'Sentrax', width: 250, height: 95 },
 };
 
 /** Writes the brand tokens to CSS custom properties so stylesheets never hard-code colors. */
@@ -88,6 +135,7 @@ export function applyBrandTokens(root: HTMLElement, b: Brand = brand): void {
   const set = (name: string, value: string) => root.style.setProperty(name, value);
   for (const [key, value] of Object.entries(b.colors)) set(`--color-${kebab(key)}`, value);
   for (const [key, value] of Object.entries(b.overlay)) set(`--overlay-${kebab(key)}`, value);
+  set('--radius-button', b.radius.button);
   set('--font-heading', fontStack(b.fonts.heading));
   set('--font-body', fontStack(b.fonts.body));
 }

@@ -1,0 +1,51 @@
+{
+  "model": "PINIX TOK-1",
+  "sourceUrl": "https://sentrax.com/product/pinix-tok-1/",
+  "fetchedAt": "2026-09-26T09:03:36.713Z",
+  "images": [
+    {
+      "file": "tok-1-featured-min.png",
+      "url": "https://sentrax.com/wp-content/uploads/2023/10/tok-1-featured-min.png"
+    },
+    {
+      "file": "tok-1-view1-min.png",
+      "url": "https://sentrax.com/wp-content/uploads/2023/10/tok-1-view1-min.png"
+    },
+    {
+      "file": "tok-1-min-1.png",
+      "url": "https://sentrax.com/wp-content/uploads/2023/10/tok-1-min-1.png"
+    },
+    {
+      "file": "TOK-1-Technical-Diagram.png",
+      "url": "https://sentrax.com/wp-content/uploads/2025/12/TOK-1-Technical-Diagram.png"
+    },
+    {
+      "file": "TOK-1-line-diagram.png",
+      "url": "https://sentrax.com/wp-content/uploads/2025/12/TOK-1-line-diagram.png"
+    }
+  ],
+  "pdfs": [
+    {
+      "file": "PINIX TOK-1 Device Specifications.pdf",
+      "url": "https://sentrax.com/docs/datasheets/PINIX%20TOK-1%20Device%20Specifications.pdf"
+    }
+  ],
+  "specLines": [
+    "NODIX CEN-1 BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon",
+    "IP65-rated ABS enclosure, resistant to dust and low-pressure water jets.",
+    "Battery Life",
+    "Replaceable 225mAh CR2032 battery with 4–6 months of operation depending on advertisement rate.",
+    "Antenna Type PCB antenna, Omni Directional",
+    "Dimensions 55.3 mm (L) x 38.6 mm (H) x 7.4 mm (H)",
+    "Protection Class IP65",
+    "Weight 12g",
+    "BATTERY",
+    "Battery Type CR2032 x 1, 225mAh, Replaceable",
+    "(Advertisement Rate) (Battery Life)",
+    "Temperature Range -20°C to 60°C",
+    "You can discover nearby beacons, check their battery levels, and view their current settings,",
+    "Smart Badge BLE 5.x AoA Beacon for tracking personal safety, replaceable 800mAh Lithium battery (4-6 Months battery life), IP65 Protection."
+  ],
+  "errors": [],
+  "title": "PINIX TOK-1 - Smart Badge BLE AoA Tag with Multi-Sensors"
+}

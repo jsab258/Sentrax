@@ -1,0 +1,261 @@
+Source: https://sentrax.com/solutions/proximity-track/
+
+BLE Proximity RSSI Tracking with Environmental Sensing
+Skip to navigation
+Skip to main content
+Call: +41 41 505 0065
+Wishlist
+Blog
+Contact us
+Login/Register
+USD
+USD
+EUR
+CHF
+Book an Appointment
+Products Scanners/Locators
+NODIX CEN-1 BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon
+ZENIX LEN-2 BLE (RSSI) Indoor Gateway for Proximity Positioning + Environmental Sensing
+ZENIX LEN-1 BLE (RSSI) Indoor Gateway for Proximity Positioning
+ZENIX LEF-3 BLE (RSSI) Outdoor Gateway for Proximity Positioning with Wi-Fi, LTE Connectivity & GPS
+ZENIX LON-2 BLE (AoA) Indoor Scanner for Precise Submeter Location Tracking.
+ZENIX LOF-2 BLE (AoA) Outdoor Scanner for Precise Sub-Meter Location Tracking.
+Beacons/Tags
+PINIX TEN-2 Indoor Anchor BLE Beacon Tag with Temperature Sensor
+PINIX TOW-5 BLE (AoA) Asset Tag with Multi-Sensors
+PINIX TOW-1 Hybrid BLE (AoA) & (RSSI) Asset Tag
+PINIX TOK-1 Smart Badge BLE (AoA) Tag with Temperature Sensor
+PINIX TOP-5 Smart Badge BLE Tag with Temperature Sensor
+PINIX TOP-6 BLE AoA Smart Badge with RFID for Indoor Positioning & Workforce Safety
+PINIX TEK-1 BLE Lanyard Beacon Tag
+PINIX TOB-1 BLE AoA Wearable Beacon Tag with SoS Button and Accelerometer
+PINIX TEF-1 Outdoor Anchor BLE Beacon Tag with Temperature Sensors
+Solix RTLS Platform &#038; API
+SOLIX RTLS &#038; IoT Management Platform Real-time tracking & analytics, on-premise, or cloud for flexible deployments
+SOLIX RTLS Integration SDK Enable seamless integration with real-time location data via APIs, middleware, and iFrame support
+Software
+POSIX SDK Enables indoor positioning for smartphone applications
+SDM (Sentrax Device Manager) Simplifies BLE beacon tag configuration and management on Android & iOS.
+Evaluation Kit
+BLE RSSI Evaluation KIT BLE (RSSI) Evaluation Kit for real-time proximity positioning and tracking of nearby assets and persons
+BLE AoA Evaluation KIT BLE (AoA) Evaluation Kit for precise real-time positioning and tracking of assets and persons
+Technology
+Solutions Proximity Tracking
+BiLink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Applications Healthcare
+Manufacturing
+Smart City
+Partners Our Partners
+Partnership Program
+Support Documents
+Hardware
+Software
+Solutions
+Evaluation Kit
+Integration Guides
+FAQs
+My Tickets
+Company About us
+Newsletters
+Whitepapers
+Blog
+Contact us
+Sentrax BLE Proximity
+Tracking System
+Smarter, Safer, and More Efficient Operations Through Real-Time Proximity Monitoring and Environmental Sensing with Room-Level Accuracy
+Download Brochure
+Talk to Our Experts
+Experience Real-Time Proximity Tracking System
+Sentrax’s BLE RSSI-based RTLS solution is a cutting-edge technology designed to elevate operational efficiency through intelligent location tracking. Powered by Bluetooth Low Energy (BLE), it provides real-time proximity monitoring of assets, persons, and equipment within any defined space.
+Whether it&#8217;s managing workflows, enhancing safety, or streamlining processes, this system provides the spatial awareness needed to make smarter, faster decisions.
+Key Benefits
+Transform your operations with intelligent proximity tracking, environmental monitoring, and easily deployable, configurable data stream interfaces.
+📍
+Real-Time Location Tracking
+Monitor assets, staff, and equipment with room level accuracy.
+🛡️
+Environmental Sensing
+Real-time visibility of humidity, temperature and air quality data.
+⚙️
+Scalable &#038; Flexible
+Deploy in single rooms or across multi-site networks.
+📈
+Improved Efficiency
+Reduce search times, prevent losses and automate workflows.
+🔒
+Enhanced Safety &#038; Compliance
+Meet regulatory standards with real-time alerts and reporting.
+📊
+Actionable Insights
+Access and analyze location data through RTLS platforms.
+Scalable. Smart. Future-Ready.
+From tracking movement in dynamic environments to optimizing energy use and ensuring compliance, Sentrax offers a flexible solution that grows with your business.
+Beyond location data, the system also integrates environmental sensors and advanced analytics to drive intelligent decision-making.
+BLE RSSI Evaluation Kit
+Sentrax&#8217;s comprehensive solution for real-time proximity tracking using Bluetooth Low Energy (BLE) technology.
+Perfect for testing, demonstrations, pilot projects, and assessments.
+BLE Scanners and Beacons are included
+Access to Solix Suite RTLS Platform
+Integrated Environmental Sensors (TVOC, Humidity, Pressure)
+Live Data Dashboard with Real-Time Data Visualization
+Request Evaluation Kit
+Hardware &#038; Software Included
+Everything you need to evaluate real-time BLE tracking – streamlined across devices and platforms.
+ZENIX LEN-1
+BLE RSSI locator with POE and Wi-Fi for precise indoor positioning.
+ZENIX LEN-2
+BLE locator with built-in environmental sensors like humidity &#038; air quality.
+PINIX TOW-1
+BLE AoA smart tag with motion sensor and accelerometer.
+PINIX TOP-5
+Smart Badge BLE Tag with Temperature Sensor
+SOLIX Suite
+Platform for managing, configuring and visualizing all BLE devices.
+Applications &#038; Use Cases
+Healthcare
+Real-Time Equipment Tracking
+Sterile Storage Monitoring
+Patient Safety Assurance
+Fall Detection &#038; SOS Alerts
+Staff Safety Monitoring
+Warehouses/Logistics
+Real-Time Asset Tracking
+Forklift &#038; Vehicle Monitoring
+3D Inventory Management
+Emergency Evacuation Guidance
+Mixed Indoor &#038; Outdoor Tracking
+Airport
+Baggage Cart &#038; Trolley Tracking
+Mobile Equipment Tracking
+Staff &#038; Contractor Tracking
+Remote Environment Monitoring
+Restricted Zone Monitoring
+Retail
+Customer Engagement
+Analyze Customer Dwell Times
+Real-Time Staff Positioning
+Inventory Monitoring
+Optimize Store Layouts
+Security &#038; Defense
+Restricted zone entry/exit monitoring.
+Unauthorized presence detection.
+Asset movement alerting.
+Automated checkpoint roll-call.
+High-risk personnel safety monitoring.
+Smart Buildings
+Real-Time Occupancy Tracking
+Visitor and Contractor Monitoring
+Environmental Monitoring
+Emergency Responder Guidance
+Personnel Tracking &#038; Geofencing Alerts
+Transform Your Operations with Sentrax BLE Proximity Tracking System
+Fill out the form below to request a demo, consultation, or evaluation kit.
+Talk to Our Experts
+Download Brochure
+Enquiry Form
+Name
+Email
+Phone
+Country
+Select Country Afghanistan Albania Algeria Andorra Angola Antigua & Deps Argentina Armenia Australia Austria Azerbaijan Bahamas Bahrain Bangladesh Barbados Belarus Belgium Belize Benin Bhutan Bolivia Bosnia Herzegovina Botswana Brazil Brunei Bulgaria Burkina Burundi Cambodia Cameroon Canada Cape Verde Central African Rep Chad Chile China Colombia Comoros Congo Congo {Democratic Rep} Costa Rica Croatia Cuba Cyprus Czech Republic Denmark Djibouti Dominica Dominican Republic East Timor Ecuador Egypt El Salvador Equatorial Guinea Eritrea Estonia Ethiopia Fiji Finland France Gabon Gambia Georgia Germany Ghana Greece Grenada Guatemala Guinea Guinea-Bissau Guyana Haiti Honduras Hungary Iceland India Indonesia Iran Iraq Ireland {Republic} Israel Italy Ivory Coast Jamaica Japan Jordan Kazakhstan Kenya Kiribati Korea North Korea South Kosovo Kuwait Kyrgyzstan Laos Latvia Lebanon Lesotho Liberia Libya Liechtenstein Lithuania Luxembourg Macedonia Madagascar Malawi Malaysia Maldives Mali Malta Marshall Islands Mauritania Mauritius Mexico Micronesia Moldova Monaco Mongolia Montenegro Morocco Mozambique Myanmar, {Burma} Namibia Nauru Nepal Netherlands New Zealand Nicaragua Niger Nigeria Norway Oman Pakistan Palau Panama Papua New Guinea Paraguay Peru Philippines Poland Portugal Qatar Romania Russian Federation Rwanda St Kitts & Nevis St Lucia Saint Vincent & the Grenadines Samoa San Marino Sao Tome & Principe Saudi Arabia Senegal Serbia Seychelles Sierra Leone Singapore Slovakia Slovenia Solomon Islands Somalia South Africa South Sudan Spain Sri Lanka Sudan Suriname Swaziland Sweden Switzerland Syria Taiwan Tajikistan Tanzania Thailand Togo Tonga Trinidad & Tobago Tunisia Turkey Turkmenistan Tuvalu Uganda Ukraine United Arab Emirates United Kingdom United States Uruguay Uzbekistan Vanuatu Vatican City Venezuela Vietnam Yemen Zambia Zimbabwe
+Company Name
+Industry
+Healthcare Education Smart Buildings Manufacturing Safety & Security Energy & Utilities
+How can we help?
+&#916;
+Company
+About us
+Our Partners
+Partnership Program
+Newsletters
+Blog
+Careers
+Contact us
+Explore
+Our Products
+Technology
+Applications and Usecases
+Documents
+FAQs
+Solutions
+Proximity Tracking
+BiLink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Follow Us
+Copyright 2026 by Sentrax . All rights reserved.
+Terms & Conditions
+Privacy Policy
+Refund & Return Policy
+Search
+Start typing to see products you are looking for.
+Search
+Menu
+Categories
+Home
+About us
+Newsletters
+Contact us
+Blog
+Careers
+Products Beacons &#038; Tags
+NODIX CEN-1
+PINIX TOW-5
+PINIX TOW-1
+PINIX TOK-1
+PINIX TEP-1
+PINIX TEF-1
+PINIX TOP-5
+PINIX TEN-2
+PINIX TOP-6
+PINIX TEK-1
+PINIX TOB-1
+Scanner &#038; Locators
+ZENIX LEN-2
+ZENIX LEN-1
+ZENIX LON-2
+ZENIX LEF-3
+ZENIX LOF-2
+Solix RTLS Platform &#038; API
+SOLIX RTLS &#038; IoT Management Platform
+Software
+SDM (Sentrax Device Manager)
+POSIX SDK
+Evaluation Kits
+BLE RSSI Evaluation KIT
+BLE AoA Evaluation KIT
+Technology
+Solutions Proximity Tracking
+Bilink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Applications Healthcare
+Manufacturing
+Smart City
+Partners Our Partners
+Partnership Program
+Support Documents
+Submit Ticket
+My Tickets
+FAQs
+Legal Data Protection
+Sentrax RMA
+Privacy Policy
+Terms & Conditions
+Careers
+Company About us
+Newsletters
+Whitepapers
+Blog
+Contact us
+Wishlist
+Login / Register
+Home
+Wishlist
+Login/Register
+Translate &raquo;

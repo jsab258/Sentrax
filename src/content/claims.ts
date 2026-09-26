@@ -6,44 +6,50 @@ import { links } from './links';
  *
  * Policy (SPEC section 3):
  * - Allowed figures: RSSI "3 to 5 m", AoA "sub-meter", BiLink "room-level" (no meter figure).
- * - No percentage savings, prices or business impact percentages.
+ * - No percentage savings, prices or business impact percentages. The site's "up to 60%", "up to 70%" and
+ *   "100% room-level accuracy" statements are deliberately not used anywhere.
  * - No customer names, partner names, deployment references or results.
  */
 export const claims = {
   rssiAccuracy: {
     id: 'rssiAccuracy',
     text: '3 to 5 m',
-    sourceUrl: links.proximity,
+    sourceUrl: links.technology,
     approved: true,
-    note: 'Allowed technical figure per SPEC section 3.',
+    verifiedAt: '2026-09-26',
+    note: 'Allowed figure per SPEC section 3. Technology page: "Mid-Level Accuracy: 3-5m BLE RSSI Proximity Positioning".',
   },
   aoaAccuracy: {
     id: 'aoaAccuracy',
     text: 'sub-meter',
     sourceUrl: links.aoa,
     approved: true,
-    note: 'Allowed technical figure per SPEC section 3.',
+    verifiedAt: '2026-09-26',
+    note: 'Allowed figure per SPEC section 3. AoA page: "sub-meter positional accuracy".',
   },
   bilinkAccuracy: {
     id: 'bilinkAccuracy',
     text: 'room-level',
     sourceUrl: links.bilink,
     approved: true,
-    note: 'Allowed technical figure per SPEC section 3. Never attach a meter figure.',
+    verifiedAt: '2026-09-26',
+    note: 'Allowed figure per SPEC section 3. Never attach a meter figure: the site states several conflicting ones (see SITE-ISSUES.md).',
   },
   bilinkTagline: {
     id: 'bilinkTagline',
     text: 'Track More, Install Less',
-    sourceUrl: links.bilink,
+    sourceUrl: links.bilinkBrochure,
     approved: true,
-    note: 'Tagline quoted in SPEC section 2. Wording on the live page not yet re-checked (site blocked from build environment).',
+    verifiedAt: '2026-09-26',
+    note: 'Quoted in SPEC section 2. Appears on the brochure cover and in an image alt text on the BiLink page, not in the page copy.',
   },
   searchTime: {
     id: 'searchTime',
-    text: 'Clinical staff can spend 30 to 60 minutes per shift searching for equipment.',
+    text: 'Clinical staff spend around 30 minutes per shift, sometimes up to 60 minutes, searching for equipment.',
     sourceUrl: links.healthcare,
     approved: false,
-    note: 'Flagged in SPEC section 3. Must stay unapproved until Sentrax confirms the source.',
+    verifiedAt: '2026-09-26',
+    note: 'Healthcare page, "Medical Equipment Tracking" section, verbatim. Stays unapproved: the site gives no underlying source.',
   },
 } as const satisfies Record<string, Claim>;
 

@@ -1,0 +1,270 @@
+Source: https://sentrax.com/solutions/bilink-tracking/
+
+Sentrax Product Enquiry | RTLS & IoT Solution
+Skip to navigation
+Skip to main content
+Call: +41 41 505 0065
+Wishlist
+Blog
+Contact us
+Login/Register
+USD
+USD
+EUR
+CHF
+Book an Appointment
+Products Scanners/Locators
+NODIX CEN-1 BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon
+ZENIX LEN-2 BLE (RSSI) Indoor Gateway for Proximity Positioning + Environmental Sensing
+ZENIX LEN-1 BLE (RSSI) Indoor Gateway for Proximity Positioning
+ZENIX LEF-3 BLE (RSSI) Outdoor Gateway for Proximity Positioning with Wi-Fi, LTE Connectivity & GPS
+ZENIX LON-2 BLE (AoA) Indoor Scanner for Precise Submeter Location Tracking.
+ZENIX LOF-2 BLE (AoA) Outdoor Scanner for Precise Sub-Meter Location Tracking.
+Beacons/Tags
+PINIX TEN-2 Indoor Anchor BLE Beacon Tag with Temperature Sensor
+PINIX TOW-5 BLE (AoA) Asset Tag with Multi-Sensors
+PINIX TOW-1 Hybrid BLE (AoA) & (RSSI) Asset Tag
+PINIX TOK-1 Smart Badge BLE (AoA) Tag with Temperature Sensor
+PINIX TOP-5 Smart Badge BLE Tag with Temperature Sensor
+PINIX TOP-6 BLE AoA Smart Badge with RFID for Indoor Positioning & Workforce Safety
+PINIX TEK-1 BLE Lanyard Beacon Tag
+PINIX TOB-1 BLE AoA Wearable Beacon Tag with SoS Button and Accelerometer
+PINIX TEF-1 Outdoor Anchor BLE Beacon Tag with Temperature Sensors
+Solix RTLS Platform &#038; API
+SOLIX RTLS &#038; IoT Management Platform Real-time tracking & analytics, on-premise, or cloud for flexible deployments
+SOLIX RTLS Integration SDK Enable seamless integration with real-time location data via APIs, middleware, and iFrame support
+Software
+POSIX SDK Enables indoor positioning for smartphone applications
+SDM (Sentrax Device Manager) Simplifies BLE beacon tag configuration and management on Android & iOS.
+Evaluation Kit
+BLE RSSI Evaluation KIT BLE (RSSI) Evaluation Kit for real-time proximity positioning and tracking of nearby assets and persons
+BLE AoA Evaluation KIT BLE (AoA) Evaluation Kit for precise real-time positioning and tracking of assets and persons
+Technology
+Solutions Proximity Tracking
+BiLink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Applications Healthcare
+Manufacturing
+Smart City
+Partners Our Partners
+Partnership Program
+Support Documents
+Hardware
+Software
+Solutions
+Evaluation Kit
+Integration Guides
+FAQs
+My Tickets
+Company About us
+Newsletters
+Whitepapers
+Blog
+Contact us
+Overview
+The BiLink Proximity Tracking is designed to deliver reliable room-level visibility in complex indoor environments without requiring dense gateway infrastructure, while keeping minimal infrastructure and deployment complexity. Large multi-room facilities often struggle with blind spots, leading to inconsistent tracking and reduced operational confidence
+Sentrax has introduced the bidirectional BLE architecture, BiLink, which addresses these gaps by enabling accurate zone detection, seamless movement tracking, and real-time awareness across critical spaces.
+At the core of this system is the BiLink BLE Relay Anchor, a battery-operated scanner and beacon, the NODIX CEN-1, designed to enhance indoor tracking performance. By extending coverage across rooms and eliminating blind spots, BiLink ensures consistent visibility, improves detection reliability, and enables seamless tracking continuity throughout the environment.
+How It Works?
+1
+Zone Detection at the Edge
+BiLink anchors like the NODIX CEN-1 are deployed across rooms and entry/exit points to detect tag presence within defined zones. This creates the first layer of reliable, room-level visibility.
+2
+Seamless Coverage Through Relay Communication
+Once a tag is detected, nearby anchors automatically relay the signal across adjacent areas, extending BLE coverage into small rooms, blind spots, and transitional spaces without interruption
+3
+Continuous Signal Validation with Bidirectional BLE
+As the signal moves through the network, each anchor both scans and broadcasts. This bidirectional communication continuously validates tag presence, ensuring accurate detection and smooth handover between zones.
+4
+Real-Time Intelligence via SOLIX Platform
+All validated data is then processed by the SOLIX engine, delivering precise real-time location insights with reliable room-level accuracy and seamless zone transitions.
+Key Features &#038; Benefits
+🎯
+Reliable Room-Level Visibility
+Consistent presence detection within rooms and clearly defined zones using calibrated BLE signal thresholds.
+📡
+Extended Coverage Across Spaces
+Relay-based anchors enhance signal propagation and visibility across rooms, entry points, and transitional areas.
+📉
+Reduced Infrastructure Requirement
+Lower gateway dependency through optimized anchor deployment, reducing overall infrastructure cost and complexity.
+↔️
+Bi-directional BLE Operation
+Anchors function as both scanners and broadcasters, enabling continuous signal exchange and improved detection performance.
+🔋
+Battery-Powered &#038; Flexible Deployment
+Battery-operated design allows quick installation without complex wiring, supporting faster and scalable deployment.
+🚪
+Seamless Entry &#038; Exit Detection
+Tracking of movement between zones through continuous signal handoff and stable detection continuity.
+Why BiLink Proximity Tracking?
+The NODIX CEN-1 is a relay-based anchor intelligence device built to support Sentrax’s BiLink architecture, enabling improved coverage, detection consistency, and deployment efficiency in indoor tracking environments.
+Advantages:
+Expanded coverage with fewer deployed devices
+More consistent and reliable room-level tracking
+Detection of moving tags and assets
+Cost-efficient infrastructure deployment
+Elimination of indoor blind spots
+By combining bidirectional BLE communication, a relay-based architecture, and data filtering &#038; validation, BiLink delivers a smarter, more scalable, and highly efficient approach to indoor positioning and tracking.
+BiLink
+NODIX CEN-1
+For reliable room-level tracking with fewer devices and extended BLE coverage. Reduces blind spots, deployment complexity, and RTLS infrastructure costs.
+Explore NODIX CEN-1
+Download Brochure
+Applications & Use Cases
+Hospitals / Healthcare
+Delivers room-level tracking for patients, staff, and equipment, eliminating hallway bleed. Improves handovers, inventory visibility, and ensures reliable entry/exit monitoring in sensitive areas.
+Warehouse / Logistics
+Enables real-time zone tracking of assets and personnel with fewer gateways. Improves operational visibility, optimizes infrastructure, and enhances safety with entry/exit alerts.
+Smart Buildings
+Provides room-level occupancy and movement insights for better space utilization. Supports efficient operations, secure access monitoring, and reduced infrastructure costs.
+Healthcare / Hospitals
+Delivers room-level tracking for patients, staff, and equipment, eliminating hallway bleed. Improves handovers, inventory visibility, and ensures reliable entry/exit monitoring in sensitive areas.
+Warehouse / Logistics
+Enables real-time zone tracking of assets and personnel with fewer gateways. Improves operational visibility, optimizes infrastructure, and enhances safety with entry/exit alerts.
+Smart Buildings
+Provides room-level occupancy and movement insights for better space utilization. Supports efficient operations, secure access monitoring, and reduced infrastructure costs.
+Hardware &#038; Software Included
+PINIX Tags
+BLE smart Asset &#038; Person tags with SOS button &#038; temperature sensor
+NODIX CEN-1
+BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon.
+ZENIX LEN-1
+BLE RSSI gateway with POE and Wi-Fi for proximity indoor positioning.
+SOLIX RTLS &#038; IoT Platform
+Platform for managing, configuring and visualizing all BLE devices.
+Frequently Asked Questions
+What is the BiLink Proximity Tracking?
+The BiLink Proximity Tracking is an advanced indoor tracking solution that uses bidirectional BLE communication to deliver reliable room-level visibility. It enables accurate zone detection, seamless movement tracking, and real-time monitoring of people and assets.
+How is BiLink different from standard BLE tracking systems?
+BiLink introduces bidirectional communication at the anchor level, where devices can both scan and broadcast signals. This enhances detection reliability, improves coverage across spaces, and reduces dependency on dense gateway infrastructure.
+What level of accuracy does the BiLink system provide?
+The system typically delivers room-level accuracy in the range of 2–4 meters, depending on deployment design and environmental conditions.
+Do I need a gateway in every room?
+No. BiLink is designed to minimize infrastructure requirements. With relay-based anchors, coverage can be extended across multiple rooms and transitional areas without deploying a gateway in each space.
+What is the role of the NODIX CEN-1 in the BiLink system?
+The NODIX CEN-1 is the first BiLink-enabled anchor device. It acts as both a scanner and broadcaster, enabling relay-based tracking, improving coverage, and ensuring consistent detection across rooms and corridors.
+Is the system suitable for large or complex environments?
+Yes. BiLink is specifically designed for complex indoor environments such as hospitals, industrial facilities, and large buildings where consistent room-level visibility is required.
+Can BiLink be integrated with existing systems?
+Yes. The system integrates seamlessly with the SOLIX RTLS platform and supports APIs and middleware for integration with third-party systems such as ERP, BMS, or healthcare platforms.
+How is the system deployed?
+BiLink anchors are typically battery-powered and easy to install, allowing flexible placement without complex wiring. This enables faster deployment and scalability.
+What types of assets or people can be tracked?
+The NODIX CEN-1 monitors the presence and movement of BLE tags, such as those attached to people, assets, or equipment, within a defined area or room. It enables visibility of BLE-enabled devices across various use cases in different industries.
+Is the system scalable?
+Yes. The BiLink architecture is highly scalable, allowing additional anchors and tags to be added easily as tracking requirements grow.
+Does BiLink support real-time alerts?
+Yes. The system can generate real-time alerts for events such as proximity breaches, asset movement, zone entry/exit, and safety-related scenarios.
+Can BiLink work alongside other RTLS technologies?
+Yes. BiLink can complement other technologies such as AoA-based tracking, enabling hybrid RTLS deployments for enhanced performance and flexibility.
+Eliminate Blind Spots. Track with Confidence
+Deploy the BiLink Proximity Tracking to achieve reliable room-level visibility without complexity, powered by intelligent relay anchors and seamless integration with SOLIX RTLS or any third-party RTLS Platform.
+Download Brochure
+Talk to Our Experts
+Enquiry Form
+Name
+Email
+Phone
+Country
+Select Country Afghanistan Albania Algeria Andorra Angola Antigua & Deps Argentina Armenia Australia Austria Azerbaijan Bahamas Bahrain Bangladesh Barbados Belarus Belgium Belize Benin Bhutan Bolivia Bosnia Herzegovina Botswana Brazil Brunei Bulgaria Burkina Burundi Cambodia Cameroon Canada Cape Verde Central African Rep Chad Chile China Colombia Comoros Congo Congo {Democratic Rep} Costa Rica Croatia Cuba Cyprus Czech Republic Denmark Djibouti Dominica Dominican Republic East Timor Ecuador Egypt El Salvador Equatorial Guinea Eritrea Estonia Ethiopia Fiji Finland France Gabon Gambia Georgia Germany Ghana Greece Grenada Guatemala Guinea Guinea-Bissau Guyana Haiti Honduras Hungary Iceland India Indonesia Iran Iraq Ireland {Republic} Israel Italy Ivory Coast Jamaica Japan Jordan Kazakhstan Kenya Kiribati Korea North Korea South Kosovo Kuwait Kyrgyzstan Laos Latvia Lebanon Lesotho Liberia Libya Liechtenstein Lithuania Luxembourg Macedonia Madagascar Malawi Malaysia Maldives Mali Malta Marshall Islands Mauritania Mauritius Mexico Micronesia Moldova Monaco Mongolia Montenegro Morocco Mozambique Myanmar, {Burma} Namibia Nauru Nepal Netherlands New Zealand Nicaragua Niger Nigeria Norway Oman Pakistan Palau Panama Papua New Guinea Paraguay Peru Philippines Poland Portugal Qatar Romania Russian Federation Rwanda St Kitts & Nevis St Lucia Saint Vincent & the Grenadines Samoa San Marino Sao Tome & Principe Saudi Arabia Senegal Serbia Seychelles Sierra Leone Singapore Slovakia Slovenia Solomon Islands Somalia South Africa South Sudan Spain Sri Lanka Sudan Suriname Swaziland Sweden Switzerland Syria Taiwan Tajikistan Tanzania Thailand Togo Tonga Trinidad & Tobago Tunisia Turkey Turkmenistan Tuvalu Uganda Ukraine United Arab Emirates United Kingdom United States Uruguay Uzbekistan Vanuatu Vatican City Venezuela Vietnam Yemen Zambia Zimbabwe
+Company Name
+Industry
+Healthcare Education Smart Buildings Manufacturing Safety & Security Energy & Utilities
+How can we help?
+&#916;
+Company
+About us
+Our Partners
+Partnership Program
+Newsletters
+Blog
+Careers
+Contact us
+Explore
+Our Products
+Technology
+Applications and Usecases
+Documents
+FAQs
+Solutions
+Proximity Tracking
+BiLink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Follow Us
+Copyright 2026 by Sentrax . All rights reserved.
+Terms & Conditions
+Privacy Policy
+Refund & Return Policy
+Search
+Start typing to see products you are looking for.
+Search
+Menu
+Categories
+Home
+About us
+Newsletters
+Contact us
+Blog
+Careers
+Products Beacons &#038; Tags
+NODIX CEN-1
+PINIX TOW-5
+PINIX TOW-1
+PINIX TOK-1
+PINIX TEP-1
+PINIX TEF-1
+PINIX TOP-5
+PINIX TEN-2
+PINIX TOP-6
+PINIX TEK-1
+PINIX TOB-1
+Scanner &#038; Locators
+ZENIX LEN-2
+ZENIX LEN-1
+ZENIX LON-2
+ZENIX LEF-3
+ZENIX LOF-2
+Solix RTLS Platform &#038; API
+SOLIX RTLS &#038; IoT Management Platform
+Software
+SDM (Sentrax Device Manager)
+POSIX SDK
+Evaluation Kits
+BLE RSSI Evaluation KIT
+BLE AoA Evaluation KIT
+Technology
+Solutions Proximity Tracking
+Bilink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Applications Healthcare
+Manufacturing
+Smart City
+Partners Our Partners
+Partnership Program
+Support Documents
+Submit Ticket
+My Tickets
+FAQs
+Legal Data Protection
+Sentrax RMA
+Privacy Policy
+Terms & Conditions
+Careers
+Company About us
+Newsletters
+Whitepapers
+Blog
+Contact us
+Wishlist
+Login / Register
+Home
+Wishlist
+Login/Register
+Translate &raquo;

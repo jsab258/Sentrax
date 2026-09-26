@@ -1,0 +1,270 @@
+Source: https://sentrax.com/solutions/hybrid-tracking/
+
+Hybrid Tracking - Sentrax BLE RSSI & AoA Tracking Solutions
+Skip to navigation
+Skip to main content
+Call: +41 41 505 0065
+Wishlist
+Blog
+Contact us
+Login/Register
+USD
+USD
+EUR
+CHF
+Book an Appointment
+Products Scanners/Locators
+NODIX CEN-1 BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon
+ZENIX LEN-2 BLE (RSSI) Indoor Gateway for Proximity Positioning + Environmental Sensing
+ZENIX LEN-1 BLE (RSSI) Indoor Gateway for Proximity Positioning
+ZENIX LEF-3 BLE (RSSI) Outdoor Gateway for Proximity Positioning with Wi-Fi, LTE Connectivity & GPS
+ZENIX LON-2 BLE (AoA) Indoor Scanner for Precise Submeter Location Tracking.
+ZENIX LOF-2 BLE (AoA) Outdoor Scanner for Precise Sub-Meter Location Tracking.
+Beacons/Tags
+PINIX TEN-2 Indoor Anchor BLE Beacon Tag with Temperature Sensor
+PINIX TOW-5 BLE (AoA) Asset Tag with Multi-Sensors
+PINIX TOW-1 Hybrid BLE (AoA) & (RSSI) Asset Tag
+PINIX TOK-1 Smart Badge BLE (AoA) Tag with Temperature Sensor
+PINIX TOP-5 Smart Badge BLE Tag with Temperature Sensor
+PINIX TOP-6 BLE AoA Smart Badge with RFID for Indoor Positioning & Workforce Safety
+PINIX TEK-1 BLE Lanyard Beacon Tag
+PINIX TOB-1 BLE AoA Wearable Beacon Tag with SoS Button and Accelerometer
+PINIX TEF-1 Outdoor Anchor BLE Beacon Tag with Temperature Sensors
+Solix RTLS Platform &#038; API
+SOLIX RTLS &#038; IoT Management Platform Real-time tracking & analytics, on-premise, or cloud for flexible deployments
+SOLIX RTLS Integration SDK Enable seamless integration with real-time location data via APIs, middleware, and iFrame support
+Software
+POSIX SDK Enables indoor positioning for smartphone applications
+SDM (Sentrax Device Manager) Simplifies BLE beacon tag configuration and management on Android & iOS.
+Evaluation Kit
+BLE RSSI Evaluation KIT BLE (RSSI) Evaluation Kit for real-time proximity positioning and tracking of nearby assets and persons
+BLE AoA Evaluation KIT BLE (AoA) Evaluation Kit for precise real-time positioning and tracking of assets and persons
+Technology
+Solutions Proximity Tracking
+BiLink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Applications Healthcare
+Manufacturing
+Smart City
+Partners Our Partners
+Partnership Program
+Support Documents
+Hardware
+Software
+Solutions
+Evaluation Kit
+Integration Guides
+FAQs
+My Tickets
+Company About us
+Newsletters
+Whitepapers
+Blog
+Contact us
+Sentrax Hybrid RTLS &#038;
+Environmental Sensing
+Smart, Scalable Tracking with AoA Precision and RSSI Coverage
+Download Brochure
+Talk to Our Experts
+Indoor &#038; Outdoor Real-Time Tracking Made Simple
+Improve operations with Sentrax&#8217;s Hybrid RTLS and environmental sensing system. By combining BLE Angle-of-Arrival (AoA) precision with RSSI-based coverage, the system delivers real-time tracking and environmental insights across diverse spaces—helping you increase efficiency, enhance safety, and reduce operational costs.
+Track inventory movement, monitor personnel and assets, and keep an eye on environmental conditions with ease.
+Key Benefits
+📍
+Precision Meets Coverage
+Sub-meter AoA where needed + room-level RSSI coverage across large spaces.
+🌿
+Environmental Sensing
+Monitor temperature, humidity, and air quality alongside location data.
+🛠️
+Operational Efficiency
+Reduce search times, automate workflows, and avoid costly delays.
+🗺️
+Zone-Based Accuracy
+Achieve sub-meter precision in AoA zones and maintain efficient coverage with RSSI zones.
+🧱
+Flexible Infrastructure
+Use fewer AoA locators where needed and cover large areas with affordable RSSI scanners.
+🧮
+Unified Dashboard
+Monitor all data—location, environment, alerts—through a single, real-time Solix interface.
+📈
+Cost-Efficient Deployment
+Scale tracking across facilities while keeping hardware and installation costs optimized.
+🚀
+Scalable &#038; Future-Ready
+Add, reassign, or reconfigure zones easily to support growing operational needs.
+🔵
+IoT &#038; API Ready
+Hybrid RTLS leverages BLE’s ubiquity and integrates effortlessly via REST APIs and Solix middleware.
+The Power of Hybrid RTLS
+From the Sentrax GmbH perspective, a Hybrid RTLS is a versatile, future-ready solution for industries requiring both high precision and wide coverage. By integrating AoA for sub-meter accuracy in critical zones with RSSI for large-area monitoring.
+Indoor Applications: Hospitals, smart buildings and warehouses.
+Outdoor Extensions: Loading bays, campus areas and airside airport zones.
+End-to-End Visibility: Ensuring that no asset and tool, or team member is out of sight.
+This hybrid approach simplifies complex operations, supports regulatory compliance, and maximizes ROI by using the right technology in the right zone.
+RSSI &#038; AoA Evaluation Kits
+Request RSSI Evaluation Kit
+Request AoA Evaluation Kit
+Hardware &#038; Software Included
+ZENIX LON-2
+BLE AoA locator for precision indoor tracking.
+ZENIX LEN-2
+BLE RSSI locator with POE/Wi-Fi for room-level presence detection &#038; Sensor Data.
+PINIX TOW-5
+BLE (AoA) Asset Tag with Multi-Sensors.
+PINIX TOP-5
+Smart badge tag with temperature sensing.
+SOLIX Suite
+Unified platform to configure zones, view positions, manage devices &#038; alerts.
+How Sentrax Hybrid RTLS Works
+A comprehensive real-time location system combining AoA and RSSI technologies for precise indoor positioning
+1
+Define Zones
+Configure spaces as either AoA Zones (requiring high accuracy) or RSSI Zones (requiring basic presence tracking).
+AoA &#038; RSSI Zones
+2
+Deploy Devices
+Install Zenix AoA Locators in precision-critical areas and RSSI BLE Scanners in larger coverage zones.
+ZENIX BLE AoA &#038; RSSI Scanners
+3
+Hybrid Tag Detection
+BLE tags (e.g., PINIX TOW-1, TOP-5) automatically transmit signals detectable by both locator types.
+PINIX AoA &#038; RSSI Tags
+4
+Solix Positioning Engine
+The Solix Engine calculates real-time positions using AoA and RSSI, tailored to your zone settings.
+Real-Time Processing &#038; Easy Integration
+5
+Live Visualization
+Solix Suite enables precise hybrid tag tracking with AoA and RSSI, plus easy geofences and smart alerts.
+Solix RTLS Platform + Environmental Data
+Applications &#038; Use Cases
+Hospitals &#038; Healthcare
+High-precision AoA tracking in OR/ICU
+Broad RSSI coverage in hallways and shared spaces
+Mixed-mode staff safety and compliance monitoring
+Manufacturing &#038; Warehousing
+AoA-based tracking for forklifts, loading docks, and conveyors
+RSSI coverage across warehouse areas indoor &#038; outdoor
+Comprehensive warehouse visibility with RSSI scanners
+Emergency evacuation support and automated zone transition alerts
+Transportation &#038; Airports
+High-accuracy tracking for baggage zones, restricted areas
+RSSI monitoring in terminals, lounges, and general service areas
+Hybrid indoor-outdoor coverage across terminals
+Real-time tracking of equipments, trolleys, and vehicles
+Smart Buildings &#038; Offices
+Sub-meter AoA tracking for equipment-intensive zones
+RSSI presence tracking in offices and meeting areas
+Geofencing for safety and workflow automation
+Transform Your Operations with Sentrx AoA RTLS
+Fill out the form below to request a demo, consultation, or evaluation kit.
+Talk to Our Experts
+Download Brochure
+Enquiry Form
+Name
+Email
+Phone
+Country
+Select Country Afghanistan Albania Algeria Andorra Angola Antigua & Deps Argentina Armenia Australia Austria Azerbaijan Bahamas Bahrain Bangladesh Barbados Belarus Belgium Belize Benin Bhutan Bolivia Bosnia Herzegovina Botswana Brazil Brunei Bulgaria Burkina Burundi Cambodia Cameroon Canada Cape Verde Central African Rep Chad Chile China Colombia Comoros Congo Congo {Democratic Rep} Costa Rica Croatia Cuba Cyprus Czech Republic Denmark Djibouti Dominica Dominican Republic East Timor Ecuador Egypt El Salvador Equatorial Guinea Eritrea Estonia Ethiopia Fiji Finland France Gabon Gambia Georgia Germany Ghana Greece Grenada Guatemala Guinea Guinea-Bissau Guyana Haiti Honduras Hungary Iceland India Indonesia Iran Iraq Ireland {Republic} Israel Italy Ivory Coast Jamaica Japan Jordan Kazakhstan Kenya Kiribati Korea North Korea South Kosovo Kuwait Kyrgyzstan Laos Latvia Lebanon Lesotho Liberia Libya Liechtenstein Lithuania Luxembourg Macedonia Madagascar Malawi Malaysia Maldives Mali Malta Marshall Islands Mauritania Mauritius Mexico Micronesia Moldova Monaco Mongolia Montenegro Morocco Mozambique Myanmar, {Burma} Namibia Nauru Nepal Netherlands New Zealand Nicaragua Niger Nigeria Norway Oman Pakistan Palau Panama Papua New Guinea Paraguay Peru Philippines Poland Portugal Qatar Romania Russian Federation Rwanda St Kitts & Nevis St Lucia Saint Vincent & the Grenadines Samoa San Marino Sao Tome & Principe Saudi Arabia Senegal Serbia Seychelles Sierra Leone Singapore Slovakia Slovenia Solomon Islands Somalia South Africa South Sudan Spain Sri Lanka Sudan Suriname Swaziland Sweden Switzerland Syria Taiwan Tajikistan Tanzania Thailand Togo Tonga Trinidad & Tobago Tunisia Turkey Turkmenistan Tuvalu Uganda Ukraine United Arab Emirates United Kingdom United States Uruguay Uzbekistan Vanuatu Vatican City Venezuela Vietnam Yemen Zambia Zimbabwe
+Company Name
+Industry
+Healthcare Education Smart Buildings Manufacturing Safety & Security Energy & Utilities
+How can we help?
+&#916;
+Company
+About us
+Our Partners
+Partnership Program
+Newsletters
+Blog
+Careers
+Contact us
+Explore
+Our Products
+Technology
+Applications and Usecases
+Documents
+FAQs
+Solutions
+Proximity Tracking
+BiLink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Follow Us
+Copyright 2026 by Sentrax . All rights reserved.
+Terms & Conditions
+Privacy Policy
+Refund & Return Policy
+Search
+Start typing to see products you are looking for.
+Search
+Menu
+Categories
+Home
+About us
+Newsletters
+Contact us
+Blog
+Careers
+Products Beacons &#038; Tags
+NODIX CEN-1
+PINIX TOW-5
+PINIX TOW-1
+PINIX TOK-1
+PINIX TEP-1
+PINIX TEF-1
+PINIX TOP-5
+PINIX TEN-2
+PINIX TOP-6
+PINIX TEK-1
+PINIX TOB-1
+Scanner &#038; Locators
+ZENIX LEN-2
+ZENIX LEN-1
+ZENIX LON-2
+ZENIX LEF-3
+ZENIX LOF-2
+Solix RTLS Platform &#038; API
+SOLIX RTLS &#038; IoT Management Platform
+Software
+SDM (Sentrax Device Manager)
+POSIX SDK
+Evaluation Kits
+BLE RSSI Evaluation KIT
+BLE AoA Evaluation KIT
+Technology
+Solutions Proximity Tracking
+Bilink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Applications Healthcare
+Manufacturing
+Smart City
+Partners Our Partners
+Partnership Program
+Support Documents
+Submit Ticket
+My Tickets
+FAQs
+Legal Data Protection
+Sentrax RMA
+Privacy Policy
+Terms & Conditions
+Careers
+Company About us
+Newsletters
+Whitepapers
+Blog
+Contact us
+Wishlist
+Login / Register
+Home
+Wishlist
+Login/Register
+Translate &raquo;

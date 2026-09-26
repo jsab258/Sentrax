@@ -1,0 +1,59 @@
+{
+  "model": "ZENIX LON-2",
+  "sourceUrl": "https://sentrax.com/product/zenix-lon-2/",
+  "fetchedAt": "2026-09-26T09:02:36.543Z",
+  "images": [
+    {
+      "file": "LON-2-Front.png",
+      "url": "https://sentrax.com/wp-content/uploads/2023/10/LON-2-Front.png"
+    },
+    {
+      "file": "lon-2-view2-min.png",
+      "url": "https://sentrax.com/wp-content/uploads/2023/10/lon-2-view2-min.png"
+    },
+    {
+      "file": "lon-2-view3-min.png",
+      "url": "https://sentrax.com/wp-content/uploads/2023/10/lon-2-view3-min.png"
+    },
+    {
+      "file": "lon-2-view4-min.png",
+      "url": "https://sentrax.com/wp-content/uploads/2023/10/lon-2-view4-min.png"
+    },
+    {
+      "file": "lon-2-min-2.png",
+      "url": "https://sentrax.com/wp-content/uploads/2023/10/lon-2-min-2.png"
+    },
+    {
+      "file": "LON-2-Technical-Diagram.png",
+      "url": "https://sentrax.com/wp-content/uploads/2025/12/LON-2-Technical-Diagram.png"
+    },
+    {
+      "file": "LON-2-line-diagram.png",
+      "url": "https://sentrax.com/wp-content/uploads/2025/12/LON-2-line-diagram.png"
+    }
+  ],
+  "pdfs": [
+    {
+      "file": "Zenix LON-2 Device Specifications.pdf",
+      "url": "https://sentrax.com/docs/datasheets/Zenix%20LON-2%20Device%20Specifications.pdf"
+    },
+    {
+      "file": "PINIX TOP-6 Device Specifications.pdf",
+      "url": "https://sentrax.com/docs/datasheets/PINIX%20TOP-6%20Device%20Specifications.pdf"
+    }
+  ],
+  "specLines": [
+    "NODIX CEN-1 BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon",
+    "Accessories Ceiling Mount",
+    "Dimensions 240 mm (W) x 240 mm (L) x 60 mm (H)",
+    "Weight 625g",
+    "Antenna Array Antenna",
+    "Range 5-50m**",
+    "Temperature Range 0°C to 60°C",
+    "Ceiling Mount",
+    "Mounting Screws",
+    "AoA BLE Scanner, POE, WiFi, Embedded MIPS processor, Antenna array, wall mount, indoor casing, IP40 protection."
+  ],
+  "errors": [],
+  "title": "ZENIX LON-2 - Indoor AoA BLE Locator & Gateway"
+}

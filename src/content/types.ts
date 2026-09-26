@@ -12,6 +12,8 @@ export interface Claim {
   sourceUrl: string;
   /** Set to true only after human sign-off. */
   approved: boolean;
+  /** ISO date on which the wording was checked against the live source page. */
+  verifiedAt?: string;
   /** Reviewer note: where the text came from, what still needs checking. */
   note?: string;
 }

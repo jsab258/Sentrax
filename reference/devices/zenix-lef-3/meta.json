@@ -1,0 +1,62 @@
+{
+  "model": "ZENIX LEF-3",
+  "sourceUrl": "https://sentrax.com/product/zenix-lef-3/",
+  "fetchedAt": "2026-09-26T09:02:53.018Z",
+  "images": [
+    {
+      "file": "LEF-3-View1-min.png",
+      "url": "https://sentrax.com/wp-content/uploads/2024/03/LEF-3-View1-min.png"
+    },
+    {
+      "file": "LEF-3-View2-min-1.png",
+      "url": "https://sentrax.com/wp-content/uploads/2024/03/LEF-3-View2-min-1.png"
+    },
+    {
+      "file": "LEF-3-View3-min.png",
+      "url": "https://sentrax.com/wp-content/uploads/2024/03/LEF-3-View3-min.png"
+    },
+    {
+      "file": "LEF-3-View4-min.png",
+      "url": "https://sentrax.com/wp-content/uploads/2024/03/LEF-3-View4-min.png"
+    },
+    {
+      "file": "LEF-3-min.png",
+      "url": "https://sentrax.com/wp-content/uploads/2024/03/LEF-3-min.png"
+    },
+    {
+      "file": "LEF-3-Technical-Diagram.png",
+      "url": "https://sentrax.com/wp-content/uploads/2025/12/LEF-3-Technical-Diagram.png"
+    },
+    {
+      "file": "LEF-3-line-diagram.png",
+      "url": "https://sentrax.com/wp-content/uploads/2025/12/LEF-3-line-diagram.png"
+    }
+  ],
+  "pdfs": [
+    {
+      "file": "Zenix LEF-3 Device Specification.pdf",
+      "url": "https://sentrax.com/docs/datasheets/Zenix%20LEF-3%20Device%20Specification.pdf"
+    }
+  ],
+  "specLines": [
+    "NODIX CEN-1 BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon",
+    "Outdoor BLE RSSI Gateway | IP67 Rated, GPS, LTE Enabled",
+    "Long-Range Coverage",
+    "External antennas provide extended BLE scan range (10–50 m, depending on environment).",
+    "Compact, Outdoor Mounting",
+    "Comes with a wall or pole mount system for flexible outdoor installation.",
+    "Accessories Wall/Pole Mount",
+    "Dimensions 175mm x 130mm x 45mm",
+    "Protection Class IP67",
+    "Weight 266g",
+    "Antenna Type External antenna",
+    "Antenna External Antenna",
+    "Range 10–50m**",
+    "Temperature Range 0°C to 60°C",
+    "Two External Antennas",
+    "Mounting Screws",
+    "BLE Scanner, POE, WiFi, LTE, GPS/GNSS, DC adapter, Embedded ARM processor, external antennas, LEDs, Reset button, wall mount, IP67 protected Outdoor enclosure"
+  ],
+  "errors": [],
+  "title": "ZENIX LEF-3 - Indoor BLE Locator & Gateway"
+}

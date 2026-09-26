@@ -25,7 +25,13 @@ export function App() {
     <div className="app" ref={rootRef}>
       <header className="topbar">
         {brand.logo.src ? (
-          <img className="logo" src={brand.logo.src} alt={brand.logo.alt} height={28} />
+          <img
+            className="logo"
+            src={brand.logo.src}
+            alt={brand.logo.alt}
+            width={brand.logo.width}
+            height={brand.logo.height}
+          />
         ) : (
           <span className="wordmark">{ui.brandName}</span>
         )}

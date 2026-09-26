@@ -1,0 +1,276 @@
+Source: https://sentrax.com/product/zenix-lon-2/
+
+ZENIX LON-2 - Indoor AoA BLE Locator & Gateway
+Skip to navigation
+Skip to main content
+Call: +41 41 505 0065
+Wishlist
+Blog
+Contact us
+Login/Register
+USD
+USD
+EUR
+CHF
+Book an Appointment
+Products Scanners/Locators
+NODIX CEN-1 BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon
+ZENIX LEN-2 BLE (RSSI) Indoor Gateway for Proximity Positioning + Environmental Sensing
+ZENIX LEN-1 BLE (RSSI) Indoor Gateway for Proximity Positioning
+ZENIX LEF-3 BLE (RSSI) Outdoor Gateway for Proximity Positioning with Wi-Fi, LTE Connectivity & GPS
+ZENIX LON-2 BLE (AoA) Indoor Scanner for Precise Submeter Location Tracking.
+ZENIX LOF-2 BLE (AoA) Outdoor Scanner for Precise Sub-Meter Location Tracking.
+Beacons/Tags
+PINIX TEN-2 Indoor Anchor BLE Beacon Tag with Temperature Sensor
+PINIX TOW-5 BLE (AoA) Asset Tag with Multi-Sensors
+PINIX TOW-1 Hybrid BLE (AoA) & (RSSI) Asset Tag
+PINIX TOK-1 Smart Badge BLE (AoA) Tag with Temperature Sensor
+PINIX TOP-5 Smart Badge BLE Tag with Temperature Sensor
+PINIX TOP-6 BLE AoA Smart Badge with RFID for Indoor Positioning & Workforce Safety
+PINIX TEK-1 BLE Lanyard Beacon Tag
+PINIX TOB-1 BLE AoA Wearable Beacon Tag with SoS Button and Accelerometer
+PINIX TEF-1 Outdoor Anchor BLE Beacon Tag with Temperature Sensors
+Solix RTLS Platform &#038; API
+SOLIX RTLS &#038; IoT Management Platform Real-time tracking & analytics, on-premise, or cloud for flexible deployments
+SOLIX RTLS Integration SDK Enable seamless integration with real-time location data via APIs, middleware, and iFrame support
+Software
+POSIX SDK Enables indoor positioning for smartphone applications
+SDM (Sentrax Device Manager) Simplifies BLE beacon tag configuration and management on Android & iOS.
+Evaluation Kit
+BLE RSSI Evaluation KIT BLE (RSSI) Evaluation Kit for real-time proximity positioning and tracking of nearby assets and persons
+BLE AoA Evaluation KIT BLE (AoA) Evaluation Kit for precise real-time positioning and tracking of assets and persons
+Technology
+Solutions Proximity Tracking
+BiLink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Applications Healthcare
+Manufacturing
+Smart City
+Partners Our Partners
+Partnership Program
+Support Documents
+Hardware
+Software
+Solutions
+Evaluation Kit
+Integration Guides
+FAQs
+My Tickets
+Company About us
+Newsletters
+Whitepapers
+Blog
+Contact us
+ZENIX LON-2
+Click to enlarge
+Home
+/
+Locators/Scanners
+/
+ZENIX LON-2
+PINIX TOW-1
+Login to see prices
+Back to products
+ZENIX LEN-2
+Login to see prices
+ZENIX LON-2
+Login to see prices
+Indoor AoA BLE Locator & Gateway | WiFi, PoE, and External Power Supply
+Add to wishlist
+Compare
+SKU:
+101-01-01-008-01
+Category: Locators/Scanners
+Share:
+Description
+Shipping & Delivery
+What is ZENIX LON-2
+The ZENIX LON-2 is a high-precision indoor BLE (Bluetooth Low Energy) locator and gateway, built for advanced Real-Time Location Systems (RTLS) in smart buildings, healthcare, industrial, and asset-tracking environments. Leveraging Angle of Arrival (AoA) technology, it delivers sub-meter accuracy in positioning nearby tags. With its embedded processor running Sentrax’s firmware and flexible connectivity via PoE and optional Wi-Fi, the LON-2 reliably captures real-time angle and sensor data from Beacon/Tag devices. Its durable design supports easy mounting on ceilings or walls, forming the cornerstone of a highly accurate location-tracking infrastructure.
+It supports advanced capabilities such as Sub-Meter Level BLE Tag Tracking , Asset Tracking , People Tracking , BLE Tags Health Check Monitoring
+Key Features &#038; Benefits
+🅱️
+Sub-Meter Location Accuracy
+Delivers highly accurate indoor positioning, typically within 0.2–0.5 meters.
+📍
+Beacon / Tag PDU Extraction
+Captures and decodes BLE PDU data for telemetry, identification, and sensor insights.
+⚙️
+Remote Tag Configuration &#038; Updates
+Enables remote setup and firmware updates of connected tags for easier device management.
+🎯
+AoA Filtering Configuration
+Supports adjustable moving-average filtering to stabilize and refine angle measurements.
+How It Works?
+The ZENIX LON-2 is an AoA-enabled Indoor Locator Gateway that delivers sub-meter real-time positioning for assets and personnel, providing high-precision tracking for healthcare, smart buildings, industrial environments, and advanced RTLS deployments.
+Mechanical Diagram
+Technical Specifications
+Download Datasheet
+ENCLOSURE
+Material ABS UL94V-0
+Type BLE 5.1 AoA Scanner
+Accessories Ceiling Mount
+Color Off-White
+Dimensions 240 mm (W) x 240 mm (L) x 60 mm (H)
+Protection Class IP40
+Weight 625g
+ENVIRONMENT
+Frequency 2.4GHz
+SENSING
+Protocol BLE 5.1
+Rx-Sensitivity -103 dBm
+Antenna Array Antenna
+Range 5-50m**
+OPERATING ENVIRONMENT
+Temperature Range 0°C to 60°C
+Operating Humidity 90%
+FEATURES
+AoA filtering (Sentrax’s Proprietary Algorithm)
+Beacon Above/Below detection
+Beacon PDU Extraction
+Remote tag devices configuration &#038; update
+* Can be configured to send data on local/clients MQTT broker
+**Distance depends heavily on the local deployment environment and the height of the ceiling.
+SOFTWARE CONNECTIVITY
+Sentrax’s Solix Platform, MQTT*
+HARDWARE CONNECTIVITY
+Supply Rating 24 Watts (12 V)
+Communication
+RJ45 – Ethernet (POE)
+WIFI – 2.4GHz b/g/n
+Power Options
+RJ45 – POE 802.3at
+DC Adapter – 12 V/2A
+SENSORS AND INTERFACES
+Azimuth Angle 0 – 359 deg (± 5 deg)
+Elevation Angle 0 – 90 deg (± 5 deg)
+Temperature 0 – 65°C
+Button 1 user reset button
+LED 2 Red LEDs and 2 Green LEDs
+ACCESSORIES
+DC 12V/2A Adapter
+POE Communication Cable
+Ceiling Mount
+Mounting Screws
+Configuration Portal
+The ZENIX Configuration Portal is embedded web page for configuration and device settings management. With the help of this portal customers can check the status of the device, change its parameters, backup and restore it’s configuration/settings and upgrade firmware.
+Applications &#038; Use Cases
+Industry-Specific Use Cases of ZENIX LON-2 (Indoor Locator and Gateway)
+❤️
+Healthcare
+Enables sub-meter AoA tracking of patients, staff, and medical assets in critical zones, offers stable BLE coverage for hospital corridors and wards, and supports real-time safety alerts through precise position updates.
+🏢
+Smart Buildings
+Provides accurate AoA-based indoor positioning for high-density areas, BLE-based presence detection for offices and meeting rooms, and enhances building automation with real-time occupancy and movement insights.
+📦
+Warehouse &#038; Logistics
+Delivers precise AoA tracking for forklifts, pallets, and high-value tools, ensures wide-area BLE signal coverage across aisles and docks, and supports automated alerts for unauthorized movements or safety-critical events.
+ZENIX LON-2
+AoA BLE Scanner, POE, WiFi, Embedded MIPS processor, Antenna array, wall mount, indoor casing, IP40 protection.
+Talk to Our Experts
+Download Device Specifications
+Enquiry Form
+Name
+Email
+Phone
+Country
+Select Country Afghanistan Albania Algeria Andorra Angola Antigua & Deps Argentina Armenia Australia Austria Azerbaijan Bahamas Bahrain Bangladesh Barbados Belarus Belgium Belize Benin Bhutan Bolivia Bosnia Herzegovina Botswana Brazil Brunei Bulgaria Burkina Burundi Cambodia Cameroon Canada Cape Verde Central African Rep Chad Chile China Colombia Comoros Congo Congo {Democratic Rep} Costa Rica Croatia Cuba Cyprus Czech Republic Denmark Djibouti Dominica Dominican Republic East Timor Ecuador Egypt El Salvador Equatorial Guinea Eritrea Estonia Ethiopia Fiji Finland France Gabon Gambia Georgia Germany Ghana Greece Grenada Guatemala Guinea Guinea-Bissau Guyana Haiti Honduras Hungary Iceland India Indonesia Iran Iraq Ireland {Republic} Israel Italy Ivory Coast Jamaica Japan Jordan Kazakhstan Kenya Kiribati Korea North Korea South Kosovo Kuwait Kyrgyzstan Laos Latvia Lebanon Lesotho Liberia Libya Liechtenstein Lithuania Luxembourg Macedonia Madagascar Malawi Malaysia Maldives Mali Malta Marshall Islands Mauritania Mauritius Mexico Micronesia Moldova Monaco Mongolia Montenegro Morocco Mozambique Myanmar, {Burma} Namibia Nauru Nepal Netherlands New Zealand Nicaragua Niger Nigeria Norway Oman Pakistan Palau Panama Papua New Guinea Paraguay Peru Philippines Poland Portugal Qatar Romania Russian Federation Rwanda St Kitts & Nevis St Lucia Saint Vincent & the Grenadines Samoa San Marino Sao Tome & Principe Saudi Arabia Senegal Serbia Seychelles Sierra Leone Singapore Slovakia Slovenia Solomon Islands Somalia South Africa South Sudan Spain Sri Lanka Sudan Suriname Swaziland Sweden Switzerland Syria Taiwan Tajikistan Tanzania Thailand Togo Tonga Trinidad & Tobago Tunisia Turkey Turkmenistan Tuvalu Uganda Ukraine United Arab Emirates United Kingdom United States Uruguay Uzbekistan Vanuatu Vatican City Venezuela Vietnam Yemen Zambia Zimbabwe
+Company Name
+Industry
+Healthcare Education Smart Buildings Manufacturing Safety & Security Energy & Utilities
+How can we help?
+&#916;
+Company
+About us
+Our Partners
+Partnership Program
+Newsletters
+Blog
+Careers
+Contact us
+Explore
+Our Products
+Technology
+Applications and Usecases
+Documents
+FAQs
+Solutions
+Proximity Tracking
+BiLink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Follow Us
+Copyright 2026 by Sentrax . All rights reserved.
+Terms & Conditions
+Privacy Policy
+Refund & Return Policy
+Search
+Start typing to see products you are looking for.
+Search
+Menu
+Categories
+Home
+About us
+Newsletters
+Contact us
+Blog
+Careers
+Products Beacons &#038; Tags
+NODIX CEN-1
+PINIX TOW-5
+PINIX TOW-1
+PINIX TOK-1
+PINIX TEP-1
+PINIX TEF-1
+PINIX TOP-5
+PINIX TEN-2
+PINIX TOP-6
+PINIX TEK-1
+PINIX TOB-1
+Scanner &#038; Locators
+ZENIX LEN-2
+ZENIX LEN-1
+ZENIX LON-2
+ZENIX LEF-3
+ZENIX LOF-2
+Solix RTLS Platform &#038; API
+SOLIX RTLS &#038; IoT Management Platform
+Software
+SDM (Sentrax Device Manager)
+POSIX SDK
+Evaluation Kits
+BLE RSSI Evaluation KIT
+BLE AoA Evaluation KIT
+Technology
+Solutions Proximity Tracking
+Bilink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Applications Healthcare
+Manufacturing
+Smart City
+Partners Our Partners
+Partnership Program
+Support Documents
+Submit Ticket
+My Tickets
+FAQs
+Legal Data Protection
+Sentrax RMA
+Privacy Policy
+Terms & Conditions
+Careers
+Company About us
+Newsletters
+Whitepapers
+Blog
+Contact us
+Wishlist
+Login / Register
+Home
+Wishlist
+Login/Register
+Translate &raquo;

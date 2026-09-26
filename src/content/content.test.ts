@@ -38,6 +38,15 @@ describe('claims policy (SPEC section 3)', () => {
     }
   });
 
+  it('never uses the site percentage claims', () => {
+    for (const c of allClaims())
+      expect(c.text, c.id).not.toMatch(/(60|70|100) ?(%|percent)|half the infrastructure/i);
+  });
+
+  it('marks every claim as verified against the live site', () => {
+    for (const c of allClaims()) expect(c.verifiedAt, c.id).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+
   it('uses only the allowed accuracy figures', () => {
     expect(claims.rssiAccuracy.text).toBe('3 to 5 m');
     expect(claims.aoaAccuracy.text).toBe('sub-meter');

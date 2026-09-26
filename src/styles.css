@@ -33,7 +33,7 @@ a {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-accent);
+  outline: 3px solid var(--color-secondary);
   outline-offset: 2px;
 }
 
@@ -64,6 +64,12 @@ a {
   border-bottom: 1px solid var(--color-border);
 }
 
+.logo {
+  display: block;
+  height: 32px;
+  width: auto;
+}
+
 .wordmark {
   font-family: var(--font-heading);
   font-weight: 700;
@@ -87,9 +93,9 @@ a {
   justify-content: center;
   min-height: 40px;
   padding: 8px 18px;
-  border-radius: 6px;
+  border-radius: var(--radius-button);
   font-family: var(--font-body);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 15px;
   text-decoration: none;
   white-space: nowrap;

@@ -1,0 +1,66 @@
+{
+  "model": "ZENIX LEN-2",
+  "sourceUrl": "https://sentrax.com/product/zenix-len-2/",
+  "fetchedAt": "2026-09-26T09:02:15.878Z",
+  "images": [
+    {
+      "file": "LEN-2-Front.png",
+      "url": "https://sentrax.com/wp-content/uploads/2023/10/LEN-2-Front.png"
+    },
+    {
+      "file": "Len-2-Wall-2-min-1.png",
+      "url": "https://sentrax.com/wp-content/uploads/2023/10/Len-2-Wall-2-min-1.png"
+    },
+    {
+      "file": "Len-2-Ceiling-1-min-1.png",
+      "url": "https://sentrax.com/wp-content/uploads/2023/10/Len-2-Ceiling-1-min-1.png"
+    },
+    {
+      "file": "Len-2_View-4-min-1.png",
+      "url": "https://sentrax.com/wp-content/uploads/2023/10/Len-2_View-4-min-1.png"
+    },
+    {
+      "file": "Len-2-LineDiagramFill-min-1.png",
+      "url": "https://sentrax.com/wp-content/uploads/2023/10/Len-2-LineDiagramFill-min-1.png"
+    },
+    {
+      "file": "ZENIX-LEN-2-min-2.PNG",
+      "url": "https://sentrax.com/wp-content/uploads/2023/10/ZENIX-LEN-2-min-2.PNG"
+    },
+    {
+      "file": "LEN-2-Technical-Diagram.png",
+      "url": "https://sentrax.com/wp-content/uploads/2025/12/LEN-2-Technical-Diagram.png"
+    },
+    {
+      "file": "LEN-2-line-diagram.png",
+      "url": "https://sentrax.com/wp-content/uploads/2025/12/LEN-2-line-diagram.png"
+    }
+  ],
+  "pdfs": [
+    {
+      "file": "Zenix LEN-2 Device Specification.pdf",
+      "url": "https://sentrax.com/docs/datasheets/Zenix%20LEN-2%20Device%20Specification.pdf"
+    }
+  ],
+  "specLines": [
+    "NODIX CEN-1 BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon",
+    "Accessories Wall/Ceiling Mount*****",
+    "Dimensions 125 mm x 125 mm x 29 mm",
+    "Weight 166g",
+    "Antenna Type Internal",
+    "Internal Antenna",
+    "External Antenna (Optional)",
+    "Antenna",
+    "External Antenna (Optional)",
+    "Range 10-50m**",
+    "Temperature Range 0°C to 60°C",
+    "**** Ceiling mount brackets can also be provided on customer requirements",
+    "Wall/Ceiling Mount",
+    "Mounting Screw",
+    "BLE 5.1 Scanner, POE, WiFi, DC adapter, Embedded ARM processor, Temperature-, humidity-, pressure sensors, light sensor, PIR motion sensor, optional external antenna, LEDs, Reset button, wall mount, indoor casing, IP54 protection."
+  ],
+  "errors": [
+    "https://sentrax.com/wp-content/uploads/2023/10/ZENIX-LEN-2-min-2.png: 404 https://sentrax.com/wp-content/uploads/2023/10/ZENIX-LEN-2-min-2.png"
+  ],
+  "title": "ZENIX LEN-2 - Precision Indoor BLE Locator & Gateway"
+}

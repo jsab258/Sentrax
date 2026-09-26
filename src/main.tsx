@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import { applyBrandTokens } from './brand/brand';
+import './brand/fonts';
 import './styles.css';
 
 applyBrandTokens(document.documentElement);

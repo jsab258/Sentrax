@@ -1,0 +1,43 @@
+{
+  "model": "NODIX CEN-1",
+  "sourceUrl": "https://sentrax.com/product/nodix-cen-1/",
+  "fetchedAt": "2026-09-26T09:01:50.313Z",
+  "images": [
+    {
+      "file": "NODIX-CEN-1a-2.png",
+      "url": "https://sentrax.com/wp-content/uploads/2026/04/NODIX-CEN-1a-2.png"
+    },
+    {
+      "file": "NODIX-CEN-1b-1.png",
+      "url": "https://sentrax.com/wp-content/uploads/2026/04/NODIX-CEN-1b-1.png"
+    },
+    {
+      "file": "NODIX-CEN-1-line-diagram.png",
+      "url": "https://sentrax.com/wp-content/uploads/2026/04/NODIX-CEN-1-line-diagram.png"
+    }
+  ],
+  "pdfs": [
+    {
+      "file": "NODIX CEN-1 Device Specification.pdf",
+      "url": "https://sentrax.com/docs/datasheets/NODIX%20CEN-1%20Device%20Specification.pdf"
+    }
+  ],
+  "specLines": [
+    "NODIX CEN-1 BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon",
+    "BiLink BLE Relay Anchor - Battery Operated Scanner and Beacon",
+    "Rapid Scalability: Deploy room-level tracking in minutes, not days, with a zero-cable mounting process.",
+    "Replaceable high-capacity battery for extended operation",
+    "Antenna Type PCB antenna, Omni Directional",
+    "Accessories Double sided tape, Mounting Screw",
+    "Dimensions 70.95 mm (Dia) x 26.20 mm (H)",
+    "Weight 72g",
+    "* Battery life is estimated when sBeacon and iBeacon are enabled only.",
+    "BATTERY",
+    "Battery Type ER14505 x 2, 4800mAh, Replaceable",
+    "Battery Life:",
+    "Temperature Range -20°C to 70°C",
+    "beacons. You can discover nearby beacons, check their battery"
+  ],
+  "errors": [],
+  "title": "NODIX CEN-1 - Sentrax"
+}

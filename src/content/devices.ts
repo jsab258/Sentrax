@@ -1,17 +1,19 @@
 import type { Claim } from './types';
-import { PLACEHOLDER_PREFIX } from './types';
 
 /**
  * Sentrax device catalogue used by product cards, the device reference sheet and (from M2) the 3D models.
  *
- * Status at M0: sentrax.com is blocked by the build environment's network policy, so product pages,
- * photos and datasheets could not be read directly. Descriptions below come from web search snippets of
- * the product pages and are therefore unapproved. Physical dimensions are unknown and left null on purpose.
+ * Verified on 2026-09-26 against the live product pages and the official datasheets
+ * (reference/devices/<model>/). Descriptions are the product descriptors from the sentrax.com main menu,
+ * verbatim. Physical data comes from the datasheets. See docs/device-reference.md for sources.
  */
 
 export type DeviceFamily = 'NODIX' | 'ZENIX' | 'PINIX';
 export type DeviceKind = 'anchor' | 'gateway' | 'locator' | 'tag' | 'badge' | 'wearable';
 export type Technology = 'rssi' | 'aoa' | 'bilink';
+
+export type DeviceSize =
+  { shape: 'box'; w: number; d: number; h: number } | { shape: 'round'; diameter: number; h: number };
 
 export interface DeviceSpec {
   model: string;
@@ -20,17 +22,25 @@ export interface DeviceSpec {
   /** Positioning methods this device takes part in within the demo scenes (not a product capability list). */
   technologies: Technology[];
   productUrl: string;
-  /** One-line description from the product page. */
+  datasheetUrl: string;
+  /** One-line description from the site (main menu product descriptor). */
   description: Claim;
-  /** Outer dimensions in millimetres (width, height, depth). Null until read from a datasheet. */
-  dimensionsMm: { w: number; h: number; d: number } | null;
-  /** Unverified facts seen in search snippets, kept for the reference sheet only. Never shown in the UI. */
-  unverifiedNotes: string[];
+  /** Outer dimensions in millimetres, from the datasheet. Used to build true-to-scale models. */
+  sizeMm: DeviceSize;
+  weightG: number;
+  /** Housing color as named in the datasheet. */
+  color: string;
+  ipRating: string | null;
+  mounting: string;
+  /** Where the Sentrax logo or other markings appear on the real device (from product photos). */
+  markings: string;
   /** Role text per scene, shown on the product card. */
   roles: Partial<Record<'hospital' | 'warehouse', string>>;
 }
 
-const unverified = 'From a web search snippet of the product page. Verify wording on the live page.';
+const verifiedAt = '2026-09-26';
+const menuNote = 'Main menu product descriptor on sentrax.com, verbatim. Verified on the live site.';
+const datasheet = (file: string) => `https://sentrax.com/docs/datasheets/${encodeURIComponent(file)}.pdf`;
 
 export const devices = {
   'NODIX CEN-1': {
@@ -39,18 +49,21 @@ export const devices = {
     kind: 'anchor',
     technologies: ['bilink'],
     productUrl: 'https://sentrax.com/product/nodix-cen-1/',
+    datasheetUrl: datasheet('NODIX CEN-1 Device Specification'),
     description: {
       id: 'device.cen1.description',
-      text: 'Bi-directional BLE anchor relay that delivers reliable room-level visibility in complex indoor environments.',
+      text: 'BiLink BLE Relay Anchor - Battery Operated Scanner and Beacon',
       sourceUrl: 'https://sentrax.com/product/nodix-cen-1/',
       approved: false,
-      note: unverified,
+      verifiedAt,
+      note: menuNote,
     },
-    dimensionsMm: null,
-    unverifiedNotes: [
-      'Battery powered, replaceable high-capacity battery.',
-      'Scans its room, bundles tag data with its Room ID and relays wirelessly to the nearest ZENIX hallway gateway.',
-    ],
+    sizeMm: { shape: 'round', diameter: 70.95, h: 26.2 },
+    weightG: 72,
+    color: 'White',
+    ipRating: 'IP54',
+    mounting: 'Double-sided tape or mounting screw',
+    markings: 'Grey embossed BiLink symbol on top; small oval LED window on the side. No wordmark visible.',
     roles: {
       hospital:
         'Room anchor: scans tags in its room, validates presence and relays verified room events to a corridor gateway.',
@@ -63,15 +76,22 @@ export const devices = {
     kind: 'gateway',
     technologies: ['rssi', 'bilink'],
     productUrl: 'https://sentrax.com/product/zenix-len-1/',
+    datasheetUrl: datasheet('Zenix LEN-1 Device Specification'),
     description: {
       id: 'device.len1.description',
-      text: 'Indoor BLE scanner and locator gateway with PoE and Wi-Fi interfaces and a wall mount system.',
+      text: 'BLE (RSSI) Indoor Gateway for Proximity Positioning',
       sourceUrl: 'https://sentrax.com/product/zenix-len-1/',
       approved: false,
-      note: unverified,
+      verifiedAt,
+      note: menuNote,
     },
-    dimensionsMm: null,
-    unverifiedNotes: ['PoE and Wi-Fi.', 'Wall mount.'],
+    sizeMm: { shape: 'box', w: 125, d: 125, h: 29 },
+    weightG: 166,
+    color: 'Off-white',
+    ipRating: null,
+    mounting: 'Wall or ceiling mount',
+    markings:
+      'Light grey "sentrax" wordmark on the top face, near one corner. Front panel: PoE port, 12 V DC jack, power and status LEDs, "ZENIX LEN-1" label. One white rod antenna on top (optional external antenna).',
     roles: {
       hospital: 'Corridor gateway: receives BiLink relays from the room anchors and forwards them to SOLIX.',
     },
@@ -82,15 +102,22 @@ export const devices = {
     kind: 'gateway',
     technologies: ['rssi'],
     productUrl: 'https://sentrax.com/product/zenix-len-2/',
+    datasheetUrl: datasheet('Zenix LEN-2 Device Specification'),
     description: {
       id: 'device.len2.description',
-      text: 'Indoor BLE locator and gateway with climatic and air quality monitoring.',
+      text: 'BLE (RSSI) Indoor Gateway for Proximity Positioning + Environmental Sensing',
       sourceUrl: 'https://sentrax.com/product/zenix-len-2/',
       approved: false,
-      note: unverified,
+      verifiedAt,
+      note: menuNote,
     },
-    dimensionsMm: null,
-    unverifiedNotes: ['PoE and Wi-Fi.', 'FAQ snippet: range 50 m in open area, depends on installation.'],
+    sizeMm: { shape: 'box', w: 125, d: 125, h: 29 },
+    weightG: 166,
+    color: 'Off-white',
+    ipRating: 'IP54',
+    mounting: 'Wall or ceiling mount',
+    markings:
+      'Same housing as LEN-1 with a black PIR dome in the centre of the top face and two vent slots on the front. "sentrax" wordmark on top near one corner; "ZENIX LEN-2" on the front panel. One white rod antenna.',
     roles: {
       hospital: 'Environmental sensing in the medication room.',
       warehouse: 'General BLE coverage and hall climate monitoring.',
@@ -102,15 +129,22 @@ export const devices = {
     kind: 'locator',
     technologies: ['aoa'],
     productUrl: 'https://sentrax.com/product/zenix-lon-2/',
+    datasheetUrl: datasheet('Zenix LON-2 Device Specifications'),
     description: {
       id: 'device.lon2.description',
-      text: 'Indoor BLE Angle of Arrival locator and gateway for sub-meter positioning, with PoE and optional Wi-Fi.',
+      text: 'BLE (AoA) Indoor Scanner for Precise Submeter Location Tracking',
       sourceUrl: 'https://sentrax.com/product/zenix-lon-2/',
       approved: false,
-      note: unverified,
+      verifiedAt,
+      note: `${menuNote} Trailing period dropped.`,
     },
-    dimensionsMm: null,
-    unverifiedNotes: ['Antenna array for AoA.', 'PoE, optional Wi-Fi.'],
+    sizeMm: { shape: 'box', w: 240, d: 240, h: 60 },
+    weightG: 950,
+    color: 'Off-white',
+    ipRating: 'IP40',
+    mounting: 'Ceiling mount',
+    markings:
+      '"sentrax" wordmark on the top face near one corner. Front panel: USB, PoE port, 12 V DC jack, status and power LEDs, reset, "ZENIX LON-2" label. No external antennas (internal array).',
     roles: {
       hospital: 'AoA locators over the ICU for bed-bay-level positioning in the hybrid setup.',
       warehouse: 'Ceiling grid over racking and production for rack-slot and station-level positioning.',
@@ -122,15 +156,22 @@ export const devices = {
     kind: 'gateway',
     technologies: ['rssi'],
     productUrl: 'https://sentrax.com/product/zenix-lef-3/',
+    datasheetUrl: datasheet('Zenix LEF-3 Device Specification'),
     description: {
       id: 'device.lef3.description',
-      text: 'Outdoor BLE RSSI locator and gateway with LTE, GPS and an IP67 enclosure.',
+      text: 'BLE (RSSI) Outdoor Gateway for Proximity Positioning with Wi-Fi, LTE Connectivity & GPS',
       sourceUrl: 'https://sentrax.com/product/zenix-lef-3/',
       approved: false,
-      note: unverified,
+      verifiedAt,
+      note: menuNote,
     },
-    dimensionsMm: null,
-    unverifiedNotes: ['IP67 outdoor enclosure.', 'External antennas.', 'PoE, Wi-Fi, LTE, GPS/GNSS.'],
+    sizeMm: { shape: 'box', w: 175, d: 130, h: 45 },
+    weightG: 266,
+    color: 'Off-white',
+    ipRating: 'IP67',
+    mounting: 'Wall or pole mount',
+    markings:
+      'Two white rod antennas on the left and right sides. Front: sealed cable glands, a round button, LEDs and a "ZENIX LEF-3" label. Small wordmark on the top edge.',
     roles: {
       warehouse:
         'Outdoor gateway on a yard pole: keeps trailers and yard assets visible after they leave the hall.',
@@ -142,15 +183,22 @@ export const devices = {
     kind: 'tag',
     technologies: ['rssi', 'aoa', 'bilink'],
     productUrl: 'https://sentrax.com/product/pinix-tow-1/',
+    datasheetUrl: datasheet('PINIX TOW-1 Device Specifications'),
     description: {
       id: 'device.tow1.description',
-      text: 'Hybrid BLE RSSI and AoA asset tag with accelerometer.',
+      text: 'Hybrid BLE (AoA) & (RSSI) Asset Tag',
       sourceUrl: 'https://sentrax.com/product/pinix-tow-1/',
       approved: false,
-      note: unverified,
+      verifiedAt,
+      note: menuNote,
     },
-    dimensionsMm: null,
-    unverifiedNotes: ['Accelerometer.'],
+    sizeMm: { shape: 'box', w: 51, d: 51, h: 20 },
+    weightG: 45,
+    color: 'Beige (datasheet); photos show off-white',
+    ipRating: 'IP65',
+    mounting: 'Double-sided tape or mounting screw (two flanges with screw holes)',
+    markings:
+      'Square housing with two mounting flanges. Light grey circular area on top. "sentrax" wordmark and "PINIX TOW-1" printed on one side face.',
     roles: {
       hospital: 'Asset tag on infusion pumps, ventilators, wheelchairs, the crash cart and mobile monitors.',
       warehouse: 'Asset tag on pallets, WIP carriers and forklifts.',
@@ -160,17 +208,23 @@ export const devices = {
     model: 'PINIX TOW-5',
     family: 'PINIX',
     kind: 'tag',
-    technologies: ['aoa'],
+    technologies: ['aoa', 'rssi', 'bilink'],
     productUrl: 'https://sentrax.com/product/pinix-tow-5/',
+    datasheetUrl: datasheet('PINIX TOW-5 Device Specifications'),
     description: {
       id: 'device.tow5.description',
-      text: 'BLE AoA asset tag with temperature, humidity and pressure sensing.',
+      text: 'BLE (AoA) Asset Tag with Multi-Sensors',
       sourceUrl: 'https://sentrax.com/product/pinix-tow-5/',
       approved: false,
-      note: unverified,
+      verifiedAt,
+      note: menuNote,
     },
-    dimensionsMm: null,
-    unverifiedNotes: ['Temperature, humidity and pressure sensors.'],
+    sizeMm: { shape: 'box', w: 51, d: 51, h: 20 },
+    weightG: 45,
+    color: 'Beige (datasheet); photos show off-white',
+    ipRating: 'IP65',
+    mounting: 'Double-sided tape or mounting screw (two flanges with screw holes)',
+    markings: 'Same housing as TOW-1. "sentrax" wordmark and "PINIX TOW-5" printed on one side face.',
     roles: {
       hospital: 'Multi-sensor tag on the medication fridge for cold chain monitoring.',
       warehouse: 'Multi-sensor tag on cold pallets to track temperature during transfer.',
@@ -182,15 +236,22 @@ export const devices = {
     kind: 'badge',
     technologies: ['aoa', 'rssi', 'bilink'],
     productUrl: 'https://sentrax.com/product/pinix-tok-1/',
+    datasheetUrl: datasheet('PINIX TOK-1 Device Specifications'),
     description: {
       id: 'device.tok1.description',
-      text: 'Smart badge BLE AoA tag with motion and temperature sensing, a user button and LED indicators.',
+      text: 'Smart Badge BLE (AoA) Tag with Temperature Sensor',
       sourceUrl: 'https://sentrax.com/product/pinix-tok-1/',
       approved: false,
-      note: unverified,
+      verifiedAt,
+      note: menuNote,
     },
-    dimensionsMm: null,
-    unverifiedNotes: ['IP65.', 'Replaceable 800 mAh lithium battery, 4 to 6 months.', 'User button, LEDs.'],
+    sizeMm: { shape: 'box', w: 38.6, d: 8.4, h: 55.3 },
+    weightG: 12,
+    color: 'White',
+    ipRating: 'IP65',
+    mounting: 'Lanyard or key ring through the top loop',
+    markings:
+      'Rounded rectangle with a lanyard loop at the top and a QR code on the front. No wordmark visible.',
     roles: {
       hospital: 'Staff badge for nurses, the BioMed technician and the porter.',
     },
@@ -199,20 +260,27 @@ export const devices = {
     model: 'PINIX TOB-1',
     family: 'PINIX',
     kind: 'wearable',
-    technologies: ['rssi', 'bilink'],
+    technologies: ['aoa', 'rssi', 'bilink'],
     productUrl: 'https://sentrax.com/product/pinix-tob-1/',
+    datasheetUrl: datasheet('PINIX TOB-1 Device Specification'),
     description: {
       id: 'device.tob1.description',
-      text: `${PLACEHOLDER_PREFIX} Wearable with SOS button. Product description not yet verified.`,
+      text: 'BLE AoA Wearable Beacon Tag with SoS Button and Accelerometer',
       sourceUrl: 'https://sentrax.com/product/pinix-tob-1/',
       approved: false,
-      note: 'Search snippets conflict: some describe TOB-1 as a battery-operated BiLink relay anchor, and PINIX TEP-1 as the wearable with optional SOS. Needs confirmation from Sentrax.',
+      verifiedAt,
+      note: menuNote,
     },
-    dimensionsMm: null,
-    unverifiedNotes: ['Conflicting search snippets. See description note.'],
+    sizeMm: { shape: 'round', diameter: 36, h: 11 },
+    weightG: 12,
+    color: 'White',
+    ipRating: 'IP67',
+    mounting: 'Detachable wristband strap',
+    markings:
+      'Round white puck with a raised centre (SOS button) on a white perforated wristband. No wordmark visible.',
     roles: {
-      hospital: 'Wearable with SOS button for staff call for help.',
-      warehouse: 'Worker tag for zone safety and muster counts.',
+      hospital: 'Staff wearable with SOS button for calling for help.',
+      warehouse: 'Worker wearable for duress alerts, zone safety and muster counts.',
     },
   },
 } as const satisfies Record<string, DeviceSpec>;

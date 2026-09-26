@@ -1,0 +1,47 @@
+{
+  "model": "PINIX TOB-1",
+  "sourceUrl": "https://sentrax.com/product/pinix-tob-1/",
+  "fetchedAt": "2026-09-26T09:03:48.542Z",
+  "images": [
+    {
+      "file": "PINIX-TOB-1-1.png",
+      "url": "https://sentrax.com/wp-content/uploads/2026/06/PINIX-TOB-1-1.png"
+    },
+    {
+      "file": "PINIX-TOB-1-2.png",
+      "url": "https://sentrax.com/wp-content/uploads/2026/06/PINIX-TOB-1-2.png"
+    },
+    {
+      "file": "TOB-1-Technical-Diagram-1.png",
+      "url": "https://sentrax.com/wp-content/uploads/2026/07/TOB-1-Technical-Diagram-1.png"
+    },
+    {
+      "file": "TOB-1-line-diagram.png",
+      "url": "https://sentrax.com/wp-content/uploads/2026/07/TOB-1-line-diagram.png"
+    }
+  ],
+  "pdfs": [
+    {
+      "file": "PINIX TOB-1 Device Specification.pdf",
+      "url": "https://sentrax.com/docs/datasheets/PINIX%20TOB-1%20Device%20Specification.pdf"
+    }
+  ],
+  "specLines": [
+    "NODIX CEN-1 BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon",
+    "CR2032 Battery Replaceable",
+    "Equipped with a replaceable 220mAh coin-cell battery for continuous operation and easy battery replacement.",
+    "IP67 Rugged Wearable Design",
+    "Combines an IP67-rated enclosure and integrated accelerometer for dependable performance in demanding working environments.",
+    "Dimensions D36×11mm",
+    "Protection Class IP67",
+    "Weight 12g",
+    "Antenna Type PCB antenna, Omni-Directional",
+    "BATTERY",
+    "Battery Type",
+    "Battery Life:",
+    "(Advertisement Rate) (Battery Life)",
+    "Temperature Range -20°C to +60°C"
+  ],
+  "errors": [],
+  "title": "PINIX TOB-1 - Smart Badge BLE AoA Tag with Multi-Sensors"
+}

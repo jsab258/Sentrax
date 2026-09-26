@@ -1,0 +1,287 @@
+Source: https://sentrax.com/product/nodix-cen-1/
+
+NODIX CEN-1 - Sentrax
+Skip to navigation
+Skip to main content
+Call: +41 41 505 0065
+Wishlist
+Blog
+Contact us
+Login/Register
+USD
+USD
+EUR
+CHF
+Book an Appointment
+Products Scanners/Locators
+NODIX CEN-1 BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon
+ZENIX LEN-2 BLE (RSSI) Indoor Gateway for Proximity Positioning + Environmental Sensing
+ZENIX LEN-1 BLE (RSSI) Indoor Gateway for Proximity Positioning
+ZENIX LEF-3 BLE (RSSI) Outdoor Gateway for Proximity Positioning with Wi-Fi, LTE Connectivity & GPS
+ZENIX LON-2 BLE (AoA) Indoor Scanner for Precise Submeter Location Tracking.
+ZENIX LOF-2 BLE (AoA) Outdoor Scanner for Precise Sub-Meter Location Tracking.
+Beacons/Tags
+PINIX TEN-2 Indoor Anchor BLE Beacon Tag with Temperature Sensor
+PINIX TOW-5 BLE (AoA) Asset Tag with Multi-Sensors
+PINIX TOW-1 Hybrid BLE (AoA) & (RSSI) Asset Tag
+PINIX TOK-1 Smart Badge BLE (AoA) Tag with Temperature Sensor
+PINIX TOP-5 Smart Badge BLE Tag with Temperature Sensor
+PINIX TOP-6 BLE AoA Smart Badge with RFID for Indoor Positioning & Workforce Safety
+PINIX TEK-1 BLE Lanyard Beacon Tag
+PINIX TOB-1 BLE AoA Wearable Beacon Tag with SoS Button and Accelerometer
+PINIX TEF-1 Outdoor Anchor BLE Beacon Tag with Temperature Sensors
+Solix RTLS Platform &#038; API
+SOLIX RTLS &#038; IoT Management Platform Real-time tracking & analytics, on-premise, or cloud for flexible deployments
+SOLIX RTLS Integration SDK Enable seamless integration with real-time location data via APIs, middleware, and iFrame support
+Software
+POSIX SDK Enables indoor positioning for smartphone applications
+SDM (Sentrax Device Manager) Simplifies BLE beacon tag configuration and management on Android & iOS.
+Evaluation Kit
+BLE RSSI Evaluation KIT BLE (RSSI) Evaluation Kit for real-time proximity positioning and tracking of nearby assets and persons
+BLE AoA Evaluation KIT BLE (AoA) Evaluation Kit for precise real-time positioning and tracking of assets and persons
+Technology
+Solutions Proximity Tracking
+BiLink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Applications Healthcare
+Manufacturing
+Smart City
+Partners Our Partners
+Partnership Program
+Support Documents
+Hardware
+Software
+Solutions
+Evaluation Kit
+Integration Guides
+FAQs
+My Tickets
+Company About us
+Newsletters
+Whitepapers
+Blog
+Contact us
+NODIX CEN-1
+Click to enlarge
+Home
+/
+BiLink Anchor
+/
+NODIX CEN-1
+SOLIX RTLS Integration SDK
+Login to see prices
+Back to products
+PINIX TOB-1
+Login to see prices
+NODIX CEN-1
+Login to see prices
+BiLink BLE Relay Anchor - Battery Operated Scanner and Beacon
+Add to wishlist
+Compare
+SKU:
+101-01-02-013-01
+Category: BiLink Anchor
+Share:
+Description
+Shipping & Delivery
+Product Overview
+How it Works?
+Why Choose NODIX CEN-1? Room-Level Certainty. Half the Infrastructure.
+The NODIX CEN-1 is a bi-directional BLE anchor relay that delivers reliable room-level visibility in complex indoor environments. In large facilities, single scanners often fail to cover all areas, creating blind spots that disrupt asset tracking, workflows, and operational control. Optimized for high-density deployments, it enables precise localization without requiring one gateway per room. It can also be placed in passageways and gates to extend coverage and ensure seamless tracking across zones.With high operational reliability, simple installation, and a replaceable high-capacity battery, the NODIX CEN-1 significantly reduces deployment complexity and maintenance overhead. By minimizing the need for multiple RSSI gateways, it provides a cost-efficient and scalable RTLS architecture, making large-scale implementations both practical and sustainable. Seamless integration with existing systems and intuitive configuration tools allows for fast deployment and effortless system expansion. The Hybrid Advantage
+To protect your infrastructure investment and optimize ROI, the Sentrax ecosystem utilizes a Hybrid Deployment Model. We distinguish between high-capacity tracking and room-level presence to give you the most efficient footprint possible: ZENIX LEN Gateways (The Brains):
+Deployed in hallways and open wards, these high-bandwidth powerhouses manage the data backbone, higher number of tag detection with lowest latency, provide real-time movement tracking, and act as the central gateways for your entire facility.
+NODIX CEN-1 BiLink Anchors (The Eyes):
+Deployed inside private rooms, exam bays, or closets to provide absolute certainty of presence. The NODIX &#8220;sees&#8221; local tags and wirelessly &#8220;whispers&#8221; data back to the ZENIX gateway.
+Instead of requiring installation of gateway and an IP-addressable scanner in every room, the NODIX CEN-1 acts as a wireless extension for your ZENIX infrastructure: Local Scan:
+The NODIX CEN-1 anchor scans its immediate room for any BLE tags (equipment, patients, or staff).
+Wireless Bypass:
+It bundles the tag data with its own unique Room ID and wirelessly relays it to the nearest ZENIX Hallway Scanner.
+Instant Identification:
+The Sentrax positioning engine identifies exactly which room the tag is in, providing 100% room-level accuracy while reducing total infrastructure requirements by up to 60%.
+Zero-Cabling Deployment: No need for additional installation in in every room. Few central scanners can manage multiple NODIX anchors.
+No IT Complexity: Reach deep into private rooms and &#8220;blind spots&#8221; without adding new IP addresses or network overhead.
+Presence-Based Certainty: Eliminates &#8220;signal bleed&#8221; through walls. If the NODIX in Room 101 sees a tag, that tag is in Room 101—period.
+Rapid Scalability: Deploy room-level tracking in minutes, not days, with a zero-cable mounting process.
+Optimized ROI: Achieve high-granularity tracking at a hardware cost-per-room that is up to 60% lower than traditional gateway-only setups.
+Key Features & Benefits
+Bi-Directional BLE Operation
+Simultaneous scanning and broadcasting for efficient data exchange
+Long-Lasting Power
+Replaceable high-capacity battery for extended operation
+Easy Configuration
+Simple setup and management through gateways
+Room-Level Visibility
+Reliable zone-level positioning using RSSI-based detection
+Reduced Infrastructure
+No need for one gateway per room, lowering deployment complexity and cost
+Zone Entry & Exit Detection
+Consistent detection of movement between rooms and zones
+How BiLink Solves RTLS Challenges?
+Problem
+In large facilities with multiple rooms of varying sizes and layouts, a single scanner cannot effectively cover the entire area. This results in blind spots where movement of assets, staff, or equipment goes undetected, leading to asset loss, delayed response times, workflow inefficiencies, and lack of true facility-wide real-time visibility.
+Attempting to eliminate these blind spots by deploying scanners in every room is often not practical, as it significantly increases infrastructure complexity, cabling requirements, maintenance effort, and overall deployment cost.
+Solution
+We have developed NODIX CEN-1 to eliminate blind spots and enable seamless room-level visibility across complex indoor environments. It ensures consistent tracking even in facilities with multiple rooms of varying sizes and layouts, without the need for a scanner in every room.
+By intelligently extending coverage across spaces, it delivers continuous, real-time visibility throughout the facility while keeping infrastructure minimal and cost-efficient.
+Mechanical Diagram
+Technical Specifications
+Download Datasheet
+BLUETOOTH RADIO
+Type Bluetooth Low energy 5.x
+Advertisement iBeacon, Eddystone (UID &#038; TLM), sBeacon (Sentrax Proprietary)
+Advertisement interval 100 ms to 10.2 seconds
+Scanning interval 1000 ms to 5 seconds
+Frequency 2.4GHz
+Transmit Power +4dBm to -20 dBm
+Antenna Type PCB antenna, Omni Directional
+SENSORS AND INTERFACES
+Motion Sensing 3 Axis Accelerometer (optional)
+Temperature Internal Temperature Sensor
+Button User interact-able button
+LED 1 Red LED
+ENCLOSURE
+Material ABS
+Accessories Double sided tape, Mounting Screw
+Color White
+Dimensions 70.95 mm (Dia) x 26.20 mm (H)
+Protection Class IP54
+Weight 72g
+* Battery life is estimated when sBeacon and iBeacon are enabled only.
+** Pending
+BATTERY
+Battery Type ER14505 x 2, 4800mAh, Replaceable
+Battery Life:
+1000ms (Adv. &#038; Scan Interval) 1 year 1 month*
+5000ms (Adv. &#038; Scan Interval)* 2 years 2 months*
+OPERATING ENVIRONMENT
+Temperature Range -20°C to 70°C
+Operating Humidity 90%
+CERTIFICATIONS
+CE, FCC**
+Sentrax Device Manager
+The Sentrax Device Manager (SDM) app allows you to manage PINIX
+beacons. You can discover nearby beacons, check their battery
+levels, and view their current settings, and modify them with a
+protected 4-digit settable PIN.
+Applications
+Hospitals / Healthcare
+Delivers room-level tracking for patients, staff, and equipment, eliminating hallway bleed. Improves handovers, inventory visibility, and ensures reliable entry/exit monitoring in sensitive areas.
+Warehouse / Logistics
+Enables real-time zone tracking of assets and personnel with fewer gateways. Improves operational visibility, optimizes infrastructure, and enhances safety with entry/exit alerts.
+Smart Buildings
+Provides room-level occupancy and movement insights for better space utilization. Supports efficient operations, secure access monitoring, and reduced infrastructure costs.
+Healthcare / Hospitals
+Delivers room-level tracking for patients, staff, and equipment, eliminating hallway bleed. Improves handovers, inventory visibility, and ensures reliable entry/exit monitoring in sensitive areas.
+Warehouse / Logistics
+Enables real-time zone tracking of assets and personnel with fewer gateways. Improves operational visibility, optimizes infrastructure, and enhances safety with entry/exit alerts.
+Smart Buildings
+Provides room-level occupancy and movement insights for better space utilization. Supports efficient operations, secure access monitoring, and reduced infrastructure costs.
+NODIX CEN-1 For Room Level Visibility
+Explore the Sentrax&#8217;s BiLink architecture for room level visibility with less infrastructure
+Talk to Our Experts
+Enquiry Form
+Name
+Email
+Phone
+Country
+Select Country Afghanistan Albania Algeria Andorra Angola Antigua & Deps Argentina Armenia Australia Austria Azerbaijan Bahamas Bahrain Bangladesh Barbados Belarus Belgium Belize Benin Bhutan Bolivia Bosnia Herzegovina Botswana Brazil Brunei Bulgaria Burkina Burundi Cambodia Cameroon Canada Cape Verde Central African Rep Chad Chile China Colombia Comoros Congo Congo {Democratic Rep} Costa Rica Croatia Cuba Cyprus Czech Republic Denmark Djibouti Dominica Dominican Republic East Timor Ecuador Egypt El Salvador Equatorial Guinea Eritrea Estonia Ethiopia Fiji Finland France Gabon Gambia Georgia Germany Ghana Greece Grenada Guatemala Guinea Guinea-Bissau Guyana Haiti Honduras Hungary Iceland India Indonesia Iran Iraq Ireland {Republic} Israel Italy Ivory Coast Jamaica Japan Jordan Kazakhstan Kenya Kiribati Korea North Korea South Kosovo Kuwait Kyrgyzstan Laos Latvia Lebanon Lesotho Liberia Libya Liechtenstein Lithuania Luxembourg Macedonia Madagascar Malawi Malaysia Maldives Mali Malta Marshall Islands Mauritania Mauritius Mexico Micronesia Moldova Monaco Mongolia Montenegro Morocco Mozambique Myanmar, {Burma} Namibia Nauru Nepal Netherlands New Zealand Nicaragua Niger Nigeria Norway Oman Pakistan Palau Panama Papua New Guinea Paraguay Peru Philippines Poland Portugal Qatar Romania Russian Federation Rwanda St Kitts & Nevis St Lucia Saint Vincent & the Grenadines Samoa San Marino Sao Tome & Principe Saudi Arabia Senegal Serbia Seychelles Sierra Leone Singapore Slovakia Slovenia Solomon Islands Somalia South Africa South Sudan Spain Sri Lanka Sudan Suriname Swaziland Sweden Switzerland Syria Taiwan Tajikistan Tanzania Thailand Togo Tonga Trinidad & Tobago Tunisia Turkey Turkmenistan Tuvalu Uganda Ukraine United Arab Emirates United Kingdom United States Uruguay Uzbekistan Vanuatu Vatican City Venezuela Vietnam Yemen Zambia Zimbabwe
+Company Name
+Industry
+Healthcare Education Smart Buildings Manufacturing Safety & Security Energy & Utilities
+How can we help?
+&#916;
+Company
+About us
+Our Partners
+Partnership Program
+Newsletters
+Blog
+Careers
+Contact us
+Explore
+Our Products
+Technology
+Applications and Usecases
+Documents
+FAQs
+Solutions
+Proximity Tracking
+BiLink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Follow Us
+Copyright 2026 by Sentrax . All rights reserved.
+Terms & Conditions
+Privacy Policy
+Refund & Return Policy
+Search
+Start typing to see products you are looking for.
+Search
+Menu
+Categories
+Home
+About us
+Newsletters
+Contact us
+Blog
+Careers
+Products Beacons &#038; Tags
+NODIX CEN-1
+PINIX TOW-5
+PINIX TOW-1
+PINIX TOK-1
+PINIX TEP-1
+PINIX TEF-1
+PINIX TOP-5
+PINIX TEN-2
+PINIX TOP-6
+PINIX TEK-1
+PINIX TOB-1
+Scanner &#038; Locators
+ZENIX LEN-2
+ZENIX LEN-1
+ZENIX LON-2
+ZENIX LEF-3
+ZENIX LOF-2
+Solix RTLS Platform &#038; API
+SOLIX RTLS &#038; IoT Management Platform
+Software
+SDM (Sentrax Device Manager)
+POSIX SDK
+Evaluation Kits
+BLE RSSI Evaluation KIT
+BLE AoA Evaluation KIT
+Technology
+Solutions Proximity Tracking
+Bilink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Applications Healthcare
+Manufacturing
+Smart City
+Partners Our Partners
+Partnership Program
+Support Documents
+Submit Ticket
+My Tickets
+FAQs
+Legal Data Protection
+Sentrax RMA
+Privacy Policy
+Terms & Conditions
+Careers
+Company About us
+Newsletters
+Whitepapers
+Blog
+Contact us
+Wishlist
+Login / Register
+Home
+Wishlist
+Login/Register
+Translate &raquo;

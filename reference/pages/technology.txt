@@ -1,0 +1,324 @@
+Source: https://sentrax.com/technology/
+
+Sentrax RTLS Technologies, BLE AoA, BLE RSSI, BLE RSSI BiLink, and BLE Hybrid Positioning System.
+Skip to navigation
+Skip to main content
+Call: +41 41 505 0065
+Wishlist
+Blog
+Contact us
+Login/Register
+USD
+USD
+EUR
+CHF
+Book an Appointment
+Products Scanners/Locators
+NODIX CEN-1 BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon
+ZENIX LEN-2 BLE (RSSI) Indoor Gateway for Proximity Positioning + Environmental Sensing
+ZENIX LEN-1 BLE (RSSI) Indoor Gateway for Proximity Positioning
+ZENIX LEF-3 BLE (RSSI) Outdoor Gateway for Proximity Positioning with Wi-Fi, LTE Connectivity & GPS
+ZENIX LON-2 BLE (AoA) Indoor Scanner for Precise Submeter Location Tracking.
+ZENIX LOF-2 BLE (AoA) Outdoor Scanner for Precise Sub-Meter Location Tracking.
+Beacons/Tags
+PINIX TEN-2 Indoor Anchor BLE Beacon Tag with Temperature Sensor
+PINIX TOW-5 BLE (AoA) Asset Tag with Multi-Sensors
+PINIX TOW-1 Hybrid BLE (AoA) & (RSSI) Asset Tag
+PINIX TOK-1 Smart Badge BLE (AoA) Tag with Temperature Sensor
+PINIX TOP-5 Smart Badge BLE Tag with Temperature Sensor
+PINIX TOP-6 BLE AoA Smart Badge with RFID for Indoor Positioning & Workforce Safety
+PINIX TEK-1 BLE Lanyard Beacon Tag
+PINIX TOB-1 BLE AoA Wearable Beacon Tag with SoS Button and Accelerometer
+PINIX TEF-1 Outdoor Anchor BLE Beacon Tag with Temperature Sensors
+Solix RTLS Platform &#038; API
+SOLIX RTLS &#038; IoT Management Platform Real-time tracking & analytics, on-premise, or cloud for flexible deployments
+SOLIX RTLS Integration SDK Enable seamless integration with real-time location data via APIs, middleware, and iFrame support
+Software
+POSIX SDK Enables indoor positioning for smartphone applications
+SDM (Sentrax Device Manager) Simplifies BLE beacon tag configuration and management on Android & iOS.
+Evaluation Kit
+BLE RSSI Evaluation KIT BLE (RSSI) Evaluation Kit for real-time proximity positioning and tracking of nearby assets and persons
+BLE AoA Evaluation KIT BLE (AoA) Evaluation Kit for precise real-time positioning and tracking of assets and persons
+Technology
+Solutions Proximity Tracking
+BiLink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Applications Healthcare
+Manufacturing
+Smart City
+Partners Our Partners
+Partnership Program
+Support Documents
+Hardware
+Software
+Solutions
+Evaluation Kit
+Integration Guides
+FAQs
+My Tickets
+Company About us
+Newsletters
+Whitepapers
+Blog
+Contact us
+Technology
+Home / Technology
+Sentrax RTLS Technology
+BLE RTLS Technology for Real-Time Location Visibility
+Overview
+Sentrax provides a flexible BLE RTLS ecosystem spanning BLE RSSI , BiLink room-level detection , BLE AoA , and hybrid positioning . Each area can use the level of visibility its workflow requires.
+SOLIX turns location and supported sensor data into positions, room and zone events, history, and integration-ready data. It can be deployed as a cloud-hosted or on-premises management platform or used through APIs and modular backend engines.
+Compare RTLS Technologies
+Discuss Your Requirements
+How It Works How the Sentrax RTLS Ecosystem Works
+The Sentrax RTLS ecosystem connects BLE hardware with SOLIX , the cloud-based platform and middleware, to deliver real-time visibility. BLE tags transmit data, locators or gateways receive the signals, and SOLIX converts those data into location events, history, and analytics.
+System Components
+P
+PINIX Tags &#038; Beacons
+BLE devices for assets, equipment, and people. They broadcast unique identifiers and, where supported by the selected device, battery, motion, environmental, or user-input telemetry.
+Z
+ZENIX Locators &#038; Gateways
+Fixed BLE infrastructure that receives tag and beacon signals for RSSI or AoA positioning and forwards data to the RTLS software. Available connectivity, sensing, and indoor/outdoor protection depend on the selected ZENIX model.
+N
+NODIX BiLink Anchors
+Battery-powered, bidirectional BLE reply anchors that scan locally, filter and validate data, associate them with a defined room or zone, and wirelessly relay them to a ZENIX gateway.
+S
+SOLIX Positioning Engine
+Processes RSSI, AoA, and hybrid data to calculate coordinates or determine room and zone presence, according to the selected deployment. SOLIX can then apply geofences, rules, alerts, and history.
+API
+Integration Interfaces
+REST APIs and WebSocket interfaces provide structured and real-time access to location, sensor, device, and event data. Supported deployments can also use MQTT and omlox-compliant APIs.
+Explore Each Positioning Layer
+Explore four Sentrax positioning approaches to understand how each works, where it fits best, and what infrastructure it requires.
+BLE AoA
+BLE RSSI
+BLE RSSI (BiLink)
+Hybrid RTLS
+Sub-Meter Precision: 0.5-1m BLE AoA High-Precision Positioning
+BLE Angle of Arrival (AoA) provides high-precision positioning by measuring the direction from which a compatible BLE tag signal reaches an AoA-enabled locator. Using antenna-array measurements, planned locator geometry, and positioning algorithms, the system calculates the tag’s location. With appropriately designed and validated infrastructure, BLE AoA can provide sub-meter positioning for precision-critical tracking applications.
+How BLE AoA Works?
+1 Tag Transmits the Signal
+A compatible BLE AoA tag broadcasts a direction-finding signal that can be detected by nearby AoA locators.
+2 Locator Captures the Signal
+An AoA locator equipped with an antenna array receives the signal across multiple antenna elements.
+3 Signal Direction Is Measured
+The locator processes the received signal to derive azimuth and elevation measurements, determining the direction of the tag relative to the locator.
+4 Position Is Calculated in SOLIX
+The measurements are sent to the SOLIX Positioning Engine, where positioning algorithms calculate the tag’s location and make the resulting position available for visualization, history, rules, and integration.
+Where BLE AoA Fits?
+BLE AoA is suited to areas where high positioning precision is required, such as locating tools or equipment within defined work areas, monitoring movement around selected process points, and supporting precision-critical asset or personnel tracking.
+Explore Precision Tracking
+Mid-Level Accuracy: 3-5m BLE RSSI Proximity Positioning
+BLE RSSI positioning provides medium-level location accuracy by using the received signal strength of BLE tag transmissions at fixed gateways. Based on gateway placement and positioning logic, RSSI can provide proximity, room, zone, or approximate coordinate-level visibility, making it suitable for applications that need more location context than simple presence detection without requiring high-precision positioning.
+How BLE RSSI Works?
+1 Tag Broadcasts
+A BLE tag periodically broadcasts its identification signal at configured intervals.
+2 Gateways Measure Signal Strength
+One or more fixed BLE gateways receive the tag signal and measure its Received Signal Strength Indicator (RSSI).
+3 Positioning Logic Estimates Location
+The positioning engine evaluates RSSI observations using the configured method, such as proximity, strongest receiver, zone logic, or filtered ranging, to estimate the tag&#8217;s location.
+4 Location Becomes Available in SOLIX
+SOLIX makes the resulting presence, room, zone, or approximate location available for visualization, history, rules, alerts, and integration with external applications.
+Where BLE RSSI Fits?
+BLE RSSI is suited to applications requiring medium-level location accuracy, where proximity, room, zone, or approximate positioning provides sufficient visibility. Typical use cases include asset and person visibility, equipment localization, movement between defined areas, goods tracking, and location-aware applications.
+Explore Proximity Tracking
+Zone Transitions . No Wiring BiLink Room-Level Positioning
+BiLink is a bidirectional BLE RSSI architecture designed for reliable room-level presence and zone-transition detection. A NODIX CEN-1 BiLink anchor scans nearby BLE tag signals, processes and validates relevant observations, associates them with its configured room or zone, and wirelessly relays the data through a ZENIX gateway to SOLIX.
+How BiLink Works?
+1 Tags Broadcast BLE Signals
+BiLink devices scan for nearby tag signals within the configured room or zone.
+2 BiLink Anchor Detects &#038; Validates
+Relevant observations are processed and validated locally by the gateways
+3 Data Is Relayed to the Gateway
+Validated tag observations are wirelessly forwarded from the NODIX CEN-1 to the ZENIX gateway, reducing the need to install a gateway in every room.
+3 Room Presence Is Processed in SOLIX
+SOLIX receives the data and makes room presence, zone transitions, and related location events available for visualization, history, rules, alerts, and integration.
+Where BiLink Fits?
+BiLink is designed for multi-room indoor environments where reliable room-level visibility is required but deploying a wired gateway in every room would add unnecessary infrastructure. It is well suited to patient rooms, storage areas, offices, treatment spaces, passageways, and other defined zones where presence and transition detection provide the required level of location visibility.
+Explore BiLink Proximity Tracking
+Mixed By Zone Hybrid BLE Positioning
+Hybrid BLE RTLS combines multiple BLE positioning approaches within one deployment, allowing each area to use the location accuracy it actually requires. BLE RSSI can provide broader, medium-level positioning, BiLink can provide room-level presence and transition detection, and BLE AoA can be introduced in selected areas requiring sub-meter precision. This creates a flexible architecture where higher-precision infrastructure is deployed only where it adds value.
+How Hybrid RTLS Positioning Works
+1 Match Positioning to Each Zone
+Location requirements are defined by area, based on whether the application needs approximate, room-level, or high-precision positioning.
+2 Apply the Required BLE Technology
+RSSI provides broader location visibility, BiLink supports room-level presence and transitions, and AoA is deployed in selected zones where sub-meter positioning is required.
+3 Process Location Data in SOLIX
+SOLIX processes location data from the different BLE positioning layers and makes the resulting positions and events available through a common middleware and integration layer.
+Why Use Hybrid BLE RTLS?
+Hybrid BLE RTLS allows organizations to use the appropriate positioning level in each area instead of deploying high-precision infrastructure everywhere. This supports a more flexible RTLS architecture while maintaining higher precision in the zones where the application specifically requires it.
+Explore Hybrid BLE Positioning
+Compare RTLS Technologies
+The appropriate technology depends on the positioning level, environment, and workflow. This table provides general guidance; final performance and infrastructure requirements must be validated for the deployment.
+Criterion BLE RSSI BiLink BLE AoA Hybrid
+Positioning level Proximity, room/zone, or approximate position Room/zone presence and transitions Sub-meter positioning Varies by area and requirement
+Best fit Broad operational coverage Multi-room facilities Precision-critical areas Sites which required precise positioning
+Primary strength Broad, scalable visibility Lower gateway dependency Higher positioning precision Selective precision
+Environment Indoor; selected outdoor configurations Indoor rooms, zones, and entry/exit points Indoor; controlled outdoor configurations Multi-zone, mixed-accuracy sites
+Which RTLS Technology Should You Choose?
+Is room-level presence sufficient?
+If you need to know whether a tagged person or asset is in a room or has moved between defined spaces, BiLink is a practical choice. It provides room- or zone-level visibility without requiring a powered, network-connected gateway in every room.
+Which areas require high-precision tracking?
+Identify the specific process points, work areas, or zones where room-level visibility is not enough. AoA can be considered for those validated precision-critical areas or combined with RSSI in a hybrid design.
+How large and complex is the coverage area?
+Review the facility layout, room structure, open areas, materials, obstructions and any indoor-to-outdoor transitions. These factors influence technology choice, infrastructure placement, and expected performance.
+What infrastructure and integration constraints apply?
+Assess power, network, mounting, calibration, hosting, security, API, and enterprise-system requirements before selecting the architecture.
+Discuss Your RTLS Requirements
+Environmental Sensing
+Beyond location, Sentrax RTLS devices can capture environmental and movement-related sensor data for monitoring through SOLIX.
+Sentrax RTLS devices can capture environmental and movement-related sensor data alongside location information. Depending on the selected tag or gateway, measurements such as temperature, humidity, air quality, motion/vibration, and pressure can be monitored and made available through SOLIX for real-time visibility, history, and integration.
+🌡️ Temperature
+Monitor temperature conditions around tagged assets, equipment, or monitored environments using supported sensor-enabled devices.
+💧 Humidity
+Track relative humidity levels in environments where changing conditions may affect stored goods, equipment, or facilities.
+🌫️ Air Quality
+Monitor indoor environmental conditions using supported sensing infrastructure for applications such as smart buildings and indoor environment monitoring.
+🧭 Pressure
+Capture atmospheric pressure data from compatible sensor-enabled devices as part of the environmental sensing layer.
+Sentrax RTLS Middleware What SOLIX Does with RTLS Data
+Location data becomes valuable when it is connected to operational context. SOLIX turns positioning and supported sensor data into current and historical status, configured rules and alerts, and events that can be delivered to supported systems.
+Location Intelligence
+Depending on the selected technology and deployment, SOLIX can present coordinates, room or zone presence, geofences, and tag movement history.
+Enterprise Connectivity
+REST APIs and WebSocket interfaces provide structured and real-time access to relevant location, event, device, and sensor data. Supported deployments can also use MQTT and omlox-compliant APIs. Integration scope should be confirmed for each target system.
+Device Operations
+The SOLIX Device Configuration Manager supports centralized provisioning, grouping, diagnostics, and lifecycle management for compatible RTLS devices. Sentrax Device Manager (SDM) provides supported tag and beacon configuration workflows.
+Environmental Data
+Location context can be combined with supported environmental or telemetry data when compatible devices are used. Available measurements depend on the selected device and deployment configuration.
+Review of the SOLIX Integration Architecture →
+Frequently Asked Questions
+What RTLS technologies does Sentrax support?
+Sentrax supports BLE RSSI proximity and approximate positioning, BiLink room- and zone-level detection, BLE AoA sub-meter positioning, and hybrid RSSI/AoA deployments. SOLIX is available as an RTLS and IoT management platform and through APIs and modular backend engines, including positioning, rule, sensor, and device-management capabilities.
+What is the difference between BLE RSSI and BLE AoA?
+BLE RSSI estimates proximity or approximate location from received signal strength. BLE AoA derives signal direction using antenna-array locators and planned locator geometry. RSSI is used for broader presence, room, zone, or approximate visibility, while AoA is used where the workflow requires sub-meter positioning.
+What positioning accuracy can BLE RTLS provide?
+BLE RTLS can support room or zone presence, approximate location and high-precision positioning, depending on the selected technology. Actual performance depends on hardware, infrastructure placement, layout, tag orientation, calibration, obstructions, and radio conditions. Accuracy should therefore be confirmed against the proposed deployment design.
+When is room-level positioning sufficient?
+Room-level positioning is appropriate when the key requirement is to confirm presence or movement between defined spaces rather than determine an exact coordinate. Examples include locating tagged equipment by room, tracking movement between departments, and detecting entry or exit from configured zones.
+What industries or environments does Sentrax RTLS work best in?
+Sentrax RTLS supports healthcare, manufacturing, warehousing and logistics, smart buildings, retail, airports, and other facilities that require asset or personnel visibility. Selected outdoor and mixed indoor-outdoor deployments are also supported with environment-appropriate infrastructure and validated architecture.
+When is sub-meter positioning necessary?
+Sub-meter positioning may be required when a workflow depends on knowing where an asset, tool or person is located within a room or operational area. It should be applied only where the additional precision provides clear operational value, and the environment supports a validated AoA design.
+How does BiLink differ from BLE RSSI tracking?
+BiLink is a BLE RSSI architecture that adds local NODIX anchor scanning, filtering, validation, and room or zone association before data is relayed through a ZENIX gateway to SOLIX. This reduces dependence on dense fixed gateway infrastructure in multi-room environments.
+Can Sentrax RTLS operate indoors and outdoors?
+Yes. Sentrax supports indoor positioning and selected outdoor tracking configurations using environment-appropriate ZENIX infrastructure. Devices, connectivity, and positioning methods vary by environment, so outdoor and indoor-to-outdoor requirements should be validated as part of the solution architecture.
+How does Sentrax integrate with enterprise or partner platforms?
+SOLIX provides REST APIs and WebSocket interfaces for structured and real-time RTLS data. Supported deployments can also use MQTT and omlox-compliant APIs. Integration scope should be validated for each platform and use case.
+What factors affect BLE positioning performance?
+BLE positioning is affected by infrastructure density and geometry, facility layout, walls, metal, people, obstructions, tag placement and orientation, multipath reflections, calibration and changing radio conditions. These factors should be evaluated during site planning and validation.
+Can SOLIX be deployed on-premises or in the cloud?
+Yes. SOLIX supports Sentrax-hosted cloud deployment and self-hosted on-premises deployment for relevant platform, API, and modular engine components.
+Can location and environmental data be managed together?
+Yes, location context can be combined with supported sensor or telemetry data when compatible devices and the required configuration are used. Available measurements and monitoring functions depend on the selected device and deployment.
+Discuss Your RTLS Requirements
+Tell us what you need to track, where the system will operate, the positioning level required, and how the data should connect with your applications.
+Explore RSSI Evaluation Kit
+Explore AoA Evaluation Kit
+Enquiry Form
+Name
+Email
+Phone
+Country
+Select Country Afghanistan Albania Algeria Andorra Angola Antigua & Deps Argentina Armenia Australia Austria Azerbaijan Bahamas Bahrain Bangladesh Barbados Belarus Belgium Belize Benin Bhutan Bolivia Bosnia Herzegovina Botswana Brazil Brunei Bulgaria Burkina Burundi Cambodia Cameroon Canada Cape Verde Central African Rep Chad Chile China Colombia Comoros Congo Congo {Democratic Rep} Costa Rica Croatia Cuba Cyprus Czech Republic Denmark Djibouti Dominica Dominican Republic East Timor Ecuador Egypt El Salvador Equatorial Guinea Eritrea Estonia Ethiopia Fiji Finland France Gabon Gambia Georgia Germany Ghana Greece Grenada Guatemala Guinea Guinea-Bissau Guyana Haiti Honduras Hungary Iceland India Indonesia Iran Iraq Ireland {Republic} Israel Italy Ivory Coast Jamaica Japan Jordan Kazakhstan Kenya Kiribati Korea North Korea South Kosovo Kuwait Kyrgyzstan Laos Latvia Lebanon Lesotho Liberia Libya Liechtenstein Lithuania Luxembourg Macedonia Madagascar Malawi Malaysia Maldives Mali Malta Marshall Islands Mauritania Mauritius Mexico Micronesia Moldova Monaco Mongolia Montenegro Morocco Mozambique Myanmar, {Burma} Namibia Nauru Nepal Netherlands New Zealand Nicaragua Niger Nigeria Norway Oman Pakistan Palau Panama Papua New Guinea Paraguay Peru Philippines Poland Portugal Qatar Romania Russian Federation Rwanda St Kitts & Nevis St Lucia Saint Vincent & the Grenadines Samoa San Marino Sao Tome & Principe Saudi Arabia Senegal Serbia Seychelles Sierra Leone Singapore Slovakia Slovenia Solomon Islands Somalia South Africa South Sudan Spain Sri Lanka Sudan Suriname Swaziland Sweden Switzerland Syria Taiwan Tajikistan Tanzania Thailand Togo Tonga Trinidad & Tobago Tunisia Turkey Turkmenistan Tuvalu Uganda Ukraine United Arab Emirates United Kingdom United States Uruguay Uzbekistan Vanuatu Vatican City Venezuela Vietnam Yemen Zambia Zimbabwe
+Company Name
+Industry
+Healthcare Education Smart Buildings Manufacturing Safety & Security Energy & Utilities
+How can we help?
+&#916;
+Company
+About us
+Our Partners
+Partnership Program
+Newsletters
+Blog
+Careers
+Contact us
+Explore
+Our Products
+Technology
+Applications and Usecases
+Documents
+FAQs
+Solutions
+Proximity Tracking
+BiLink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Follow Us
+Copyright 2026 by Sentrax . All rights reserved.
+Terms & Conditions
+Privacy Policy
+Refund & Return Policy
+Search
+Start typing to see products you are looking for.
+Search
+Menu
+Categories
+Home
+About us
+Newsletters
+Contact us
+Blog
+Careers
+Products Beacons &#038; Tags
+NODIX CEN-1
+PINIX TOW-5
+PINIX TOW-1
+PINIX TOK-1
+PINIX TEP-1
+PINIX TEF-1
+PINIX TOP-5
+PINIX TEN-2
+PINIX TOP-6
+PINIX TEK-1
+PINIX TOB-1
+Scanner &#038; Locators
+ZENIX LEN-2
+ZENIX LEN-1
+ZENIX LON-2
+ZENIX LEF-3
+ZENIX LOF-2
+Solix RTLS Platform &#038; API
+SOLIX RTLS &#038; IoT Management Platform
+Software
+SDM (Sentrax Device Manager)
+POSIX SDK
+Evaluation Kits
+BLE RSSI Evaluation KIT
+BLE AoA Evaluation KIT
+Technology
+Solutions Proximity Tracking
+Bilink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Applications Healthcare
+Manufacturing
+Smart City
+Partners Our Partners
+Partnership Program
+Support Documents
+Submit Ticket
+My Tickets
+FAQs
+Legal Data Protection
+Sentrax RMA
+Privacy Policy
+Terms & Conditions
+Careers
+Company About us
+Newsletters
+Whitepapers
+Blog
+Contact us
+Wishlist
+Login / Register
+Home
+Wishlist
+Login/Register
+Translate &raquo;

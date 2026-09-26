@@ -1,7 +1,6 @@
 import { brand, fontStack } from '../brand/brand';
-import { deviceList } from '../content/devices';
+import { deviceList, type DeviceSize } from '../content/devices';
 import { ui } from '../content/ui';
-import { isPlaceholder } from '../content/types';
 
 /** Dev-only reference page (?dev=brand): current brand tokens and the device catalogue status. */
 export function BrandSheet() {
@@ -24,7 +23,16 @@ export function BrandSheet() {
       </section>
 
       <section>
-        <h2>Overlay colors for Radio, Data and Insight ({brand.status})</h2>
+        <h2>Elementor global kit (verbatim)</h2>
+        <div className="swatches">
+          {Object.entries(brand.kit).map(([name, value]) => (
+            <Swatch key={name} name={name} value={value} />
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2>Overlay colors for Radio, Data and Insight (proposed mapping)</h2>
         <div className="swatches">
           {Object.entries(brand.overlay).map(([name, value]) => (
             <Swatch key={name} name={name} value={value} />
@@ -50,7 +58,7 @@ export function BrandSheet() {
               <th>Model</th>
               <th>Kind</th>
               <th>Used with (demo)</th>
-              <th>Description (unapproved)</th>
+              <th>Description (from site menu)</th>
               <th>Dimensions</th>
             </tr>
           </thead>
@@ -64,14 +72,8 @@ export function BrandSheet() {
                 </td>
                 <td>{d.kind}</td>
                 <td>{d.technologies.join(', ')}</td>
-                <td className={isPlaceholder(d.description.text) ? 'placeholder' : undefined}>
-                  {d.description.text}
-                </td>
-                <td>
-                  {d.dimensionsMm
-                    ? `${d.dimensionsMm.w} x ${d.dimensionsMm.h} x ${d.dimensionsMm.d} mm`
-                    : 'unknown'}
-                </td>
+                <td>{d.description.text}</td>
+                <td>{formatSize(d.sizeMm)}</td>
               </tr>
             ))}
           </tbody>
@@ -79,6 +81,10 @@ export function BrandSheet() {
       </section>
     </main>
   );
+}
+
+function formatSize(s: DeviceSize): string {
+  return s.shape === 'round' ? `\u00d8 ${s.diameter} x ${s.h} mm` : `${s.w} x ${s.d} x ${s.h} mm`;
 }
 
 function Swatch({ name, value }: { name: string; value: string }) {

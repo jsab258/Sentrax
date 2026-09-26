@@ -1,0 +1,367 @@
+Source: https://sentrax.com/product/solix/
+
+SOLIX RTLS & IoT Management Platform - Device Management & Connectivity
+Skip to navigation
+Skip to main content
+Call: +41 41 505 0065
+Wishlist
+Blog
+Contact us
+Login/Register
+USD
+USD
+EUR
+CHF
+Book an Appointment
+Products Scanners/Locators
+NODIX CEN-1 BiLink BLE Relay Anchor – Battery Operated Scanner and Beacon
+ZENIX LEN-2 BLE (RSSI) Indoor Gateway for Proximity Positioning + Environmental Sensing
+ZENIX LEN-1 BLE (RSSI) Indoor Gateway for Proximity Positioning
+ZENIX LEF-3 BLE (RSSI) Outdoor Gateway for Proximity Positioning with Wi-Fi, LTE Connectivity & GPS
+ZENIX LON-2 BLE (AoA) Indoor Scanner for Precise Submeter Location Tracking.
+ZENIX LOF-2 BLE (AoA) Outdoor Scanner for Precise Sub-Meter Location Tracking.
+Beacons/Tags
+PINIX TEN-2 Indoor Anchor BLE Beacon Tag with Temperature Sensor
+PINIX TOW-5 BLE (AoA) Asset Tag with Multi-Sensors
+PINIX TOW-1 Hybrid BLE (AoA) & (RSSI) Asset Tag
+PINIX TOK-1 Smart Badge BLE (AoA) Tag with Temperature Sensor
+PINIX TOP-5 Smart Badge BLE Tag with Temperature Sensor
+PINIX TOP-6 BLE AoA Smart Badge with RFID for Indoor Positioning & Workforce Safety
+PINIX TEK-1 BLE Lanyard Beacon Tag
+PINIX TOB-1 BLE AoA Wearable Beacon Tag with SoS Button and Accelerometer
+PINIX TEF-1 Outdoor Anchor BLE Beacon Tag with Temperature Sensors
+Solix RTLS Platform &#038; API
+SOLIX RTLS &#038; IoT Management Platform Real-time tracking & analytics, on-premise, or cloud for flexible deployments
+SOLIX RTLS Integration SDK Enable seamless integration with real-time location data via APIs, middleware, and iFrame support
+Software
+POSIX SDK Enables indoor positioning for smartphone applications
+SDM (Sentrax Device Manager) Simplifies BLE beacon tag configuration and management on Android & iOS.
+Evaluation Kit
+BLE RSSI Evaluation KIT BLE (RSSI) Evaluation Kit for real-time proximity positioning and tracking of nearby assets and persons
+BLE AoA Evaluation KIT BLE (AoA) Evaluation Kit for precise real-time positioning and tracking of assets and persons
+Technology
+Solutions Proximity Tracking
+BiLink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Applications Healthcare
+Manufacturing
+Smart City
+Partners Our Partners
+Partnership Program
+Support Documents
+Hardware
+Software
+Solutions
+Evaluation Kit
+Integration Guides
+FAQs
+My Tickets
+Company About us
+Newsletters
+Whitepapers
+Blog
+Contact us
+SOLIX RTLS &#038; IoT Management Platform
+Click to enlarge
+Home
+/
+Software
+/
+SOLIX RTLS &#038; IoT Management Platform
+BLE AoA Evaluation KIT
+Login to see prices
+Back to products
+POSIX SDK
+Login to see prices
+SOLIX RTLS &#038; IoT Management Platform
+Login to see prices
+Sentrax Devices Management & Connectivity Platform
+Add to wishlist
+Compare
+SKU:
+101-02-05-010-01
+Category: Software
+Share:
+Description
+Shipping & Delivery
+Introduction
+SOLIX is a modular, scalable RTLS and IoT management platform that delivers accurate real-time location and sensor data to track assets, position people, and optimize workflows empowering businesses with unmatched visibility, control, and informed decision-making. Supporting AoA, RSSI, and hybrid positioning, SOLIX adapts to your infrastructure needs with flexible deployment options including cloud, onpremises.
+Your browser does not support the video tag.
+Benefits
+📍
+Complete Real-Time Visibility
+SOLIX provides end-to-end visibility of assets, people, and environments across your facility.
+🎯
+Accuracy with Hybrid Positioning
+Supports AoA, RSSI, and hybrid positioning, letting organizations balance accuracy and cost.
+📈
+Improved Operational Efficiency
+Transforms location and sensor data into insights, streamlining workflows, saving time, preventing loss, boosting efficiency.
+🛡️
+Proactive Safety &#038; Compliance
+Enhances safety, compliance, and risk management via geofences, motion, environmental monitoring, and notifications.
+🧩
+Seamless Integration
+Integrates with ERP, HIS, BMS &#038; security platforms via APIs and iFrame support
+🏢
+Multi-Deployment Options
+Cloud, on-premise (Docker), or embedded via APIs/iFrame.
+Solix Features
+Interactive Dashboard
+Live Tracking
+Heat Map
+Device Deployment
+Notifications &#038; Alerts
+Your browser does not support the video tag.
+Interactive Dashboard
+A smart, intuitive platform for managing your RTLS network. Monitor gateways, beacons, and tags in real time, view live maps and heatmaps, and track performance across buildings and floors, all from one interactive dashboard.
+Your browser does not support the video tag.
+Live Tracking
+Solix uses RTLS Engine which determines the location of the tag by using a system of Gateways.
+The platform would display their positions on a map or a layout of the area being monitored.
+Your browser does not support the video tag.
+Heat Map
+Solix uses API which determines the heatmap location of the tags.
+The platform displays their positions on a map by visually representing tags position history.
+Your browser does not support the video tag.
+Device Deployment
+In Solix, devices are deployed through the Infrastructure → Devices workflow, where gateways and beacons can be added to specific buildings, floors, and zones. Using the interactive floor map and device deployment tool, users can easily position devices, set parameters like gateway height, and ensure accurate tracking.
+Your browser does not support the video tag.
+Notifications &#038; Alerts
+SOLIX delivers real-time alerts on device activity, geofence events, motion, tampering, and environmental changes. Configurable rules trigger instant notifications via dashboard, SMS, or email keeping users informed and responsive.
+How It Works?
+A comprehensive real-time location system combining AoA and RSSI technologies for precise indoor positioning
+1
+User Role Management
+Flexible user management with custom roles, page-level rights, and multi-role assignments.
+System &#038; User Defined Roles
+2
+Define Zones
+Configure spaces as either AoA Zones (requiring high accuracy) or RSSI Zones (requiring basic presence tracking).
+AoA &#038; RSSI Zones
+3
+Deploy Devices
+Install Zenix AoA Locators in precision-critical areas and RSSI BLE Scanners in larger coverage zones.
+ZENIX BLE AoA &#038; RSSI Scanners
+4
+Device Configuration
+Remotely configure and manage ZENIX gateways and PINIX tags &#038; beacons across BLE, AoA, and RSSI devices.
+ZENIX Gateways &#038; PINIX Beacons/Tags
+5
+Solix Positioning Engine
+The Solix Engine calculates real-time positions using AoA and RSSI, tailored to your zone settings.
+Real-Time Processing &#038; Easy Integration
+6
+Advanced Analytics Dashboard
+Solix Suite enables precise hybrid tag tracking with AoA and RSSI, plus easy geofences and smart alerts.
+Solix RTLS Platform + Environmental Data
+Solix Packages
+Feature / Module Solix Lite Solix Standard
+Live Tracking — AoA, RSSI, Hybrid
+Sensor Data Handling — ✓
+Automated Rules &#038; Alerts — ✓
+Device Configuration ✓ (via UI) ✓
+Web Dashboard ✓ Basic UI (config &#038; management) ✓ Full UI (maps, heatmaps, alerts, etc.)
+Firmware Updates — —
+User Management — ✓
+API Access — ✓ Full API (data + config)
+Deployment Cloud or On-Prem Cloud or On-Prem
+Target Audience SMBs, POCs, and hardware users using the API to display data Enterprises, hospitals, POC, full RTLS
+Deployment Options
+On-Premises
+For organizations needing complete data ownership and compliance with strict security standards.
+Secure
+Cloud-Based
+For faster scaling, simplified management, and seamless updates across multiple sites.
+Scalable
+Applications &#038; Use Cases
+Healthcare
+Real-time tracking of critical equipment
+Monitoring devices and inventory
+Tracking vulnerable patients
+Staff location for rapid response
+Restricted-area visitor monitoring
+Manufacturing, Warehouse
+Tracking materials, tools, and machinery
+Real-time monitoring of equipment
+Preventing asset loss
+Facility-wide staff positioning
+Monitoring in hazardous areas
+Warehousing &#038; Intralogistics
+Real-time tracking of forklifts and carts
+Monitoring mobile equipment usage
+Optimized asset allocation
+Tracking tools and inventory
+Optimizing internal transport routes
+Smart Buildings
+Tracking temperature and humidity
+Ensuring compliance in storage areas
+Instant alerts for environmental deviations
+Positioning staff facility-wide
+Real-time tracking of building assets
+Aviation &#038; Airports
+Real-time tracking of GSE, carts, and cargo
+Staff coordination in terminals and restricted zones
+Geofencing secure airside areas
+Monitoring temperature-sensitive cargo
+Security &#038; Defense
+Monitoring access to restricted/classified zones
+Real-time personnel tracking in secure facilities
+Geofencing high-security areas with instant breach alerts
+Tracking weapons, tactical, and sensitive assets
+Visitor and contractor movement monitoring
+Technical FAQs
+What is the SOLIX RTLS &#038; IoT Management Platform?
+SOLIX is Sentrax’s centralized RTLS and IoT management platform for tracking assets and people, monitoring environmental conditions, and managing connected RTLS devices. It brings live location data, sensor information, device status, maps, alerts, and historical information together in a web-based interface.
+Which positioning technologies does SOLIX support?
+SOLIX supports BLE RSSI, BLE Angle of Arrival (AoA), and hybrid RSSI + AoA positioning. This allows a deployment to combine different levels of location accuracy according to the requirements of each area. Depending on the infrastructure and positioning method used, the system can provide zone-, room-, or meter-level positioning.
+Can RSSI and AoA be used together in the same SOLIX deployment?
+Yes. SOLIX supports hybrid deployments in which RSSI can be used in areas that require proximity or room-level visibility, while AoA can be used where more precise positioning is required. Zones can be configured according to the positioning technology used in each part of the facility.
+Is SOLIX available in the cloud and on premises?
+Yes. SOLIX can be deployed as a cloud-hosted platform or within the customer’s on-premises infrastructure. This gives organizations flexibility to select an architecture based on their IT environment, data-control requirements, and deployment strategy. The current product page also identifies Docker-based on-premises deployment.
+What components are required for a SOLIX RTLS system?
+A typical system consists of BLE tags or beacons, ZENIX scanners/gateways, and the SOLIX platform. For AoA deployments, the positioning architecture also includes the AoA positioning engine. The exact hardware configuration depends on the required coverage, positioning accuracy, facility layout, and use case.
+Can SOLIX display assets and people on a floor map?
+Yes. SOLIX supports user-defined 2D floor maps and GeoJSON maps and can display the live positions of tracked tags on the relevant facility layout. Gateways and other infrastructure devices can also be positioned on the map to simplify system deployment and monitoring.
+Can SOLIX manage multiple buildings, regions, floors, and zones?
+Yes. Facilities can be structured into regions and zones, so organizations can organize location data according to their operational layout. Zones can also be configured for different positioning technologies and deployment models, including RSSI and AoA environments.
+What types of alerts can SOLIX generate?
+SOLIX supports configurable alerts for operational and device events. These include geofence entry or exit, low battery, device online/offline status, proximity detection, leashed-pair separation, memory/storage conditions, and time-based events. The platform can also support alerts relating to motion, tampering, and environmental changes when the required devices and sensors are used.
+Does SOLIX support environmental monitoring?
+Yes. SOLIX can collect and visualize environmental data from compatible Sentrax sensors, tags, and gateways. Depending on the connected hardware, organizations can monitor parameters such as temperature, humidity, air quality, pressure, and other climatic measurements, alongside location information.
+Can historical location and sensor data be viewed in SOLIX?
+Yes. SOLIX supports historical device, positioning, and sensor information for operational analysis and reporting. Users can review device information, location history, status, sensor readings, deployment details, and timestamps. Heat maps can also use historical location information to show movement patterns, dwell behaviour, and areas with higher tag activity.
+Does SOLIX provide heat-map visualization?
+Yes. SOLIX can generate heat-map views from historical positioning data. These visualizations help organizations identify frequently used areas, movement patterns, asset activity, and space-utilization trends across a facility.
+Can SOLIX integrate with existing enterprise software?
+Yes. SOLIX supports integration through REST APIs, MQTT-based data exchange, and other integration options available within the selected solution. The platform is designed to connect RTLS information with systems such as ERP, HIS, BMS, security, and other enterprise applications. The current product page also lists iFrame-based integration for embedding SOLIX views into other applications.
+Can devices be configured remotely through SOLIX?
+Yes. Supported SOLIX configurations provide centralized device management and remote configuration capabilities. Depending on the package and connected hardware, gateway, tag, beacon, and sensor parameters can be managed through the platform, APIs, or MQTT without requiring routine physical access to each device.
+Does SOLIX support user and role management?
+Yes. SOLIX supports user management for controlling platform access. The current SOLIX product page also provides custom role management, page-level access rights, and multi-role assignments, allowing organizations to control which users can access different areas and functions of the platform.
+Can SOLIX work with third-party devices?
+Compatibility depends on the BLE devices, tags/beacons, protocol, data format, and required functionalit.
+What is the difference between Solix Lite, Standard, and Advanced?
+SOLIX Lite is primarily designed to support basic deployment and device management. SOLIX Standard adds full RTLS capabilities, including live maps, heat maps, alerts, user management, historical data, positioning, sensor data, and API integration. SOLIX Professional builds on these capabilities with advanced RTLS features, environmental monitoring and reporting, and support for managing third-party devices. The appropriate edition depends on whether the project requires device management only, complete RTLS deployment, or additional IoT and reporting capabilities.
+Is SOLIX suitable for both proof-of-concept and enterprise deployments?
+Yes. SOLIX is designed as a modular and scalable platform and can support smaller evaluation or proof-of-concept systems as well as larger RTLS deployments across operational facilities. Its region, zone, mapping, device-management, and deployment capabilities allow the system architecture to expand as project requirements grow.
+Can SOLIX support multiple facilities or sites?
+Yes. SOLIX is designed to organize devices and operational data across different regions, buildings, floors, and zones. This makes the platform suitable for organizations that want to manage RTLS infrastructure across more than one operational area or facility from a structured platform environment.
+Do I have to replace my existing ERP, HIS, BMS, WMS, or security platform to use SOLIX?
+No. SOLIX can operate as the location and IoT intelligence layer while exchanging information with existing enterprise applications through supported APIs and integration interfaces. This allows organizations to add real-time location and sensor information to existing workflows rather than building an entirely separate operational process.
+Is on-premises deployment available for organizations with strict data requirements?
+Yes. In addition to cloud deployment, SOLIX can be installed on-premises, giving organizations greater control over where the platform and operational data are hosted. This option can be considered where internal IT policies, security requirements, or data-ownership requirements favour locally managed infrastructure.
+Is SOLIX pricing fixed?
+SOLIX pricing is not fixed and depends on the customer’s specific requirements and project scope. Based on the customer’s requirements and solution analysis, the Sentrax pre-sales team prepares and provides a tailored quotation for the proposed SOLIX package and deployment.
+How can I request a SOLIX demonstration or quotation?
+Organizations can contact the Sentrax team through the SOLIX product enquiry form to discuss their facility, required accuracy, use case, integration requirements, deployment preference, and software package. Sentrax can then recommend the appropriate SOLIX configuration and supporting RTLS hardware for the project.
+Ready to Transform Your Operations?
+Get in touch with our team to explore how SOLIX RTLS &#038; IoT Management Platform can help you track assets, position people, and optimize workflows with precision and ease.
+Talk to Our Experts
+Download Brochure
+Enquiry Form
+Name
+Email
+Phone
+Country
+Select Country Afghanistan Albania Algeria Andorra Angola Antigua & Deps Argentina Armenia Australia Austria Azerbaijan Bahamas Bahrain Bangladesh Barbados Belarus Belgium Belize Benin Bhutan Bolivia Bosnia Herzegovina Botswana Brazil Brunei Bulgaria Burkina Burundi Cambodia Cameroon Canada Cape Verde Central African Rep Chad Chile China Colombia Comoros Congo Congo {Democratic Rep} Costa Rica Croatia Cuba Cyprus Czech Republic Denmark Djibouti Dominica Dominican Republic East Timor Ecuador Egypt El Salvador Equatorial Guinea Eritrea Estonia Ethiopia Fiji Finland France Gabon Gambia Georgia Germany Ghana Greece Grenada Guatemala Guinea Guinea-Bissau Guyana Haiti Honduras Hungary Iceland India Indonesia Iran Iraq Ireland {Republic} Israel Italy Ivory Coast Jamaica Japan Jordan Kazakhstan Kenya Kiribati Korea North Korea South Kosovo Kuwait Kyrgyzstan Laos Latvia Lebanon Lesotho Liberia Libya Liechtenstein Lithuania Luxembourg Macedonia Madagascar Malawi Malaysia Maldives Mali Malta Marshall Islands Mauritania Mauritius Mexico Micronesia Moldova Monaco Mongolia Montenegro Morocco Mozambique Myanmar, {Burma} Namibia Nauru Nepal Netherlands New Zealand Nicaragua Niger Nigeria Norway Oman Pakistan Palau Panama Papua New Guinea Paraguay Peru Philippines Poland Portugal Qatar Romania Russian Federation Rwanda St Kitts & Nevis St Lucia Saint Vincent & the Grenadines Samoa San Marino Sao Tome & Principe Saudi Arabia Senegal Serbia Seychelles Sierra Leone Singapore Slovakia Slovenia Solomon Islands Somalia South Africa South Sudan Spain Sri Lanka Sudan Suriname Swaziland Sweden Switzerland Syria Taiwan Tajikistan Tanzania Thailand Togo Tonga Trinidad & Tobago Tunisia Turkey Turkmenistan Tuvalu Uganda Ukraine United Arab Emirates United Kingdom United States Uruguay Uzbekistan Vanuatu Vatican City Venezuela Vietnam Yemen Zambia Zimbabwe
+Company Name
+Industry
+Healthcare Education Smart Buildings Manufacturing Safety & Security Energy & Utilities
+How can we help?
+&#916;
+Company
+About us
+Our Partners
+Partnership Program
+Newsletters
+Blog
+Careers
+Contact us
+Explore
+Our Products
+Technology
+Applications and Usecases
+Documents
+FAQs
+Solutions
+Proximity Tracking
+BiLink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Follow Us
+Copyright 2026 by Sentrax . All rights reserved.
+Terms & Conditions
+Privacy Policy
+Refund & Return Policy
+Search
+Start typing to see products you are looking for.
+Search
+Menu
+Categories
+Home
+About us
+Newsletters
+Contact us
+Blog
+Careers
+Products Beacons &#038; Tags
+NODIX CEN-1
+PINIX TOW-5
+PINIX TOW-1
+PINIX TOK-1
+PINIX TEP-1
+PINIX TEF-1
+PINIX TOP-5
+PINIX TEN-2
+PINIX TOP-6
+PINIX TEK-1
+PINIX TOB-1
+Scanner &#038; Locators
+ZENIX LEN-2
+ZENIX LEN-1
+ZENIX LON-2
+ZENIX LEF-3
+ZENIX LOF-2
+Solix RTLS Platform &#038; API
+SOLIX RTLS &#038; IoT Management Platform
+Software
+SDM (Sentrax Device Manager)
+POSIX SDK
+Evaluation Kits
+BLE RSSI Evaluation KIT
+BLE AoA Evaluation KIT
+Technology
+Solutions Proximity Tracking
+Bilink Proximity Tracking
+Accurate Tracking
+Hybrid Tracking
+Indoor Positioning
+Applications Healthcare
+Manufacturing
+Smart City
+Partners Our Partners
+Partnership Program
+Support Documents
+Submit Ticket
+My Tickets
+FAQs
+Legal Data Protection
+Sentrax RMA
+Privacy Policy
+Terms & Conditions
+Careers
+Company About us
+Newsletters
+Whitepapers
+Blog
+Contact us
+Wishlist
+Login / Register
+Home
+Wishlist
+Login/Register
+Translate &raquo;

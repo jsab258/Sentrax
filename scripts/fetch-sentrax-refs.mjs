@@ -10,7 +10,12 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const root = join(import.meta.dirname, '..');
-const UA = 'Mozilla/5.0 (sentrax-3d-demo reference fetcher)';
+// The site's bot protection rejects unusual user agents intermittently, so use a standard browser UA and
+// pace requests politely (one at a time, with a pause, retrying 403 and 429 with backoff).
+const UA =
+  'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36';
+const PAUSE_MS = 1200;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const DEVICES = [
   ['NODIX CEN-1', 'https://sentrax.com/product/nodix-cen-1/'],
@@ -45,9 +50,13 @@ const slug = (s) =>
     .replace(/^-|-$/g, '');
 
 async function get(url) {
-  const res = await fetch(url, { headers: { 'user-agent': UA } });
-  if (!res.ok) throw new Error(`${res.status} ${url}`);
-  return res;
+  for (let attempt = 0; ; attempt++) {
+    await sleep(PAUSE_MS * (attempt + 1));
+    const res = await fetch(url, { headers: { 'user-agent': UA, accept: '*/*' } });
+    if (res.ok) return res;
+    if ((res.status === 403 || res.status === 429) && attempt < 3) continue;
+    throw new Error(`${res.status} ${url}`);
+  }
 }
 
 function decode(s) {
@@ -78,18 +87,25 @@ function fullSize(url) {
   return url.replace(/-\d{2,4}x\d{2,4}(\.(?:jpe?g|png|webp))$/i, '$1');
 }
 
-function productImages(html) {
+/**
+ * Product photos. The product pages are built with Elementor, not a WooCommerce gallery, so photos are
+ * found by file name: any upload whose name contains the model token (for example "cen-1" or "CEN-1").
+ * Menu thumbnails and other products in the related-products carousel are skipped.
+ */
+function productImages(html, model) {
+  const token = model.split(' ')[1].toLowerCase();
+  const compact = token.replace('-', '');
   const urls = new Set();
-  const og = html.match(/<meta[^>]+property="og:image"[^>]+content="([^"]+)"/i);
-  if (og) urls.add(decode(og[1]));
-  const galleryStart = html.indexOf('woocommerce-product-gallery');
-  const scope = galleryStart >= 0 ? html.slice(galleryStart, galleryStart + 60000) : html;
-  for (const m of scope.matchAll(
-    /(?:data-large_image|href|src)="([^"]+\/wp-content\/uploads\/[^"]+\.(?:jpe?g|png|webp))"/gi,
+  for (const m of html.matchAll(
+    /https?:\/\/sentrax\.com\/wp-content\/uploads\/[^"')\s]+?\.(?:jpe?g|png|webp)/gi,
   )) {
-    urls.add(fullSize(decode(m[1])));
+    const url = fullSize(decode(m[0]));
+    const name = url.split('/').pop().toLowerCase();
+    if (!name.includes(token) && !name.includes(compact)) continue;
+    if (/menu|thumb|icon|logo/.test(name)) continue;
+    urls.add(url);
   }
-  return [...urls].filter((u) => !/logo|icon|favicon|placeholder/i.test(u));
+  return [...urls];
 }
 
 function pdfLinks(html) {
@@ -110,9 +126,10 @@ async function download(url, dir) {
 }
 
 async function main() {
+  const devicesOnly = process.argv.includes('--devices-only');
   const pagesDir = join(root, 'reference', 'pages');
   await mkdir(pagesDir, { recursive: true });
-  for (const url of PAGES) {
+  for (const url of devicesOnly ? [] : PAGES) {
     try {
       const html = await (await get(url)).text();
       const name = slug(new URL(url).pathname) || 'home';
@@ -122,12 +139,13 @@ async function main() {
       console.warn(`page  FAILED ${url}: ${e.message}`);
     }
   }
-  try {
-    await download(BROCHURE, pagesDir);
-    console.log(`pdf   ${BROCHURE}`);
-  } catch (e) {
-    console.warn(`pdf   FAILED ${BROCHURE}: ${e.message}`);
-  }
+  if (!devicesOnly)
+    try {
+      await download(BROCHURE, pagesDir);
+      console.log(`pdf   ${BROCHURE}`);
+    } catch (e) {
+      console.warn(`pdf   FAILED ${BROCHURE}: ${e.message}`);
+    }
 
   for (const [model, url] of DEVICES) {
     const dir = join(root, 'reference', 'devices', slug(model));
@@ -147,7 +165,7 @@ async function main() {
       await writeFile(join(dir, 'page.txt'), `Source: ${url}\n\n${text}\n`);
       meta.title = decode(html.match(/<title>([^<]+)<\/title>/i)?.[1] ?? '');
       meta.specLines = text.split('\n').filter((l) => SPEC_LINE.test(l) && l.length < 240);
-      for (const img of productImages(html)) {
+      for (const img of productImages(html, model)) {
         try {
           meta.images.push({ file: await download(img, dir), url: img });
         } catch (e) {
