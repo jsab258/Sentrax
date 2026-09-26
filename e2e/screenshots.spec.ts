@@ -13,7 +13,11 @@ interface Shot {
   waitFor?: string;
   fullPage?: boolean;
   desktopOnly?: boolean;
+  /** Extra wait after `waitFor`, for the 3D scene to settle (software rendering is slow). */
+  settleMs?: number;
 }
+
+const ready = '[data-testid="scene-stage"][data-ready="true"]';
 
 const shots: Record<string, Shot[]> = {
   m0: [
@@ -67,14 +71,75 @@ const shots: Record<string, Shot[]> = {
       desktopOnly: true,
     },
   ],
+  m2: [
+    { name: 'hospital-high', url: './?quality=high&stats=1', waitFor: ready, settleMs: 6000 },
+    {
+      name: 'hospital-medium',
+      url: './?quality=medium&stats=1',
+      waitFor: ready,
+      settleMs: 6000,
+      desktopOnly: true,
+    },
+    { name: 'hospital-low', url: './?quality=low&stats=1', waitFor: ready, settleMs: 4000 },
+    {
+      name: 'closeup-patient-room-high',
+      url: './?quality=high&cam=13,5.5,-12.5,17,0.8,-18',
+      waitFor: ready,
+      settleMs: 6000,
+      desktopOnly: true,
+    },
+    {
+      name: 'closeup-icu-high',
+      url: './?quality=high&cam=4,6,3,5,0.8,-4',
+      waitFor: ready,
+      settleMs: 6000,
+      desktopOnly: true,
+    },
+    {
+      name: 'closeup-station-high',
+      url: './?quality=high&cam=24,6.5,-17,30,0.8,-8',
+      waitFor: ready,
+      settleMs: 6000,
+      desktopOnly: true,
+    },
+    {
+      name: 'closeup-patient-room-low',
+      url: './?quality=low&cam=13,5.5,-12.5,17,0.8,-18',
+      waitFor: ready,
+      settleMs: 4000,
+      desktopOnly: true,
+    },
+    {
+      name: 'device-handover-high',
+      url: './?quality=high&cam=3.2,4.2,-1.2,4.6,2.6,-4.2',
+      waitFor: ready,
+      settleMs: 6000,
+      desktopOnly: true,
+    },
+    {
+      name: 'swatch-sheet',
+      url: './?quality=high&swatches=1',
+      waitFor: ready,
+      settleMs: 5000,
+      desktopOnly: true,
+    },
+    {
+      name: 'swatch-strip',
+      url: './?quality=high&swatches=strip&cam=14.2,24,4,14.2,0,-11.5',
+      waitFor: ready,
+      settleMs: 6000,
+      desktopOnly: true,
+    },
+  ],
 };
 
 for (const shot of shots[milestone] ?? []) {
   test(`screenshot ${shot.name}`, async ({ page }, info) => {
     test.skip(!!shot.desktopOnly && info.project.name !== 'desktop', 'desktop only');
     await page.goto(shot.url);
-    if (shot.waitFor) await page.locator(shot.waitFor).first().waitFor({ timeout: 60_000 });
-    await page.waitForTimeout(1500);
+    test.setTimeout(180_000);
+    if (shot.waitFor) await page.locator(shot.waitFor).first().waitFor({ timeout: 120_000 });
+    await page.waitForTimeout(shot.settleMs ?? 1500);
     await page.screenshot({
       path: `docs/screenshots/${milestone}/${shot.name}-${info.project.name}.png`,
       fullPage: shot.fullPage ?? false,

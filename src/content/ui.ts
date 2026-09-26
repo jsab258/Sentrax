@@ -24,10 +24,6 @@ export const ui = {
     label: 'Loading scene',
     percent: (p: number) => `${Math.round(p)} percent`,
   },
-  placeholderStage: {
-    title: 'Scene preview',
-    body: 'Setup build. The hospital and warehouse scenes arrive in later milestones.',
-  },
   fallback: {
     title: 'This demo needs WebGL2',
     body: 'Your browser or device cannot display the interactive 3D view. You can still talk to us about real-time location for your hospital, warehouse or production site.',

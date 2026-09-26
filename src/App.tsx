@@ -7,7 +7,7 @@ import { ui } from './content/ui';
 import { brand } from './brand/brand';
 import { observeContentHeight, postToParent } from './embed/bridge';
 
-const PlaceholderStage = lazy(() => import('./app/PlaceholderStage'));
+const SceneStage = lazy(() => import('./scene/SceneStage'));
 const ClaimsOverlay = lazy(() => import('./dev/ClaimsOverlay').then((m) => ({ default: m.ClaimsOverlay })));
 const BrandSheet = lazy(() => import('./dev/BrandSheet').then((m) => ({ default: m.BrandSheet })));
 const SimDebugView = lazy(() => import('./dev/SimDebugView').then((m) => ({ default: m.SimDebugView })));
@@ -56,12 +56,8 @@ export function App() {
       ) : (
         <main className="stage">
           <Suspense fallback={<StageLoader />}>
-            <PlaceholderStage />
+            <SceneStage />
           </Suspense>
-          <div className="stage-card" role="note">
-            <h1>{ui.placeholderStage.title}</h1>
-            <p>{ui.placeholderStage.body}</p>
-          </div>
         </main>
       )}
 

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { CASING, SCENE_REFERENCE, SWATCHES } from '../dev/swatches';
 import { brand, shade, tint } from './brand';
 
 function luminance(hex: string): number {
@@ -55,10 +56,19 @@ describe('brand tokens', () => {
     expect(uses.map(([k]) => k)).toEqual(['critical']);
   });
 
-  it('keeps overlay marks at 3:1 or more against a light floor', () => {
-    const floor = '#C9CBCC';
+  it('keeps every overlay mark at 3:1 or more against its casing', () => {
+    // Measured at M2: on the lit floor (#ABA79E) some marks fall below 3:1 on their own, so every line
+    // and dot is drawn with a casing (white, or the insight shade for the light amber warning).
+    for (const s of SWATCHES.filter((x) => x.kind === 'mark')) {
+      expect(contrast(s.hex, s.casing ?? CASING), s.key).toBeGreaterThanOrEqual(3);
+    }
+  });
+
+  it('keeps the dark marks at 3:1 or more against the rendered walls and ground', () => {
     for (const key of ['rssiLine', 'aoa', 'bilink', 'data', 'insight', 'critical'] as const) {
-      expect(contrast(brand.overlay[key], floor), key).toBeGreaterThanOrEqual(3);
+      for (const bg of [SCENE_REFERENCE['Wall face'], SCENE_REFERENCE.Ground]) {
+        expect(contrast(brand.overlay[key], bg), `${key} on ${bg}`).toBeGreaterThanOrEqual(3);
+      }
     }
   });
 });

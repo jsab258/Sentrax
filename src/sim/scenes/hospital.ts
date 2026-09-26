@@ -287,7 +287,8 @@ function devices(): InfraDeviceDef[] {
       id: 'len2-med',
       model: 'ZENIX LEN-2',
       kind: 'gateway',
-      position: vec3(22.2, 1, 2.2),
+      // On the west wall of the medication room (wall face at x 21.6).
+      position: vec3(21.6, 1.2, 2.2),
       mount: 'wall',
       relayTarget: false,
       power: 'poe',
@@ -351,7 +352,7 @@ function assetsAndTags(): { assets: AssetDef[]; tags: TagDef[] } {
   // Crash cart in the corridor by the nurse station; mobile monitors in the ICU and room 103.
   add({ id: 'crashcart-01', cls: 'crash_cart', position: vec3(26, 12.6, 0) });
   add({ id: 'monitor-01', cls: 'mobile_monitor', position: vec3(4.5, 8.8, 0) });
-  add({ id: 'monitor-02', cls: 'mobile_monitor', position: vec3(roomX0(2) + 3.4, 19.2, 0) });
+  add({ id: 'monitor-02', cls: 'mobile_monitor', position: vec3(roomX0(2) + 4.25, 19.3, 0) });
   // Medication fridge with a multi-sensor tag.
   assets.push({ id: 'fridge-01', cls: 'fridge', position: vec3(26, 1.2, 0) });
   tags.push({

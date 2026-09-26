@@ -1,12 +1,13 @@
 // Downloads the Poly Haven textures and HDRIs the scenes use (CC0), processes them and encodes KTX2.
 //
 //   node scripts/assets.mjs            fetch missing sources, then (re)encode everything
+//   node scripts/assets.mjs plaster    only (re)encode the named texture sets, keep the rest
 //
 // Output (committed): public/assets/textures/<name>/<map>-<size>.ktx2, public/assets/hdri/<id>-1k.hdr,
 // src/scene/assets/manifest.json (paths, real-world size, credits). Sources are cached in .asset-cache/.
 // Needs `toktx` from KTX-Software 4.x on PATH. See ASSETS.md for licenses and modifications.
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import sharp from 'sharp';
 
@@ -21,10 +22,10 @@ const API = 'https://api.polyhaven.com';
  */
 const TEXTURES = [
   { name: 'vinyl', id: 'terrazzo_tiles', sizes: [2048, 1024], process: 'desaturate-light' },
-  { name: 'plaster', id: 'painted_plaster_wall', sizes: [1024, 512] },
+  { name: 'plaster', id: 'painted_plaster_wall', sizes: [1024, 512], process: 'white-paint' },
   { name: 'bath-tiles', id: 'interior_tiles', sizes: [1024, 512] },
   { name: 'veneer', id: 'grey_oak_veneer_01', sizes: [1024, 512] },
-  { name: 'leather', id: 'fabric_leather_01', sizes: [1024, 512], process: 'desaturate' },
+  { name: 'leather', id: 'fabric_leather_01', sizes: [1024, 512], process: 'neutral-light' },
   { name: 'linen', id: 'cotton_jersey', sizes: [1024, 512], process: 'desaturate-light' },
 ];
 const HDRIS = [{ id: 'hospital_room', size: '1k' }];
@@ -51,25 +52,28 @@ async function processColor(src, dst, size, mode) {
   let img = sharp(src).resize(size, size);
   if (mode === 'desaturate') img = img.modulate({ saturation: 0.25 });
   if (mode === 'desaturate-light') img = img.modulate({ saturation: 0.12, brightness: 1.35 });
+  // Off-white paint: nearly neutral, mean near sRGB 225, texture variation halved. Sources are 16-bit,
+  // so convert to 8-bit first; linear() offsets are in the image's own value range.
+  // Neutral light grey that keeps the grain, so vertex colours can tint it (upholstery).
+  if (mode === 'neutral-light') {
+    const eight = await img.modulate({ saturation: 0 }).png().toBuffer();
+    const mean = (await sharp(eight).stats()).channels[0].mean;
+    img = sharp(eight).linear(1.2, 205 - 1.2 * mean);
+  }
+  if (mode === 'white-paint') {
+    const eight = await img.modulate({ saturation: 0.1 }).png().toBuffer();
+    img = sharp(eight).linear(0.5, 142);
+  }
   await img.png().toFile(dst);
 }
 
 function encode(input, output, kind) {
-  const common = ['--t2', '--genmipmap'];
+  // Images are stored bottom-up so they sample like a flipY PNG (KTX2 textures cannot be flipped at upload).
+  const common = ['--t2', '--genmipmap', '--lower_left_maps_to_s0t0'];
   const args =
     kind === 'nor'
-      ? [
-          ...common,
-          '--encode',
-          'uastc',
-          '--uastc_quality',
-          '2',
-          '--zcmp',
-          '19',
-          '--assign_oetf',
-          'linear',
-          '--normal_mode',
-        ]
+      ? // Normals stay three-channel (no --normal_mode): three.js reads xyz from the normal map.
+        [...common, '--encode', 'uastc', '--uastc_quality', '2', '--zcmp', '19', '--assign_oetf', 'linear']
       : kind === 'rough'
         ? [...common, '--encode', 'etc1s', '--clevel', '4', '--qlevel', '160', '--assign_oetf', 'linear']
         : [...common, '--encode', 'etc1s', '--clevel', '4', '--qlevel', '192', '--assign_oetf', 'srgb'];
@@ -78,8 +82,14 @@ function encode(input, output, kind) {
 
 async function main() {
   mkdirSync(cache, { recursive: true });
-  const manifest = { textures: {}, hdri: {} };
+  const only = process.argv.slice(2);
+  const manifestFile = join(root, 'src', 'scene', 'assets', 'manifest.json');
+  const manifest =
+    only.length && existsSync(manifestFile)
+      ? JSON.parse(readFileSync(manifestFile, 'utf8'))
+      : { textures: {}, hdri: {} };
   for (const t of TEXTURES) {
+    if (only.length && !only.includes(t.name)) continue;
     const info = await json(`${API}/info/${t.id}`);
     const files = await json(`${API}/files/${t.id}`);
     const srcRes = t.sizes[0] >= 2048 ? '2k' : '1k';
@@ -116,7 +126,7 @@ async function main() {
     }
     manifest.textures[t.name] = entry;
   }
-  for (const h of HDRIS) {
+  for (const h of only.length ? [] : HDRIS) {
     const info = await json(`${API}/info/${h.id}`);
     const files = await json(`${API}/files/${h.id}`);
     const url = files.hdri[h.size].hdr.url;

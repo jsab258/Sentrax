@@ -30,7 +30,7 @@
       "authors": ["Amal Kumar"],
       "license": "CC0",
       "sizeM": [2, 2],
-      "modified": null,
+      "modified": "white-paint",
       "maps": {
         "diff": {
           "high": "assets/textures/plaster/diff-1024.ktx2",
@@ -99,7 +99,7 @@
       "authors": ["Rob Tuytel"],
       "license": "CC0",
       "sizeM": [0.4000000059604645, 0.40000003576278687],
-      "modified": "desaturate",
+      "modified": "neutral-light",
       "maps": {
         "diff": {
           "high": "assets/textures/leather/diff-1024.ktx2",

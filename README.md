@@ -31,6 +31,10 @@ Useful URL parameters during development:
 - `?dev=brand` shows the brand tokens and device catalogue
 - `?claims` opens the unapproved-claims overlay
 - `?webgl=0` forces the no-WebGL2 fallback
+- `?quality=high|medium|low` overrides the detected quality tier (also available in the Quality menu on the stage)
+- `?stats=1` shows frame rate, draw calls, triangles and script time per frame (always on in development; `?stats=0` hides it)
+- `?cam=px,py,pz,tx,ty,tz` (development only) places the camera, in three.js coordinates, for reproducible screenshots
+- `?swatches=1` (development only) shows the overlay colour sheet with contrast against the rendered scene; `?swatches=strip` shows only the in-scene strip
 
 ## Check
 
@@ -91,10 +95,15 @@ src/
   brand/       brand tokens extracted from sentrax.com, self-hosted fonts
   content/     every UI string and claim, with source and approval flag
   dev/         dev-only claims overlay, brand sheet and 2D simulation debug view
+  scene/       3D stage: canvas, quality tiers, lighting, post-processing, cutaway, overlay pass
+    kit/       procedural parts builder and instancing
+    hospital/  building, furniture, equipment and dressing for the hospital
+    devices/   true-scale Sentrax device models and billboard markers
+    characters/ the Character system (instanced mannequins and poses)
   sim/         simulation engine, scenes and engine tests
   embed/       postMessage bridge for iframe hosting
-e2e/           Playwright smoke and screenshot specs
-scripts/       bundle budget check, reference fetcher, brand extractor
+e2e/           Playwright smoke, scene and screenshot specs
+scripts/       bundle budget check, texture pipeline, reference fetcher, brand extractor
 reference/     downloaded product references (modelling only)
 docs/          device reference sheet, screenshots
 ```

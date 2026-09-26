@@ -82,7 +82,9 @@ The 3D world uses realistic colors. Brand colors are reserved for the Radio, Dat
 | overlay.warning    | `#F59E0B` | standard amber           | Warnings                                           |
 | overlay.critical   | `#D31F4C` | red                      | Critical alerts only                               |
 
-Marks (lines, dots, outlines) are checked at 3:1 or more against the scene; translucent fills are not. The M2 checkpoint measures every value against colors sampled from the rendered hospital.
+Marks (lines, dots, outlines) are checked at 3:1 or more against the scene; translucent fills are not.
+
+Measured at M2 against colors sampled from the rendered hospital (high tier): lit floor `#ABA79E`, shaded floor `#8A8779`, wall face `#E1E1E2`, wall section `#A8A49E`, ground `#E1E1E1`. On the lit floor, RSSI rings (2.5:1), AoA rays (2.6:1), critical red (2.2:1) and amber (1.1:1) fall below 3:1 on their own. Proposed (DECISIONS.md 61, pending approval): every overlay line and dot gets a casing, white for the dark marks and the insight shade `#221E57` for the amber warning; each mark then reaches 5:1 or more against its casing. The full table is in the development swatch sheet (`?swatches=1`) and in src/dev/swatches.ts.
 
 ## Contrast
 

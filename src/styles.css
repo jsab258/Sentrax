@@ -119,9 +119,141 @@ a {
   min-height: 480px;
 }
 
-.stage-canvas {
+.stage-inner {
+  position: absolute;
+  inset: 0;
+}
+
+.scene-canvas {
   position: absolute !important;
   inset: 0;
+  touch-action: none;
+}
+
+.stage-badge {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  margin: 0;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  background: rgb(255 255 255 / 88%);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+}
+
+.stage-controls {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.stage-quality {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  background: rgb(255 255 255 / 92%);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.stage-quality select {
+  font: inherit;
+  color: var(--color-text);
+  background: transparent;
+  border: 0;
+}
+
+.stage-quality select:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+.stage-stats {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  display: flex;
+  gap: 10px;
+  padding: 4px 8px;
+  font:
+    12px/1.4 ui-monospace,
+    monospace;
+  color: #fff;
+  background: rgb(0 0 0 / 60%);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.swatch-panel {
+  position: absolute;
+  top: 48px;
+  right: 16px;
+  bottom: 64px;
+  width: min(760px, calc(100% - 32px));
+  overflow: auto;
+  padding: 12px 14px;
+  font-size: 12px;
+  background: rgb(255 255 255 / 94%);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.swatch-panel h2 {
+  margin: 0 0 4px;
+  font-size: 15px;
+}
+
+.swatch-panel p {
+  margin: 0 0 8px;
+  color: var(--color-text-muted);
+}
+
+.swatch-panel table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.swatch-panel th,
+.swatch-panel td {
+  padding: 3px 5px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.swatch-panel td.below {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.swatch-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+  vertical-align: -2px;
+  border: 1px solid rgb(0 0 0 / 20%);
+  border-radius: 50%;
+}
+
+.stage-progress {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+}
+
+.stage-progress progress {
+  width: 180px;
+  accent-color: var(--color-secondary);
 }
 
 .stage-card {
@@ -151,6 +283,7 @@ a {
 .stage-loader {
   position: absolute;
   inset: 0;
+  background: #eef1f4;
   display: grid;
   place-items: center;
   gap: 12px;
@@ -493,6 +626,13 @@ a {
 
   .stage-card {
     right: 16px;
+  }
+
+  .stage-stats {
+    top: 44px;
+    left: 16px;
+    right: auto;
+    flex-wrap: wrap;
   }
 }
 
