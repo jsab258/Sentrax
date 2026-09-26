@@ -236,7 +236,7 @@ export class RuleEngine {
     if (n < rule.min) {
       const since = this.belowSince.get(rule.id) ?? t;
       this.belowSince.set(rule.id, since);
-      if (this.active.has(rule.id)) this.refresh(rule.id, t, { count: n }, true);
+      if (this.active.has(rule.id)) this.refresh(rule.id, t, { count: n });
       else if (t - since >= this.cfg.rules.parConfirmS) {
         this.raise(
           {
@@ -434,9 +434,11 @@ export class RuleEngine {
     for (const [tagId, report] of reports) {
       if (!this.applies(tagId, rule.appliesTo)) continue;
       const id = `${rule.id}:${tagId}`;
-      const enteredAt = this.zonesOf(tagId).get(rule.zoneId);
+      const zones = this.zonesOf(tagId);
+      const enteredAt = zones.get(rule.zoneId);
       let since: number | undefined;
       if (rule.mode === 'inside') since = enteredAt;
+      else if (rule.withinZoneId && !zones.has(rule.withinZoneId)) this.outsideSince.delete(id);
       else if (enteredAt === undefined) {
         since = this.outsideSince.get(id) ?? t;
         this.outsideSince.set(id, since);

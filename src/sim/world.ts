@@ -84,6 +84,8 @@ export interface InfraDeviceDef {
   mount: 'ceiling' | 'wall' | 'pole' | 'header';
   /** For BiLink anchors: the room (zone) the anchor validates presence for. */
   roomId?: string;
+  /** Gateways receive BiLink relays unless this is false (for example a sensing-only gateway). */
+  relayTarget?: boolean;
   /** Per-anchor commissioning settings, overriding the defaults in config. */
   bilink?: { enterDbm?: number; exitDbm?: number; validateS?: number; filterAlpha?: number };
   power: 'battery' | 'poe';
@@ -195,6 +197,8 @@ export type RuleDef =
       appliesTo?: Array<AgentRole | AssetClass>;
       /** 'inside': alert when a tag stays in the zone too long. 'outside': when it stays out too long. */
       mode: 'inside' | 'outside';
+      /** For 'outside': only count time spent inside this zone (for example the hall, not the truck). */
+      withinZoneId?: string;
     }
   | { id: string; type: 'muster'; zoneId: string; roles: AgentRole[] };
 

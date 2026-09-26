@@ -9,7 +9,7 @@ Standalone interactive 3D web demo that shows how Sentrax BLE real-time location
 - Device reference sheet: docs/device-reference.md
 - Milestone screenshots: docs/screenshots/
 
-Current milestone: M0 (setup and research).
+Current milestone: M1 (simulation engine and 2D debug view).
 
 ## Requirements
 
@@ -27,6 +27,7 @@ Open http://localhost:5173/.
 
 Useful URL parameters during development:
 
+- `?dev=sim` opens the 2D simulation debug view (add `&scene=hospital|warehouse|test-rssi|test-aoa|test-bilink|test-dock`, `&seed=1`, `&t=120` to fast-forward, `&scenario=h3-out&at=25`, `&select=tag-vent-02`, `&speed=0`)
 - `?dev=brand` shows the brand tokens and device catalogue
 - `?claims` opens the unapproved-claims overlay
 - `?webgl=0` forces the no-WebGL2 fallback
@@ -56,6 +57,17 @@ npm run refs:fetch     # product photos, PDFs and page text into reference/
 npm run brand:extract  # Elementor kit colors, fonts, computed styles and header logo into reference/brand/
 ```
 
+## Simulation engine (src/sim)
+
+Plain TypeScript, no three.js or React, so it runs in Vitest, in the 2D debug view and later under the 3D scenes.
+
+- Deterministic and seeded, fixed 10 Hz steps; `advance(seconds)` returns the interpolation factor for rendering.
+- World data (zones, walls with RF materials, doors, nav graph, devices, tags, agents, rules) in src/sim/scenes.
+- Positioning: RSSI (weighted trilateration), AoA (least-squares ray intersection), BiLink (anchor validation, relay, room assignment), hybrid fusion.
+- Rule engine: zones, PAR, geofence, sensor thresholds, SOS, dock check-in and check-out, dwell, muster. Events on a typed bus.
+- `PositionSource` interface: the UI reads reports through it, so a live SOLIX WebSocket feed can replace the simulator.
+- Every parameter is in src/sim/config.ts and marked illustrative.
+
 ## Build output
 
 `npm run build` writes a fully static site to dist/ with relative paths, so it can be served from any folder. No backend.
@@ -76,9 +88,10 @@ Not set up yet. The target (Hetzner VPS, GitHub Pages or another static host) wi
 src/
   analytics/   pluggable track(event, props), console by default
   app/         shell, WebGL2 check, fallback, CTA
-  brand/       brand tokens (placeholder until extracted)
+  brand/       brand tokens extracted from sentrax.com, self-hosted fonts
   content/     every UI string and claim, with source and approval flag
-  dev/         dev-only claims overlay and brand sheet
+  dev/         dev-only claims overlay, brand sheet and 2D simulation debug view
+  sim/         simulation engine, scenes and engine tests
   embed/       postMessage bridge for iframe hosting
 e2e/           Playwright smoke and screenshot specs
 scripts/       bundle budget check, reference fetcher, brand extractor

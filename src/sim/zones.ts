@@ -43,9 +43,16 @@ export class ZoneIndex {
 
   /** Innermost room or corridor containing the point, if any. */
   roomAt(p: Vec2): string | null {
+    let best: string | null = null;
+    let bestDepth = -1;
     for (const z of this.byId.values()) {
-      if ((z.kind === 'room' || z.kind === 'corridor') && pointInPolygon(p, z.polygon)) return z.id;
+      if ((z.kind !== 'room' && z.kind !== 'corridor') || !pointInPolygon(p, z.polygon)) continue;
+      const depth = this.withAncestors(z.id).length;
+      if (depth > bestDepth) {
+        bestDepth = depth;
+        best = z.id;
+      }
     }
-    return null;
+    return best;
   }
 }

@@ -27,3 +27,10 @@ test('page has no horizontal overflow', async ({ page }) => {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(overflow).toBeLessThanOrEqual(0);
 });
+
+test('2D simulation debug view runs and reports accuracy', async ({ page }) => {
+  await page.goto('./?dev=sim&scene=hospital&t=30');
+  await expect(page.getByTestId('sim-debug')).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByTestId('sim-time')).toContainText('s');
+  await expect(page.getByTestId('sim-stats')).toContainText('%');
+});

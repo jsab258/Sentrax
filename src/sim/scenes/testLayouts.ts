@@ -298,7 +298,7 @@ export function dockLayout(): WorldDef {
       mount: 'header',
       roomId: 'dock1',
       // Dock doors: short-range proximity, validated quickly so a forklift driving through registers.
-      bilink: { enterDbm: -73, exitDbm: -78, validateS: 0.5, filterAlpha: 0.6 },
+      bilink: { enterDbm: -73, exitDbm: -78, validateS: 1, filterAlpha: 0.5 },
       power: 'battery',
     },
     {

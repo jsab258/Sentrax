@@ -10,11 +10,15 @@ import { observeContentHeight, postToParent } from './embed/bridge';
 const PlaceholderStage = lazy(() => import('./app/PlaceholderStage'));
 const ClaimsOverlay = lazy(() => import('./dev/ClaimsOverlay').then((m) => ({ default: m.ClaimsOverlay })));
 const BrandSheet = lazy(() => import('./dev/BrandSheet').then((m) => ({ default: m.BrandSheet })));
+const SimDebugView = lazy(() => import('./dev/SimDebugView').then((m) => ({ default: m.SimDebugView })));
 
 export function App() {
   const rootRef = useRef<HTMLDivElement>(null);
   const webgl = useMemo(() => hasWebGL2(), []);
-  const devView = devToolsEnabled ? new URLSearchParams(window.location.search).get('dev') : null;
+  const query = new URLSearchParams(window.location.search);
+  const devView = devToolsEnabled
+    ? (query.get('dev') ?? (query.get('debug') === 'sim' ? 'sim' : null))
+    : null;
 
   useEffect(() => {
     postToParent('ready');
@@ -42,6 +46,10 @@ export function App() {
       {devView === 'brand' ? (
         <Suspense fallback={null}>
           <BrandSheet />
+        </Suspense>
+      ) : devView === 'sim' ? (
+        <Suspense fallback={null}>
+          <SimDebugView />
         </Suspense>
       ) : !webgl ? (
         <Fallback />
