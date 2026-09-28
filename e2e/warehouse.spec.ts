@@ -35,6 +35,8 @@ test('the scene switch opens the warehouse and its first story', async ({ page }
 test('W1: the dashboard finds PL-2291 at its rack slot', async ({ page }) => {
   const errors = collectErrors(page);
   await page.goto('./?scene=warehouse&story=w1&step=2');
+  // A deep link replays the earlier steps before the stage shows this one.
+  await expect(page.getByTestId('guided-panel')).toHaveAttribute('data-step', '2', { timeout: 30_000 });
   await openDashboard(page);
   await expect(page.getByTestId('asset-search')).toHaveValue('PL-2291');
   await expect(page.getByTestId('asset-where-tag-pallet-2291')).toContainText('Aisle C, bay 14, level 4');
@@ -43,6 +45,8 @@ test('W1: the dashboard finds PL-2291 at its rack slot', async ({ page }) => {
 
 test('W3: work in progress per station and the bottleneck alert', async ({ page }) => {
   await page.goto('./?scene=warehouse&story=w3&step=3');
+  // A deep link replays the earlier steps before the stage shows this one.
+  await expect(page.getByTestId('guided-panel')).toHaveAttribute('data-step', '3', { timeout: 30_000 });
   await openDashboard(page);
   await expect(page.getByTestId('stations')).toBeVisible();
   await expect(page.getByTestId('station-station-2')).toContainText('1 WIP');
@@ -51,6 +55,8 @@ test('W3: work in progress per station and the bottleneck alert', async ({ page 
 
 test('W4: the muster count shows who is still missing', async ({ page }) => {
   await page.goto('./?scene=warehouse&story=w4&step=4');
+  // A deep link replays the earlier steps before the stage shows this one.
+  await expect(page.getByTestId('guided-panel')).toHaveAttribute('data-step', '4', { timeout: 30_000 });
   await openDashboard(page);
   await expect(page.getByTestId('muster-count')).toContainText('8 of 9');
   await expect(page.getByTestId('muster-missing')).toContainText('Assembly worker');

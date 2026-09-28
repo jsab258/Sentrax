@@ -34,12 +34,18 @@ DECISIONS.md first. Branch: `claude/sentrax-3d-rtls-demo-jtoerz`. Preview: https
   link, dev handle `window.__sentrax`. Tests: `src/experience/__tests__/triggers.test.ts`,
   `e2e/sandbox.spec.ts` (drag included).
 
+- M6 polish (DECISIONS 109 to 119): teaser mode (`?mode=teaser`, H1 and W1 teaser loop, pause, no camera
+  input, offscreen pause), iframe `ready` after the first frame, Credits dialog (`src/content/credits.ts`, checked
+  against ASSETS.md), accessibility fixes, simulation performance pass (warehouse step 1.25 to 0.53 ms, results
+  unchanged). Tests: `teaserStories.test.ts`, `credits.test.ts`, e2e `teaser`, `embed` (postMessage), `analytics`
+  (all eight events, no cookies, no third-party requests), `a11y` (axe WCAG A and AA, keyboard, reduced
+  motion), `credits`, `stories` (all ten stories end to end with their narration and takeaway).
+
 ## Next (goal: M3 to M6 without checkpoint stops)
 
 1. Rule 1 of the goal: re-run the Pages workflow and confirm the live preview loads (blocked, see below).
-2. M6 teaser mode, iframe hooks, accessibility, analytics, Credits panel, performance pass, Playwright smoke
-   test per story, live-preview checks. Performance: the warehouse simulation costs about 1.4 ms per step
-   (hospital 0.26 ms); profile the radio sampling first.
+2. Final report after CI is green on the last push. M7 (deploy target) is not started: it needs the user's
+   choice of host.
 
 ## Open issues
 

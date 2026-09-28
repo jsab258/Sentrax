@@ -93,4 +93,8 @@ export interface StoryDef {
   /** Starting state (agent positions, routines) applied before the 30 s pre-roll. */
   world: (base: WorldDef) => WorldDef;
   steps: StoryStep[];
+  /** Teaser version (?mode=teaser): a shortened loop of this story; its copy lives under `copyOf`. */
+  teaser?: boolean;
+  /** Content key in src/content/stories.ts, when it differs from the id. */
+  copyOf?: string;
 }

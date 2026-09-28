@@ -50,6 +50,32 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  verify:
+    name: Check the live preview
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      # Both scenes, one story per scene, the teaser and both tiers load from the deployed URL with their
+      # textures, HDRI and transcoder, without console errors (e2e/preview.spec.ts).
+      - run: npx playwright test e2e/preview.spec.ts --project=desktop
+        env:
+          E2E_BASE_URL: ${{ needs.deploy.outputs.page_url }}
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: preview-check
+          path: test-results
+          retention-days: 7

@@ -192,6 +192,13 @@ shots.m4 = [
   story('w5-step2-excursion', 'scene=warehouse&story=w5&step=2'),
 ];
 
+shots.m6 = [
+  story('teaser-hospital', 'mode=teaser'),
+  story('teaser-warehouse', 'mode=teaser&scene=warehouse'),
+  { ...story('credits', 'scene=hospital&story=h1'), click: '[data-testid="credits-open"]', settleMs: 3000 },
+  story('warehouse-device-card', 'mode=sandbox&scene=warehouse&device=len2-20-20'),
+];
+
 for (const shot of shots[milestone] ?? []) {
   test(`screenshot ${shot.name}`, async ({ page }, info) => {
     test.skip(!!shot.desktopOnly && info.project.name !== 'desktop', 'desktop only');

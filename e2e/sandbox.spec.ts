@@ -32,15 +32,18 @@ test('explore mode has time controls, presets and triggers; an SOS trigger raise
   await page.getByTestId('trigger-sos').click();
   // The trigger sends the nurse to room 105 (its outcome is covered by the trigger unit tests).
   await expect
-    .poll(() =>
-      page.evaluate(() => {
-        const dbg = (
-          window as unknown as {
-            __sentrax: { activeSim: () => { agents: { agents: Map<string, { node: string }> } } };
-          }
-        ).__sentrax;
-        return dbg.activeSim().agents.agents.get('nurse-3')?.node;
-      }),
+    .poll(
+      () =>
+        page.evaluate(() => {
+          const dbg = (
+            window as unknown as {
+              __sentrax: { activeSim: () => { agents: { agents: Map<string, { node: string }> } } };
+            }
+          ).__sentrax;
+          return dbg.activeSim().agents.agents.get('nurse-3')?.node;
+        }),
+      // The nurse walks there in simulation time; software rendering slows the clock down.
+      { timeout: 60_000 },
     )
     .toBe('r105-bed');
   await openDashboard(page);
@@ -72,31 +75,70 @@ test('reset starts the explore simulation afresh', async ({ page }) => {
 });
 
 test('dragging a person moves them in the simulation and follows their tag', async ({ page }) => {
+  // Software rendering: each pointer move waits for a frame, which takes long on a busy runner.
+  test.setTimeout(150_000);
   await page.goto('./?mode=sandbox&scene=hospital&quality=low');
   await expect(page.getByTestId('scene-stage')).toHaveAttribute('data-ready', 'true', { timeout: 90_000 });
   await page.getByTestId('time-pause').click();
+  type Pt = { x: number; y: number };
   type Dbg = {
-    screenOf: (kind: string, id: string) => { x: number; y: number } | null;
-    activeSim: () => { agents: { agents: Map<string, { pos: { x: number; y: number } }> } };
+    screenOf: (kind: string, id: string) => Pt | null;
+    activeSim: () => { agents: { agents: Map<string, { pos: Pt }> } };
   };
-  const screenOf = () =>
-    page.evaluate(() => (window as unknown as { __sentrax: Dbg }).__sentrax.screenOf('agent', 'porter'));
-  const posOf = () =>
-    page.evaluate(() => {
-      const p = (window as unknown as { __sentrax: Dbg }).__sentrax
-        .activeSim()
-        .agents.agents.get('porter')?.pos;
+  const people = [
+    ['porter', 'Porter'],
+    ['biomed', 'BioMed technician'],
+    ['nurse-1', 'Nurse'],
+    ['nurse-2', 'Nurse'],
+    ['nurse-3', 'Nurse'],
+  ] as const;
+  const screenOf = (id: string) =>
+    page.evaluate((a) => (window as unknown as { __sentrax: Dbg }).__sentrax.screenOf('agent', a), id);
+  const posOf = (id: string) =>
+    page.evaluate((a) => {
+      const p = (window as unknown as { __sentrax: Dbg }).__sentrax.activeSim().agents.agents.get(a)?.pos;
       return p ? { x: p.x, y: p.y } : null;
-    });
-  await expect.poll(screenOf).not.toBeNull();
-  const start = (await screenOf()) as { x: number; y: number };
-  const before = (await posOf()) as { x: number; y: number };
+    }, id);
+  const onCanvas = (p: Pt) =>
+    page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.tagName === 'CANVAS', p);
+
+  // Wait until the camera has settled (initial framing, panel insets): people stay put on screen.
+  let last: Pt | null = null;
+  await expect
+    .poll(
+      async () => {
+        const now = await screenOf('porter');
+        const still = !!now && !!last && Math.hypot(now.x - last.x, now.y - last.y) < 1;
+        last = now;
+        return still;
+      },
+      { timeout: 60_000, intervals: [500] },
+    )
+    .toBe(true);
+
+  // Someone the visitor can see and grab (on a phone the explore panel covers the lower part).
+  const vw = page.viewportSize()?.width ?? 0;
+  let pick: { id: string; label: string; start: Pt; end: Pt } | null = null;
+  for (const [id, label] of people) {
+    const start = await screenOf(id);
+    if (!start || !(await onCanvas(start))) continue;
+    const dir = start.x > vw / 2 ? -1 : 1;
+    const end = { x: start.x + dir * 80, y: start.y - 30 };
+    if (await onCanvas(end)) {
+      pick = { id, label, start, end };
+      break;
+    }
+  }
+  expect(pick).not.toBeNull();
+  if (!pick) return;
+  const { start, end } = pick;
+  const before = (await posOf(pick.id)) as Pt;
   await page.mouse.move(start.x, start.y);
   await page.mouse.down();
-  await page.mouse.move(start.x + 60, start.y + 10, { steps: 6 });
-  await page.mouse.move(start.x + 120, start.y + 20, { steps: 6 });
+  await page.mouse.move((start.x + end.x) / 2, (start.y + end.y) / 2, { steps: 3 });
+  await page.mouse.move(end.x, end.y, { steps: 3 });
   await page.mouse.up();
-  const after = (await posOf()) as { x: number; y: number };
+  const after = (await posOf(pick.id)) as Pt;
   expect(Math.hypot(after.x - before.x, after.y - before.y)).toBeGreaterThan(1);
-  await expect(page.getByTestId('sandbox-panel')).toContainText('Porter');
+  await expect(page.getByTestId('sandbox-panel')).toContainText(pick.label);
 });

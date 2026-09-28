@@ -33,6 +33,14 @@ export interface SensorReading {
  */
 export class RuleEngine {
   private readonly membership = new Map<string, ZoneMembership>();
+  /** The zone list each tag's membership was last updated with. */
+  private readonly lastZones = new Map<string, readonly string[]>();
+  /** Per-rule alert and state keys (`rule:tag`), built once instead of every step. */
+  private readonly keys = new Map<string, Map<string, string>>();
+  /** appliesTo results per filter (carriers never change). */
+  private readonly appliesMemo = new WeakMap<object, Map<string, boolean>>();
+  /** Tags each gate rule checks (its appliesTo filter over asset classes). */
+  private readonly gateTags = new Map<string, string[]>();
   private readonly active = new Map<string, AlertInfo>();
   private readonly history: AlertInfo[] = [];
   private readonly belowSince = new Map<string, number>();
@@ -51,7 +59,21 @@ export class RuleEngine {
 
   /** Confirmed zones of a tag, with the time each was entered. */
   zonesOf(tagId: string): ReadonlyMap<string, number> {
-    return this.membership.get(tagId)?.confirmed ?? new Map();
+    return this.membership.get(tagId)?.confirmed ?? NO_ZONES;
+  }
+
+  private key(ruleId: string, tagId: string): string {
+    let perRule = this.keys.get(ruleId);
+    if (!perRule) {
+      perRule = new Map();
+      this.keys.set(ruleId, perRule);
+    }
+    let k = perRule.get(tagId);
+    if (k === undefined) {
+      k = `${ruleId}:${tagId}`;
+      perRule.set(tagId, k);
+    }
+    return k;
   }
 
   /** Number of tagged assets of a class confirmed in a zone. */
@@ -148,6 +170,9 @@ export class RuleEngine {
       m = { confirmed: new Map(), pendingEnter: new Map(), pendingExit: new Map() };
       this.membership.set(tagId, m);
     }
+    // Same zone list as last step and nothing pending: every zone is confirmed and nothing can change.
+    if (this.lastZones.get(tagId) === zoneIds && !m.pendingEnter.size && !m.pendingExit.size) return;
+    this.lastZones.set(tagId, zoneIds);
     const raw = new Set(zoneIds);
     for (const z of raw) {
       m.pendingExit.delete(z);
@@ -175,9 +200,18 @@ export class RuleEngine {
 
   private applies(tagId: string, filter?: ReadonlyArray<AgentRole | AssetClass>): boolean {
     if (!filter?.length) return true;
-    const c = this.carrierOf(tagId);
-    if (!c) return false;
-    return filter.includes(c.type === 'agent' ? c.role : c.cls);
+    let memo = this.appliesMemo.get(filter);
+    if (!memo) {
+      memo = new Map();
+      this.appliesMemo.set(filter, memo);
+    }
+    let r = memo.get(tagId);
+    if (r === undefined) {
+      const c = this.carrierOf(tagId);
+      r = !!c && filter.includes(c.type === 'agent' ? c.role : c.cls);
+      memo.set(tagId, r);
+    }
+    return r;
   }
 
   private population(roles: readonly AgentRole[]): string[] {
@@ -263,7 +297,7 @@ export class RuleEngine {
     reports: ReadonlyMap<string, ReportedPosition>,
   ): void {
     for (const tagId of reports.keys()) {
-      const id = `${rule.id}:${tagId}`;
+      const id = this.key(rule.id, tagId);
       const inside = this.zonesOf(tagId).get(rule.zoneId);
       const violating =
         inside !== undefined && this.applies(tagId, rule.appliesTo) && !rule.allowedTagIds?.includes(tagId);
@@ -349,20 +383,29 @@ export class RuleEngine {
     reports: ReadonlyMap<string, ReportedPosition>,
   ): void {
     const c = this.cfg.rules;
-    for (const tag of this.world.tags) {
-      const carrier = this.carrierOf(tag.id);
-      if (rule.appliesTo?.length && !(carrier?.type === 'asset' && rule.appliesTo.includes(carrier.cls)))
-        continue;
-      const zones = this.zonesOf(tag.id);
+    let tagIds = this.gateTags.get(rule.id);
+    if (!tagIds) {
+      tagIds = this.world.tags
+        .filter((tag) => {
+          const carrier = this.carrierOf(tag.id);
+          return (
+            !rule.appliesTo?.length || (carrier?.type === 'asset' && rule.appliesTo.includes(carrier.cls))
+          );
+        })
+        .map((tag) => tag.id);
+      this.gateTags.set(rule.id, tagIds);
+    }
+    for (const tagId of tagIds) {
+      const zones = this.zonesOf(tagId);
       if (!zones.size) continue;
-      const key = `${rule.id}:${tag.id}`;
+      const key = this.key(rule.id, tagId);
       let g = this.gates.get(key);
       if (!g) {
         g = { side: null, passedGate: false, pendingSide: null, pendingSince: t, lostAt: null };
         this.gates.set(key, g);
       }
       if (zones.has(rule.gateZoneId)) {
-        const report = reports.get(tag.id);
+        const report = reports.get(tagId);
         // Only a live report marks the gate as passed; a held one is just the last known place.
         if (!report?.held) g.passedGate = g.side !== null;
         g.pendingSide = null;
@@ -376,7 +419,7 @@ export class RuleEngine {
           t - heldSince >= c.gateLostS
         ) {
           g.lostAt = heldSince;
-          this.cross(rule, tag.id, g, g.side === 'inside' ? 'outside' : 'inside', t);
+          this.cross(rule, tagId, g, g.side === 'inside' ? 'outside' : 'inside', t);
         }
         continue;
       }
@@ -398,7 +441,7 @@ export class RuleEngine {
       }
       if (side !== g.side) {
         if (t - g.pendingSince < c.gateConfirmS) continue;
-        if (g.passedGate) this.cross(rule, tag.id, g, side, t);
+        if (g.passedGate) this.cross(rule, tagId, g, side, t);
         else g.side = side;
       } else if (g.passedGate && t - g.pendingSince >= c.gateReturnS) {
         // Went into the gate zone and came back out on the same side: not a crossing.
@@ -433,7 +476,7 @@ export class RuleEngine {
   ): void {
     for (const [tagId, report] of reports) {
       if (!this.applies(tagId, rule.appliesTo)) continue;
-      const id = `${rule.id}:${tagId}`;
+      const id = this.key(rule.id, tagId);
       const zones = this.zonesOf(tagId);
       const enteredAt = zones.get(rule.zoneId);
       let since: number | undefined;
@@ -481,6 +524,8 @@ export class RuleEngine {
     });
   }
 }
+
+const NO_ZONES: ReadonlyMap<string, number> = new Map();
 
 function round1(v: number): number {
   return Math.round(v * 10) / 10;

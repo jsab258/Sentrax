@@ -17,32 +17,37 @@ export function App() {
   const rootRef = useRef<HTMLDivElement>(null);
   const webgl = useMemo(() => hasWebGL2(), []);
   const query = new URLSearchParams(window.location.search);
+  // Teaser mode (homepage embed): no header, the stage fills the frame.
+  const teaser = query.get('mode') === 'teaser';
   const devView = devToolsEnabled
     ? (query.get('dev') ?? (query.get('debug') === 'sim' ? 'sim' : null))
     : null;
 
   useEffect(() => {
-    postToParent('ready');
+    // With WebGL2 the stage announces `ready` once the first scene has rendered (SceneStage).
+    if (!webgl || devView) postToParent('ready', { webgl });
     return rootRef.current ? observeContentHeight(rootRef.current) : undefined;
-  }, []);
+  }, [webgl, devView]);
 
   return (
-    <div className="app" ref={rootRef}>
-      <header className="topbar">
-        {brand.logo.src ? (
-          <img
-            className="logo"
-            src={assetUrl(brand.logo.src)}
-            alt={brand.logo.alt}
-            width={brand.logo.width}
-            height={brand.logo.height}
-          />
-        ) : (
-          <span className="wordmark">{ui.brandName}</span>
-        )}
-        <span className="topbar-title">{ui.appTitle}</span>
-        <BookMeetingButton placement="topbar" />
-      </header>
+    <div className={`app${teaser ? ' is-teaser' : ''}`} ref={rootRef}>
+      {!teaser && (
+        <header className="topbar">
+          {brand.logo.src ? (
+            <img
+              className="logo"
+              src={assetUrl(brand.logo.src)}
+              alt={brand.logo.alt}
+              width={brand.logo.width}
+              height={brand.logo.height}
+            />
+          ) : (
+            <span className="wordmark">{ui.brandName}</span>
+          )}
+          <span className="topbar-title">{ui.appTitle}</span>
+          <BookMeetingButton placement="topbar" />
+        </header>
+      )}
 
       {devView === 'brand' ? (
         <Suspense fallback={null}>

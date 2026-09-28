@@ -3,6 +3,7 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
 import { Box3, Vector3 } from 'three';
 import { devToolsEnabled } from '../app/devtools';
+import { useExperience } from '../experience/store';
 import { framing, MAX_DISTANCE, type SceneFrameBounds } from './framing';
 import { cameraApi } from './cameraApi';
 import { cutawayUniforms } from './materials/cutaway';
@@ -27,6 +28,8 @@ export function CameraRig({ bounds, reach }: { bounds: SceneFrameBounds; reach?:
   const camera = useThree((s) => s.camera);
   const get = useThree((s) => s.get);
   const portrait = useThree((s) => s.size.width / Math.max(1, s.size.height) < 0.9);
+  // Teaser mode takes no camera input: wheel and touch scroll the page around the embed.
+  const interactive = useExperience((s) => s.mode !== 'teaser');
 
   useEffect(() => {
     const c = ref.current;
@@ -63,6 +66,7 @@ export function CameraRig({ bounds, reach }: { bounds: SceneFrameBounds; reach?:
     <CameraControls
       ref={ref}
       makeDefault
+      enabled={interactive}
       minDistance={3}
       maxDistance={MAX_DISTANCE}
       minPolarAngle={0.2}

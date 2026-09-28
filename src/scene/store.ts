@@ -32,6 +32,9 @@ interface SceneState {
   /** True once the current scene has rendered its first complete frame. */
   ready: boolean;
   setReady: (r: boolean) => void;
+  /** False while the stage is scrolled out of view: the canvas stops rendering. */
+  visible: boolean;
+  setVisible: (v: boolean) => void;
   /** Stage area covered by UI panels (CSS px): the camera centres shots in the rest. */
   insets: ViewInsets;
   setInsets: (i: ViewInsets) => void;
@@ -62,6 +65,8 @@ export const useSceneStore = create<SceneState>((set) => {
     setSpeed: (speed) => set({ speed }),
     ready: false,
     setReady: (ready) => set({ ready }),
+    visible: true,
+    setVisible: (visible) => set({ visible }),
     insets: { right: 0, bottom: 0 },
     setInsets: (insets) =>
       set((s) => (s.insets.right === insets.right && s.insets.bottom === insets.bottom ? s : { insets })),

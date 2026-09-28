@@ -17,9 +17,14 @@ export function urlParam(name: string): string | null {
   }
 }
 
-/** Claims overlay: always in the dev server, elsewhere only with ?claims. */
+/**
+ * Claims overlay: in the dev server except in the teaser (whose corner holds its two buttons),
+ * elsewhere only with ?claims.
+ */
 export function claimsOverlayRequested(): boolean {
-  return devToolsEnabled && (devToolsShownByDefault || urlParam('claims') !== null);
+  if (!devToolsEnabled) return false;
+  if (urlParam('claims') !== null) return true;
+  return devToolsShownByDefault && urlParam('mode') !== 'teaser';
 }
 
 /** Stats HUD: ?stats=1 in any build; on by default in the dev server (?stats=0 hides it). */

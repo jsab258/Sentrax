@@ -13,7 +13,7 @@ export function SceneLoader() {
       <img className="stage-poster" src={assetUrl('poster.svg')} alt="" />
       <div className="stage-progress">
         <span>{ui.loading.label}</span>
-        <progress max={100} value={progress} aria-label={ui.loading.percent(progress)} />
+        <progress max={100} value={progress} aria-label={ui.loading.label} />
       </div>
     </div>
   );
@@ -34,6 +34,8 @@ export function QualityMenu() {
     <label className="stage-quality">
       <span>{ui.quality.label}</span>
       <select
+        // The visible label is hidden on narrow screens; the select keeps its name.
+        aria-label={ui.quality.label}
         value={override ?? 'auto'}
         onChange={(e) => setOverride(e.target.value === 'auto' ? null : (e.target.value as QualityTier))}
         data-testid="quality-select"

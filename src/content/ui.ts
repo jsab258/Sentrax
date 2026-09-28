@@ -86,6 +86,17 @@ export const ui = {
       coldPallet: 'Take a cold pallet to staging',
     } as Record<string, string>,
   },
+  credits: {
+    open: 'Credits',
+    title: 'Credits',
+    close: 'Close credits',
+    intro: 'Third-party assets and software used in this demo, with their authors and licenses.',
+  },
+  teaser: {
+    label: 'Sentrax demo preview',
+    pause: 'Pause the animation',
+    play: 'Play the animation',
+  },
   deviceCard: {
     inScene: 'In this scene',
     viewProduct: 'View product',
@@ -181,7 +192,6 @@ export const ui = {
   },
   loading: {
     label: 'Loading scene',
-    percent: (p: number) => `${Math.round(p)} percent`,
   },
   fallback: {
     title: 'This demo needs WebGL2',

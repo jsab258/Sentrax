@@ -1,4 +1,5 @@
 import { useThree } from '@react-three/fiber';
+import { prefersReducedMotion } from '../app/motion';
 import { useEffect, useRef } from 'react';
 import { devToolsEnabled, urlParam } from '../app/devtools';
 import { useExperience } from '../experience/store';
@@ -9,14 +10,6 @@ import type { NetworkLayout } from './layers/sceneLayout';
 import { resolveShot } from './shots';
 import { useSceneStore } from './store';
 import { visibleFrustum } from './viewInset';
-
-function prefersReducedMotion(): boolean {
-  try {
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  } catch {
-    return false;
-  }
-}
 
 /**
  * Moves the camera for each guided story step (SPEC section 4: camera target and move per step). Camera

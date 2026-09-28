@@ -71,6 +71,10 @@ export class Simulation implements PositionSource {
   private readonly fallbackZones: ZoneDef[];
   private readonly buildingZones: ZoneDef[];
   private readonly fused = new Map<string, ReportedPosition>();
+  /** Last point report per tag with the estimate and position it was built from (reused while unchanged). */
+  private readonly pointReports = new Map<string, { e: Estimate; p: Vec3; r: ReportedPosition }>();
+  /** Shadowing link keys per tag, one per device (`tag|device`), built once. */
+  private readonly linkKeys = new Map<string, string[]>();
   private readonly seen = new Map<string, number>();
   private readonly readings = new Map<string, Map<SensorKind, SensorReading>>();
   private readonly lastReadingEmit = new Map<string, number>();
@@ -261,10 +265,23 @@ export class Simulation implements PositionSource {
   private advertise(tag: TagRuntime, t: number): void {
     const rays: AoaRay[] = [];
     let heard = false;
-    for (const d of this.world.devices) {
+    let keys = this.linkKeys.get(tag.def.id);
+    if (!keys) {
+      keys = this.world.devices.map((d) => `${tag.def.id}|${d.id}`);
+      this.linkKeys.set(tag.def.id, keys);
+    }
+    const devices = this.world.devices;
+    for (let i = 0; i < devices.length; i++) {
+      const d = devices[i] as InfraDeviceDef;
       const rx = this.cfg.receivers[d.model];
+      // Cheap squared-distance rejection first (with a margin, so the exact test decides every close call).
+      const dx = tag.pos.x - d.position.x;
+      const dy = tag.pos.y - d.position.y;
+      const dz = tag.pos.z - d.position.z;
+      const far = rx.rangeM + 1e-6;
+      if (dx * dx + dy * dy + dz * dz > far * far) continue;
       if (dist3(tag.pos, d.position) > rx.rangeM) continue;
-      const rssi = this.radio.sample(tag.pos, d.position, `${tag.def.id}|${d.id}`);
+      const rssi = this.radio.sample(tag.pos, d.position, keys[i] as string);
       if (rssi < rx.sensitivityDbm) continue;
       heard = true;
       if (d.kind === 'gateway') this.rssi.ingest(tag.def.id, d.id, rssi, t);
@@ -343,6 +360,15 @@ export class Simulation implements PositionSource {
   }
 
   private pointReport(e: Estimate, p: Vec3): ReportedPosition {
+    // Same estimate and position as last step: the same report (zone lookup skipped).
+    const cached = this.pointReports.get(e.tagId);
+    if (cached && cached.e === e && cached.p === p) return cached.r;
+    const r = this.buildPointReport(e, p);
+    this.pointReports.set(e.tagId, { e, p, r });
+    return r;
+  }
+
+  private buildPointReport(e: Estimate, p: Vec3): ReportedPosition {
     const zoneIds = this.zones.zonesAt(p);
     return {
       tagId: e.tagId,

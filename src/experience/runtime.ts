@@ -6,7 +6,7 @@ import { alertFeed } from './alertFeed';
 import { attachIntegrationLog } from './integrationLog';
 import { useExperience } from './store';
 import { StoryPlayer } from './storyPlayer';
-import { storyById, storiesByScene } from './stories';
+import { storyById, storiesByScene, teaserStories } from './stories';
 import { DEFAULT_LAYERS, type CameraShot, type Mode, type SceneKey } from './types';
 import { replaceUrl, type DeepLink } from './url';
 import { baseWorld } from './worlds';
@@ -86,7 +86,8 @@ function applyStep(bump: boolean) {
     simVersion: bump ? prev.simVersion + 1 : prev.simVersion,
   });
   syncUrl();
-  track('story_step', { story: player.story.id, step: player.index + 1 });
+  // The teaser loops for as long as the page is open; only guided stories report their steps.
+  if (!player.story.teaser) track('story_step', { story: player.story.id, step: player.index + 1 });
 }
 
 /** Opens a story at a step (zero-based), replaying earlier steps instantly. */
@@ -100,9 +101,30 @@ export function openStory(storyId: string, step = 0): void {
   attachIntegrationLog(p.sim, baseWorld(story.scene), () => forwardedTags(p));
   p.seek(step);
   player = p;
-  useExperience.setState({ mode: 'guided', scene: story.scene });
-  if (step === 0) track('story_started', { story: story.id });
+  useExperience.setState({ mode: story.teaser ? 'teaser' : 'guided', scene: story.scene });
+  if (step === 0 && !story.teaser) track('story_started', { story: story.id });
   applyStep(true);
+}
+
+/**
+ * Teaser mode: the next step of the current teaser story, or the next teaser story when this one has
+ * ended (H1, W1, H1 and so on). No end card, no analytics per step.
+ */
+export function advanceTeaser(): void {
+  if (!player?.story.teaser) {
+    const first = teaserStories[0];
+    if (first) openStory(first.id);
+    return;
+  }
+  player.finish();
+  if (player.index + 1 < player.story.steps.length) {
+    player.enter(player.index + 1);
+    applyStep(false);
+    return;
+  }
+  const i = teaserStories.indexOf(player.story);
+  const next = teaserStories[(i + 1) % teaserStories.length];
+  if (next) openStory(next.id);
 }
 
 export function nextStep(): void {
@@ -235,7 +257,15 @@ export function applyDeepLink(link: DeepLink): void {
     syncUrl();
     return;
   }
-  const story = storyById(link.story) ?? storiesByScene[link.scene][0];
+  if (link.mode === 'teaser') {
+    // Starts with the scene in the link (hospital by default), then alternates.
+    const first = teaserStories.find((s) => s.scene === link.scene) ?? teaserStories[0];
+    if (first) openStory(first.id);
+    track('scene_opened', { scene: link.scene, mode: 'teaser' });
+    return;
+  }
+  const linked = storyById(link.story);
+  const story = (linked && !linked.teaser ? linked : undefined) ?? storiesByScene[link.scene][0];
   if (story && link.mode === 'guided') openStory(story.id, link.step);
   if (link.lens || link.layers) {
     useExperience.setState({

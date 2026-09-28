@@ -35,8 +35,10 @@ export function SceneCanvas({
   const tier = useSceneStore((s) => s.tier);
   const settings = tierSettings[tier];
   const usePost = tier !== 'low';
+  const visible = useSceneStore((s) => s.visible);
   return (
     <Canvas
+      frameloop={visible ? 'always' : 'never'}
       // Native antialiasing only without the composer; the composer multisamples itself. Switching
       // between the two needs a new context, hence the key.
       key={usePost ? 'post' : 'direct'}

@@ -16,7 +16,7 @@ export function useStageInsets(stage: RefObject<HTMLElement | null>): void {
       const r = root.getBoundingClientRect();
       const dash = root.querySelector<HTMLElement>('[data-testid="dashboard"]');
       const guided = root.querySelector<HTMLElement>(
-        '[data-testid="guided-panel"], [data-testid="sandbox-panel"]',
+        '[data-testid="guided-panel"], [data-testid="sandbox-panel"], [data-testid="teaser"]',
       );
       let right = 0;
       let bottom = 0;
