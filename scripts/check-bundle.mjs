@@ -5,6 +5,8 @@ import { join } from 'node:path';
 import { gzipSync } from 'node:zlib';
 
 const BUDGET_KB = 400;
+// Script URLs start with the build's base path ('./' by default, '/Sentrax/' for the Pages preview).
+const base = process.env.VITE_BASE || './';
 const dist = join(import.meta.dirname, '..', 'dist');
 const html = readFileSync(join(dist, 'index.html'), 'utf8');
 const refs = new Set();
@@ -13,7 +15,8 @@ for (const m of html.matchAll(/<link[^>]+rel="modulepreload"[^>]+href="([^"]+\.j
 
 let total = 0;
 for (const ref of refs) {
-  const bytes = gzipSync(readFileSync(join(dist, ref.replace(/^\.?\//, '')))).length;
+  const file = ref.startsWith(base) ? ref.slice(base.length) : ref.replace(/^\.?\//, '');
+  const bytes = gzipSync(readFileSync(join(dist, file))).length;
   total += bytes;
   console.log(`  ${ref}  ${(bytes / 1024).toFixed(1)} KB gzip`);
 }

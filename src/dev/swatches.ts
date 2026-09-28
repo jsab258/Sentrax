@@ -15,8 +15,8 @@ export const SCENE_REFERENCE = {
 } as const;
 
 /**
- * Casing drawn around overlay lines and dots so they read on any part of the scene (see DECISIONS.md):
- * white for the dark marks, the dark insight shade for the light amber warning.
+ * Casing drawn around every overlay line, dot and ring so it reads on any part of the scene (DECISIONS.md
+ * 61, approved at the M2 review): white for the dark marks, the dark insight shade for the amber warning.
  */
 export const CASING = '#FFFFFF';
 

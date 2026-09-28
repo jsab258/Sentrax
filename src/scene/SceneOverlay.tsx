@@ -1,4 +1,5 @@
 import { useProgress } from '@react-three/drei';
+import { assetUrl } from '../app/assetUrl';
 import { ui } from '../content/ui';
 import type { QualityTier } from './quality';
 import { useRenderStats } from './stats';
@@ -9,7 +10,7 @@ export function SceneLoader() {
   const { progress } = useProgress();
   return (
     <div className="stage-loader" role="status" aria-live="polite" data-testid="scene-loader">
-      <img className="stage-poster" src="./poster.svg" alt="" />
+      <img className="stage-poster" src={assetUrl('poster.svg')} alt="" />
       <div className="stage-progress">
         <span>{ui.loading.label}</span>
         <progress max={100} value={progress} aria-label={ui.loading.percent(progress)} />

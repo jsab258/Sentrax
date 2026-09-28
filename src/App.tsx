@@ -1,8 +1,9 @@
 import { Suspense, lazy, useEffect, useMemo, useRef } from 'react';
+import { assetUrl } from './app/assetUrl';
 import { hasWebGL2 } from './app/webgl';
 import { Fallback } from './app/Fallback';
 import { BookMeetingButton } from './app/CtaButton';
-import { devToolsEnabled } from './app/devtools';
+import { claimsOverlayRequested, devToolsEnabled } from './app/devtools';
 import { ui } from './content/ui';
 import { brand } from './brand/brand';
 import { observeContentHeight, postToParent } from './embed/bridge';
@@ -31,7 +32,7 @@ export function App() {
         {brand.logo.src ? (
           <img
             className="logo"
-            src={brand.logo.src}
+            src={assetUrl(brand.logo.src)}
             alt={brand.logo.alt}
             width={brand.logo.width}
             height={brand.logo.height}
@@ -61,7 +62,7 @@ export function App() {
         </main>
       )}
 
-      {devToolsEnabled && (
+      {claimsOverlayRequested() && (
         <Suspense fallback={null}>
           <ClaimsOverlay />
         </Suspense>
@@ -73,7 +74,7 @@ export function App() {
 function StageLoader() {
   return (
     <div className="stage-loader" role="status" aria-live="polite">
-      <img className="stage-poster" src="./poster.svg" alt="" />
+      <img className="stage-poster" src={assetUrl('poster.svg')} alt="" />
       <span>{ui.loading.label}</span>
     </div>
   );

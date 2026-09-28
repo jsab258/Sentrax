@@ -1,0 +1,3 @@
+# Preview build: keep out of search engines (see DECISIONS.md 74).
+User-agent: *
+Disallow: /

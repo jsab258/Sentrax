@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { unapprovedClaims } from '../content';
 import { ui } from '../content/ui';
 
-/** Dev-only list of every unapproved claim (SPEC section 3). Never rendered in normal production builds. */
+/** Dev-only list of every unapproved claim (SPEC section 3). On the preview it shows only with ?claims. */
 export function ClaimsOverlay() {
   const items = unapprovedClaims();
   const [open, setOpen] = useState(() => new URLSearchParams(window.location.search).has('claims'));

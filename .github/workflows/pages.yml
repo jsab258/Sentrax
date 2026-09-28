@@ -1,0 +1,55 @@
+name: Preview (GitHub Pages)
+
+# Online preview of the working branch (DECISIONS.md 72). Final production hosting is decided at M7.
+# Needs Settings > Pages > Source set to "GitHub Actions", and the github-pages environment must allow
+# this branch to deploy (Settings > Environments > github-pages > Deployment branches and tags).
+on:
+  push:
+    branches:
+      - claude/sentrax-3d-rtls-demo-jtoerz
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; a newer push replaces a queued one.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build preview
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - id: pages
+        uses: actions/configure-pages@v5
+      - name: Build with the Pages base path
+        run: npm run build
+        env:
+          # For example /Sentrax/; follows the repository name, so the M7 rename needs no change here.
+          VITE_BASE: ${{ steps.pages.outputs.base_path }}/
+          # Dev tools stay reachable, shown only when their URL parameter is set (DECISIONS.md 75).
+          VITE_ENABLE_DEV_TOOLS: 'true'
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy preview
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

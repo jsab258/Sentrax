@@ -6,7 +6,7 @@ import { devToolsEnabled } from '../app/devtools';
 import { framing, MAX_DISTANCE, type SceneFrameBounds } from './framing';
 import { cutawayUniforms } from './materials/cutaway';
 
-/** Development only: ?cam=px,py,pz,tx,ty,tz (three.js coordinates) for reproducible screenshots. */
+/** Dev tool: ?cam=px,py,pz,tx,ty,tz (three.js coordinates) for reproducible screenshots. */
 function devCamera(): [number, number, number, number, number, number] | null {
   if (!devToolsEnabled) return null;
   const v = new URLSearchParams(window.location.search).get('cam')?.split(',').map(Number);

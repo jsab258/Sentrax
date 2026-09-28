@@ -57,8 +57,12 @@ describe('brand tokens', () => {
   });
 
   it('keeps every overlay mark at 3:1 or more against its casing', () => {
-    // Measured at M2: on the lit floor (#ABA79E) some marks fall below 3:1 on their own, so every line
-    // and dot is drawn with a casing (white, or the insight shade for the light amber warning).
+    expect(SWATCHES.find((x) => x.key === 'warning')?.casing).toBe(brand.overlay.insight);
+    for (const s of SWATCHES.filter((x) => x.kind === 'mark' && x.key !== 'warning')) {
+      expect(s.casing ?? CASING, s.key).toBe('#FFFFFF');
+    }
+    // Measured at M2: on the lit floor (#ABA79E) some marks fall below 3:1 on their own, so every line,
+    // dot and ring is drawn with a casing (approved at the M2 review): white, or the insight shade for amber.
     for (const s of SWATCHES.filter((x) => x.kind === 'mark')) {
       expect(contrast(s.hex, s.casing ?? CASING), s.key).toBeGreaterThanOrEqual(3);
     }

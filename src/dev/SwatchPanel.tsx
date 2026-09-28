@@ -7,9 +7,11 @@ export function SwatchPanel() {
     <aside className="swatch-panel" data-testid="swatch-panel">
       <h2>Overlay colours against the rendered hospital</h2>
       <p>
-        Numbers are WCAG contrast ratios. Marks (lines, dots, outlines) need 3:1; fills are translucent
-        washes. The in-scene strip shows each colour as a mark without (front row) and with (back row) a white
-        casing.
+        Numbers are WCAG contrast ratios. Marks (lines, dots, rings) need 3:1; fills are translucent washes.
+        Every mark is drawn with a casing (approved at the M2 review): white around the dark colours,{' '}
+        {SWATCHES.find((x) => x.key === 'warning')?.casing} around the amber warning. In the in-scene strip
+        the back row shows marks as drawn, with casing; the front row shows them without casing, for reference
+        only.
       </p>
       <table>
         <thead>
@@ -24,6 +26,7 @@ export function SwatchPanel() {
               </th>
             ))}
             <th>Casing</th>
+            <th>As drawn</th>
           </tr>
         </thead>
         <tbody>
@@ -56,6 +59,13 @@ export function SwatchPanel() {
                     {contrast(s.hex, s.casing ?? CASING).toFixed(2)}
                   </>
                 )}
+              </td>
+              <td>
+                {s.kind === 'mark'
+                  ? contrast(s.hex, s.casing ?? CASING) >= 3
+                    ? 'passes 3:1'
+                    : 'fails'
+                  : 'fill'}
               </td>
             </tr>
           ))}

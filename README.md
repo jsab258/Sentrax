@@ -82,9 +82,18 @@ Plain TypeScript, no three.js or React, so it runs in Vitest, in the 2D debug vi
 - It posts `ready`, `cta_click`, `story_complete` and `content_height` messages to the parent window, each tagged `source: 'sentrax-3d-demo'`.
 - Set `VITE_EMBED_PARENT_ORIGIN` at build time to restrict messages to the host origin.
 
+## Online preview
+
+`.github/workflows/pages.yml` builds the working branch and deploys it to GitHub Pages on every push: https://jsab258.github.io/Sentrax/ (the path follows the repository name, so it changes with the M7 rename).
+
+- The build sets `VITE_BASE` to the Pages site path and `VITE_ENABLE_DEV_TOOLS=true`. Dev tools are reachable but only show with their URL parameter: `?claims`, `?dev=sim`, `?dev=brand`, `?stats=1`, `?swatches=1`, `?cam=`.
+- Every build carries `noindex, nofollow` and a robots.txt that disallows crawling.
+- One-time repository settings: Settings > Pages > Build and deployment > Source "GitHub Actions"; Settings > Environments > github-pages > Deployment branches and tags must allow the working branch.
+- Rehearse locally: `VITE_BASE=/Sentrax/ VITE_ENABLE_DEV_TOOLS=true npm run build`, then serve `dist/` under `/Sentrax/`.
+
 ## Deploy
 
-Not set up yet. The target (Hetzner VPS, GitHub Pages or another static host) will be chosen at M7.
+Final production hosting (Hetzner VPS, GitHub Pages or another static host) will be chosen at M7.
 
 ## Project layout
 

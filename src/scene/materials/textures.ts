@@ -2,6 +2,7 @@ import { useLoader, useThree } from '@react-three/fiber';
 import { useEffect, useMemo } from 'react';
 import { RepeatWrapping, type Texture } from 'three';
 import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader.js';
+import { assetUrl } from '../../app/assetUrl';
 import manifest from '../assets/manifest.json';
 
 /**
@@ -14,11 +15,11 @@ export type TextureTier = 'high' | 'low';
 
 export function texturePaths(name: TextureName, tier: TextureTier): [string, string, string] {
   const maps = manifest.textures[name].maps;
-  return [maps.diff[tier], maps.nor[tier], maps.rough[tier]];
+  return [assetUrl(maps.diff[tier]), assetUrl(maps.nor[tier]), assetUrl(maps.rough[tier])];
 }
 
 export function hdriPath(id: keyof typeof manifest.hdri): string {
-  return manifest.hdri[id].path;
+  return assetUrl(manifest.hdri[id].path);
 }
 
 export interface PbrMaps {
