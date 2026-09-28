@@ -41,14 +41,12 @@ DECISIONS.md first. Branch: `claude/sentrax-3d-rtls-demo-jtoerz`. Preview: https
   (all eight events, no cookies, no third-party requests), `a11y` (axe WCAG A and AA, keyboard, reduced
   motion), `credits`, `stories` (all ten stories end to end with their narration and takeaway).
 
-## Next (goal: M3 to M6 without checkpoint stops)
+## Next
 
-1. Rule 1 of the goal: re-run the Pages workflow and confirm the live preview loads (blocked, see below).
-2. Final report after CI is green on the last push. M7 (deploy target) is not started: it needs the user's
-   choice of host.
+1. M7 (deploy target) is not started: it needs the user's choice of host (SPEC section 12).
 
 ## Open issues
 
-- BLOCKED (2026-09-28 13:04 UTC): GitHub Pages is not enabled on the repository (configure-pages: "Get
-  Pages site failed ... Not Found", run 36425931480), and this session's network policy denies
-  jsab258.github.io (proxy 403), so the live preview cannot be opened from here.
+- None blocking. GitHub Pages was enabled on 2026-09-28; the Pages workflow deploys every push to this branch and
+  its verify job runs `e2e/preview.spec.ts` against the live URL (both scenes, H1, W1, the teaser, both tiers).
+  The same spec passed 4/4 from this session against https://jsab258.github.io/Sentrax/ (run 36473404314).
