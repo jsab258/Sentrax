@@ -202,6 +202,9 @@ function nav() {
   // Cold room through its door.
   n.node('cold-out', 62, 9.2).node('cold-door', 64, 9.2).node('cold-in', 66, 9.2).node('cold-store', 72, 8);
   n.link('ls-61', 'cold-out', 'cold-door', 'cold-in', 'cold-store');
+  // Beside the cold room stock, within reach of CP-04's place.
+  n.node('cold-rack', 74.5, 9.5);
+  n.link('cold-store', 'cold-rack');
   // Production: buffer and stations.
   n.node('buffer-w', 6, 28.5).node('buffer-e', 22, 28.5);
   n.node('station-1', 7, 36.5).node('station-2', 15, 36.5).node('station-3', 23, 36.5).node('prod-n', 15, 44);

@@ -42,5 +42,15 @@ export function StoryDirector({ world, network }: { world: WorldDef; network?: N
     cameraApi.fly(shot.position, shot.target, !first.current && !prefersReducedMotion());
     first.current = false;
   }, [storyId, step, simVersion, data, world, network, size, insets]);
+  // Explore mode presets: fly to the requested shot.
+  const request = useExperience((s) => s.cameraRequest);
+  useEffect(() => {
+    if (!request || !cameraApi.fly) return;
+    const { aspect, fov } = visibleFrustum(size, insets);
+    const shot = resolveShot(request.shot, world, aspect, fov);
+    if (shot) cameraApi.fly(shot.position, shot.target, !prefersReducedMotion());
+    // Only a new request flies; resizes keep the visitor's view.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [request]);
   return null;
 }

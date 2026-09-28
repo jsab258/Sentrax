@@ -7,7 +7,7 @@ import { attachIntegrationLog } from './integrationLog';
 import { useExperience } from './store';
 import { StoryPlayer } from './storyPlayer';
 import { storyById, storiesByScene } from './stories';
-import { DEFAULT_LAYERS, type Mode, type SceneKey } from './types';
+import { DEFAULT_LAYERS, type CameraShot, type Mode, type SceneKey } from './types';
 import { replaceUrl, type DeepLink } from './url';
 import { baseWorld } from './worlds';
 
@@ -196,6 +196,19 @@ export function setScene(scene: SceneKey): void {
     const first = storiesByScene[scene][0];
     if (first) openStory(first.id);
   }
+}
+
+/** Explore mode: starts the scene's simulation afresh (same seed, after the pre-roll). */
+export function resetSandbox(): void {
+  const s = useExperience.getState();
+  sandboxSims.delete(s.scene);
+  useExperience.setState({ selectedTag: null, simVersion: s.simVersion + 1 });
+}
+
+/** Asks the camera to fly to a shot (explore mode presets). */
+export function requestCamera(shot: CameraShot): void {
+  const prev = useExperience.getState().cameraRequest;
+  useExperience.setState({ cameraRequest: { shot, nonce: (prev?.nonce ?? 0) + 1 } });
 }
 
 /** Advances the active simulation by real time; returns the interpolation factor. */

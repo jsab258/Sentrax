@@ -42,11 +42,15 @@ export function CameraRig({ bounds, reach }: { bounds: SceneFrameBounds; reach?:
     cameraApi.fly = (position, target, animate) => {
       void c.setLookAt(position.x, position.y, position.z, target.x, target.y, target.z, animate);
     };
+    cameraApi.setEnabled = (on) => {
+      c.enabled = on;
+    };
     const r = reach ?? bounds;
     c.setBoundary(new Box3(new Vector3(r.x0 - 2, 0, -r.y1 - 2), new Vector3(r.x1 + 2, 6, -r.y0 + 2)));
     // Frame once, and again only when the canvas flips between portrait and landscape.
     return () => {
       cameraApi.fly = null;
+      cameraApi.setEnabled = null;
     };
   }, [bounds, reach, camera, get, portrait]);
 

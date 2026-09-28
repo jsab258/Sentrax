@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import {
   DEFAULT_LAYERS,
+  type CameraShot,
   type LayerKey,
   type LayerState,
   type Lens,
@@ -35,6 +36,10 @@ export interface ExperienceState {
   heatmap: boolean;
   /** Bumped whenever the active simulation is replaced (new story, back, scene change). */
   simVersion: number;
+  /** Explore mode: the device whose product card is open. */
+  inspectDevice: string | null;
+  /** A camera move requested by the UI (presets); the nonce makes repeated requests fly again. */
+  cameraRequest: { shot: CameraShot; nonce: number } | null;
   set: (patch: Partial<ExperienceState>) => void;
   toggleLayer: (k: LayerKey) => void;
 }
@@ -56,6 +61,8 @@ export const useExperience = create<ExperienceState>((set) => ({
   compare: 'bilink',
   heatmap: false,
   simVersion: 0,
+  inspectDevice: null,
+  cameraRequest: null,
   set: (patch) => set(patch),
   toggleLayer: (k) => set((s) => ({ layers: { ...s.layers, [k]: !s.layers[k] } })),
 }));

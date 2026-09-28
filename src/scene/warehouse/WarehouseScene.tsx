@@ -11,6 +11,7 @@ import { tierSettings } from '../quality';
 import { SceneCanvas } from '../SceneCanvas';
 import { SimClock } from '../simRuntime';
 import { useSceneStore } from '../store';
+import { Picker } from '../Picker';
 import { StoryDirector } from '../StoryDirector';
 import { warehouseGround } from './ground';
 import { WarehouseBuilding } from './WarehouseBuilding';
@@ -62,6 +63,7 @@ export default function WarehouseScene() {
       <Heatmap sim={sim} world={world} bounds={bounds} />
       <Layers sim={sim} world={world} network={network} glow={settings.glow} ground={warehouseGround} />
       <StoryDirector world={world} network={network} />
+      <Picker sim={sim} world={world} ground={warehouseGround} />
       <ReadySignal />
     </SceneCanvas>
   );

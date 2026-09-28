@@ -15,7 +15,9 @@ export function useStageInsets(stage: RefObject<HTMLElement | null>): void {
       if (!root) return;
       const r = root.getBoundingClientRect();
       const dash = root.querySelector<HTMLElement>('[data-testid="dashboard"]');
-      const guided = root.querySelector<HTMLElement>('[data-testid="guided-panel"]');
+      const guided = root.querySelector<HTMLElement>(
+        '[data-testid="guided-panel"], [data-testid="sandbox-panel"]',
+      );
       let right = 0;
       let bottom = 0;
       if (r.width > MOBILE_MAX_W) {

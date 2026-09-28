@@ -1241,6 +1241,162 @@ a {
   }
 }
 
+/* Explore mode */
+
+.sandbox {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 5;
+  display: grid;
+  gap: 12px;
+  width: min(390px, calc(100% - 32px));
+  max-height: calc(100% - 150px);
+  overflow: auto;
+  padding: 14px 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: var(--panel-shadow);
+}
+
+.sandbox-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.sandbox-row .guided-kicker {
+  flex-basis: 100%;
+}
+
+.sandbox-block {
+  display: grid;
+  gap: 6px;
+}
+
+.sandbox-triggers {
+  display: grid;
+  gap: 6px;
+}
+
+.sandbox-triggers .btn {
+  justify-content: flex-start;
+  min-height: 36px;
+  padding: 6px 12px;
+  font-size: 14px;
+  white-space: normal;
+  text-align: left;
+}
+
+.chip-plain::before {
+  display: none;
+}
+
+.sandbox-following {
+  margin: 0;
+  font-size: 14px;
+}
+
+.device-card {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 14px;
+  width: min(460px, calc(100% - 32px));
+  padding: 16px;
+  transform: translateX(-50%);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: var(--panel-shadow);
+}
+
+.has-dashboard .device-card {
+  left: calc((100% - var(--dash-w) - 28px) / 2);
+}
+
+.device-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.device-card h2 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.device-card p {
+  margin: 0 0 8px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+}
+
+.device-role .guided-kicker {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.device-card .btn {
+  min-height: 36px;
+  padding: 6px 14px;
+  font-size: 14px;
+}
+
+.device-card-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--color-text-muted);
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+@media (width <= 720px) {
+  .sandbox {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    width: auto;
+    max-height: 44%;
+    padding: 12px;
+  }
+
+  .has-dashboard .sandbox {
+    bottom: 60px;
+  }
+
+  .has-dashboard .device-card {
+    left: 50%;
+  }
+
+  .device-card {
+    bottom: 8px;
+    grid-template-columns: 84px 1fr;
+    width: calc(100% - 16px);
+    z-index: 8;
+  }
+
+  .device-card img {
+    width: 84px;
+    height: 84px;
+  }
+}
+
 /* Dev tools */
 
 .claims-overlay {

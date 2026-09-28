@@ -7,6 +7,8 @@ import { footprint } from '../buildingGeometry';
 import { SwatchStrip } from '../dev/SwatchStrip';
 import { Heatmap } from '../layers/Heatmap';
 import { Layers } from '../layers/Layers';
+import { flatGround } from '../elevation';
+import { Picker } from '../Picker';
 import { networkLayouts } from '../layers/sceneLayout';
 import { tierSettings } from '../quality';
 import { SceneCanvas } from '../SceneCanvas';
@@ -55,6 +57,7 @@ export default function HospitalScene({ swatches = false }: { swatches?: boolean
       <Heatmap sim={sim} world={world} bounds={bounds} />
       <Layers sim={sim} world={world} network={network} glow={settings.glow} />
       <StoryDirector world={world} network={network} />
+      <Picker sim={sim} world={world} ground={flatGround} />
       {swatches && <SwatchStrip />}
       <ReadySignal />
     </SceneCanvas>

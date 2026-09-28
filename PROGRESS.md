@@ -29,11 +29,15 @@ DECISIONS.md first. Branch: `claude/sentrax-3d-rtls-demo-jtoerz`. Preview: https
   with dev tools (`VITE_ENABLE_DEV_TOOLS=true npx vite build --outDir dist-shots`, `vite preview --port 4173`,
   `E2E_BASE_URL=http://127.0.0.1:4173/ SCREENSHOTS=1 SCREENSHOT_MILESTONE=m4 npx playwright test e2e/screenshots.spec.ts`).
 
+- M5 explore mode (DECISIONS 104 to 108): panel with time controls, camera presets and event triggers per
+  scene, drag people and tagged assets, device product cards with photos (`public/devices`), ?device= deep
+  link, dev handle `window.__sentrax`. Tests: `src/experience/__tests__/triggers.test.ts`,
+  `e2e/sandbox.spec.ts` (drag included).
+
 ## Next (goal: M3 to M6 without checkpoint stops)
 
 1. Rule 1 of the goal: re-run the Pages workflow and confirm the live preview loads (blocked, see below).
-2. M5 sandbox: drag, lens, event triggers, time controls, heatmap, device product cards, camera presets.
-3. M6 teaser mode, iframe hooks, accessibility, analytics, Credits panel, performance pass, Playwright smoke
+2. M6 teaser mode, iframe hooks, accessibility, analytics, Credits panel, performance pass, Playwright smoke
    test per story, live-preview checks. Performance: the warehouse simulation costs about 1.4 ms per step
    (hospital 0.26 ms); profile the radio sampling first.
 

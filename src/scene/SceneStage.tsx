@@ -6,7 +6,9 @@ import { devToolsEnabled, statsRequested, urlParam } from '../app/devtools';
 import { ui } from '../content/ui';
 import { SwatchPanel } from '../dev/SwatchPanel';
 import { Dashboard } from '../ui/Dashboard';
+import { DeviceCard } from '../ui/DeviceCard';
 import { GuidedPanel } from '../ui/GuidedPanel';
+import { SandboxPanel } from '../ui/SandboxPanel';
 import { LabelLayer } from '../ui/LabelLayer';
 import { LayerToolbar, SceneBar } from '../ui/StageToolbar';
 import { useStageInsets } from '../ui/useStageInsets';
@@ -66,6 +68,8 @@ export default function SceneStage() {
         <QualityMenu />
       </div>
       {mode === 'guided' && <GuidedPanel />}
+      {mode === 'sandbox' && <SandboxPanel />}
+      <DeviceCard />
       {insight && <Dashboard sim={sim} world={baseWorld(scene)} />}
       {statsRequested() && <StatsHud />}
       {swatches === 'sheet' && <SwatchPanel />}
