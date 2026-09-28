@@ -32,6 +32,14 @@ interface SceneState {
   /** True once the current scene has rendered its first complete frame. */
   ready: boolean;
   setReady: (r: boolean) => void;
+  /** Stage area covered by UI panels (CSS px): the camera centres shots in the rest. */
+  insets: ViewInsets;
+  setInsets: (i: ViewInsets) => void;
+}
+
+export interface ViewInsets {
+  right: number;
+  bottom: number;
 }
 
 export const useSceneStore = create<SceneState>((set) => {
@@ -54,5 +62,8 @@ export const useSceneStore = create<SceneState>((set) => {
     setSpeed: (speed) => set({ speed }),
     ready: false,
     setReady: (ready) => set({ ready }),
+    insets: { right: 0, bottom: 0 },
+    setInsets: (insets) =>
+      set((s) => (s.insets.right === insets.right && s.insets.bottom === insets.bottom ? s : { insets })),
   };
 });

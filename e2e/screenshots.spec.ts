@@ -15,6 +15,10 @@ interface Shot {
   desktopOnly?: boolean;
   /** Extra wait after `waitFor`, for the 3D scene to settle (software rendering is slow). */
   settleMs?: number;
+  /** Cut camera flights (prefers-reduced-motion), so the shot shows where the camera lands. */
+  reduced?: boolean;
+  /** Click this selector before the settle wait. */
+  click?: string;
 }
 
 const ready = '[data-testid="scene-stage"][data-ready="true"]';
@@ -133,12 +137,49 @@ const shots: Record<string, Shot[]> = {
   ],
 };
 
+const story = (name: string, query: string): Shot => ({
+  name,
+  url: `./?${query}&quality=high`,
+  waitFor: ready,
+  settleMs: 8000,
+  reduced: true,
+});
+
+shots.m3 = [
+  story('h1-step1-search', 'story=h1&step=1'),
+  story('h1-step2-dashboard', 'story=h1&step=2'),
+  story('h1-step3-why', 'story=h1&step=3'),
+  story('h2-step3-filter', 'story=h2&step=3'),
+  story('h2-step6-compare', 'story=h2&step=6'),
+  story('h3-step2-below-par', 'story=h3&step=2'),
+  story('h4-step2-door-open', 'story=h4&step=2'),
+  story('h5-step2-routed', 'story=h5&step=2'),
+  { ...story('h5-end-card', 'story=h5&step=2'), click: '[data-testid="skip"]' },
+  story('sandbox', 'mode=sandbox&scene=hospital'),
+  {
+    ...story(
+      'overlay-depth-before',
+      'mode=sandbox&layers=physical,radio&lens=rssi&select=tag-crashcart-01&cam=34,7,-2,24,1,-13&dimming=0',
+    ),
+    desktopOnly: true,
+  },
+  {
+    ...story(
+      'overlay-depth-after',
+      'mode=sandbox&layers=physical,radio&lens=rssi&select=tag-crashcart-01&cam=34,7,-2,24,1,-13',
+    ),
+    desktopOnly: true,
+  },
+];
+
 for (const shot of shots[milestone] ?? []) {
   test(`screenshot ${shot.name}`, async ({ page }, info) => {
     test.skip(!!shot.desktopOnly && info.project.name !== 'desktop', 'desktop only');
+    if (shot.reduced) await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto(shot.url);
     test.setTimeout(180_000);
     if (shot.waitFor) await page.locator(shot.waitFor).first().waitFor({ timeout: 120_000 });
+    if (shot.click) await page.locator(shot.click).first().click();
     await page.waitForTimeout(shot.settleMs ?? 1500);
     await page.screenshot({
       path: `docs/screenshots/${milestone}/${shot.name}-${info.project.name}.png`,

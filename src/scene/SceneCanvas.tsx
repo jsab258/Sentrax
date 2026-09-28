@@ -1,3 +1,4 @@
+import { BASE_FOV } from './viewInset';
 import { Canvas } from '@react-three/fiber';
 import { Suspense, type ReactNode } from 'react';
 import { AgXToneMapping, Color } from 'three';
@@ -15,7 +16,15 @@ import { useSceneStore } from './store';
  * The shared 3D canvas: tone mapping, colour space, lighting, camera and post-processing per quality
  * tier. Scene content comes in as children and may suspend while its textures load.
  */
-export function SceneCanvas({ bounds, children }: { bounds: SceneFrameBounds; children: ReactNode }) {
+export function SceneCanvas({
+  bounds,
+  reach,
+  children,
+}: {
+  bounds: SceneFrameBounds;
+  reach?: SceneFrameBounds;
+  children: ReactNode;
+}) {
   const tier = useSceneStore((s) => s.tier);
   const settings = tierSettings[tier];
   const usePost = tier !== 'low';
@@ -34,7 +43,7 @@ export function SceneCanvas({ bounds, children }: { bounds: SceneFrameBounds; ch
         // Lifts AgX's mid-grey rendering of white walls.
         toneMappingExposure: 1.15,
       }}
-      camera={{ fov: 35, near: 0.3, far: 400, position: [20, 40, 30] }}
+      camera={{ fov: BASE_FOV, near: 0.3, far: 400, position: [20, 40, 30] }}
       data-testid="scene-canvas"
       data-tier={tier}
     >
@@ -43,7 +52,7 @@ export function SceneCanvas({ bounds, children }: { bounds: SceneFrameBounds; ch
       <Suspense fallback={null}>
         <Lighting bounds={bounds} settings={settings} />
       </Suspense>
-      <CameraRig bounds={bounds} />
+      <CameraRig bounds={bounds} reach={reach} />
       <OverlayRoot afterComposer={usePost}>
         <Suspense fallback={null}>{children}</Suspense>
       </OverlayRoot>

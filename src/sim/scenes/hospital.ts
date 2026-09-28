@@ -251,7 +251,8 @@ function devices(): InfraDeviceDef[] {
       id: 'cen-med',
       model: 'NODIX CEN-1',
       kind: 'anchor',
-      position: vec3(25.3, 3.5, 2.7),
+      // Kept away from the wall to the open nurse station, so staff at the desk never count as inside.
+      position: vec3(23.6, 5.0, 2.7),
       mount: 'ceiling',
       roomId: 'med',
       bilink: bigRoom,

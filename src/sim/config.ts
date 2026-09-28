@@ -111,6 +111,12 @@ export const simConfig = {
     exitDbm: -82,
     /** Presence is validated only after the filtered value stays above enter for this long (s). */
     validateS: 2,
+    /**
+     * A gap longer than this between two packets restarts validation. A weak link through a wall is heard
+     * only on its loudest packets (the rest fall below sensitivity), so its average looks too strong; a
+     * steady packet train is what proves the tag is in the room. Tags advertise at least every 1 s.
+     */
+    maxPacketGapS: 1.6,
     /** An anchor forgets a tag not heard for this long. */
     presenceTimeoutS: 6,
     /** A stronger room must beat the current one by this margin to take over (dB). */

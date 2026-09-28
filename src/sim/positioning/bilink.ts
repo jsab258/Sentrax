@@ -41,8 +41,8 @@ interface Assignment {
  * BiLink, modelled in two parts.
  *
  * Anchor side (NODIX CEN-1, one per room): keeps a filtered RSSI per tag, validates presence (the value
- * must stay above the enter threshold for a short validation time) with hysteresis (leave only below a
- * lower threshold) and relays only presence events and
+ * must stay above the enter threshold for a short validation time, on a steady packet train) with
+ * hysteresis (leave only below a lower threshold) and relays only presence events and
  * periodic keep-alives to the nearest gateway, with a short latency.
  *
  * SOLIX side: receives the relays and assigns each tag to the room of the strongest anchor reporting
@@ -102,6 +102,8 @@ export class Bilink {
       s = { filtered: rssi, lastHeard: t, present: false, lastRelay: -Infinity, aboveSince: null };
       states.set(tagId, s);
     } else {
+      // Missed packets mean a weak link: restart validation (see config.bilink.maxPacketGapS).
+      if (!s.present && t - s.lastHeard > this.cfg.bilink.maxPacketGapS) s.aboveSince = null;
       s.filtered += alpha * (rssi - s.filtered);
       s.lastHeard = t;
     }

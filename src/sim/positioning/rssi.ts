@@ -89,6 +89,26 @@ export class RssiPositioner {
     return e && t - e.t <= this.cfg.rssi.staleS ? e : undefined;
   }
 
+  /**
+   * Mean RSSI per gateway over the current window and the distance it implies under the estimator's
+   * path loss model (read-only; for the RSSI lens: range rings and trilateration circles).
+   */
+  ranges(tagId: string, t: number): Array<{ gatewayId: string; rssi: number; distanceM: number }> {
+    const { rf, rssi: c } = this.cfg;
+    const out: Array<{ gatewayId: string; rssi: number; distanceM: number }> = [];
+    for (const [gatewayId, list] of this.samples.get(tagId) ?? []) {
+      const recent = list.filter((x) => x.t >= t - c.windowS);
+      if (!recent.length) continue;
+      const rssi = recent.reduce((s, x) => s + x.rssi, 0) / recent.length;
+      out.push({
+        gatewayId,
+        rssi,
+        distanceM: rssiToDistance(rssi, rf.rssiAt1mDbm, c.estimatorPathLossExponent),
+      });
+    }
+    return out.sort((a, b) => b.rssi - a.rssi).slice(0, c.maxGateways);
+  }
+
   /** Time of the most recent packet from the tag at any gateway. */
   lastSampleAt(tagId: string): number {
     return this.lastSample.get(tagId) ?? -Infinity;

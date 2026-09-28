@@ -13,6 +13,8 @@ import type { WorldDef } from '../../sim/world';
 import { GROUND_HDR } from '../backdrop';
 import { buildDoors, buildFloors, buildSlab, buildWalls } from '../buildingGeometry';
 import { cutawayDepthMaterial, withCutaway } from '../materials/cutaway';
+import { Occluder } from '../overlay';
+import { occluderMaterial } from '../overlays/occluders';
 import { usePbrMaps, type TextureTier } from '../materials/textures';
 import { hospitalVisualDoors, hospitalWindows } from './dressing';
 
@@ -77,6 +79,7 @@ export function HospitalBuilding({ world, textures }: { world: WorldDef; texture
       ground,
       catcher,
       depth: cutawayDepthMaterial(),
+      occluder: occluderMaterial(true),
     };
   }, [plaster, vinyl, tiles, veneer]);
 
@@ -129,6 +132,12 @@ export function HospitalBuilding({ world, textures }: { world: WorldDef; texture
       {floors.vinyl && <mesh geometry={floors.vinyl} material={mat.floor} receiveShadow />}
       {floors.tiles && <mesh geometry={floors.tiles} material={mat.bath} receiveShadow />}
       <mesh geometry={geo.slab} material={mat.slab} receiveShadow />
+      <Occluder>
+        {walls.solid && <mesh geometry={walls.solid} material={mat.occluder} />}
+        {walls.frame && <mesh geometry={walls.frame} material={mat.occluder} />}
+        {doors.leaf && <mesh geometry={doors.leaf} material={mat.occluder} />}
+        {doors.steel && <mesh geometry={doors.steel} material={mat.occluder} />}
+      </Occluder>
       <mesh geometry={geo.ground} material={mat.ground} />
       <mesh geometry={geo.ground} material={mat.catcher} position-y={0.001} receiveShadow />
     </group>
