@@ -1,7 +1,8 @@
 import { Color, InstancedMesh, Matrix4, Vector3, type Object3D } from 'three';
 import type { AgentState } from '../../sim/agents';
 import type { Simulation } from '../../sim/engine';
-import type { FigureDef, TagModel } from '../../sim/world';
+import type { AgentRole, FigureDef, TagModel } from '../../sim/world';
+import { flatGround, type Elevation } from '../elevation';
 import type { ModelParts } from '../kit/instancing';
 import type { Bucket } from '../kit/parts';
 import type { Palette } from '../materials/palette';
@@ -10,6 +11,8 @@ import { poseCharacter, type CharacterState } from './pose';
 
 const STRIDE_M = 1.35;
 const TURN_RATE = 9;
+/** Riders turn with their vehicle, which smooths its turns at this rate (warehouse/vehicles.ts). */
+const VEHICLE_TURN_RATE = 6;
 /** Height of a lying figure's centre line: the back sinks into the mattress, the front stays under the blanket. */
 const LYING_Y = 0.64;
 
@@ -35,12 +38,27 @@ export class CharacterSystem {
   private readonly parts = mannequinParts();
   private readonly people: AgentState[];
   private readonly figures: FigureDef[];
+  private readonly vehicles: Map<string, AgentState>;
+  private readonly ground: Elevation;
+  private readonly seats: Partial<Record<AgentRole, [number, number, number]>>;
 
   constructor(
     sim: Simulation,
     palette: Palette,
-    opts: { showFigures: boolean; castShadow: boolean; tagModels: Partial<Record<TagModel, ModelParts>> },
+    opts: {
+      showFigures: boolean;
+      castShadow: boolean;
+      tagModels: Partial<Record<TagModel, ModelParts>>;
+      ground?: Elevation;
+      /** Seat position per vehicle role (vehicle local metres), for people riding them. */
+      seats?: Partial<Record<AgentRole, [number, number, number]>>;
+    },
   ) {
+    this.vehicles = new Map(
+      [...sim.agents.agents.values()].filter((a) => a.kind === 'vehicle').map((a) => [a.id, a]),
+    );
+    this.ground = opts.ground ?? flatGround;
+    this.seats = opts.seats ?? {};
     this.people = [...sim.agents.agents.values()].filter((a) => a.kind === 'person');
     this.figures = opts.showFigures ? sim.world.figures : [];
     const count = this.people.length + this.figures.length;
@@ -91,11 +109,11 @@ export class CharacterSystem {
     };
     const anchors = new Map<string, { chest: Matrix4; wrist: Matrix4 }>();
     for (const a of this.people) {
-      _pos.set(
-        a.prevPos.x + (a.pos.x - a.prevPos.x) * alpha,
-        0,
-        -(a.prevPos.y + (a.pos.y - a.prevPos.y) * alpha),
-      );
+      const px = a.prevPos.x + (a.pos.x - a.prevPos.x) * alpha;
+      const py = a.prevPos.y + (a.pos.y - a.prevPos.y) * alpha;
+      _pos.set(px, this.ground(px, py), -py);
+      const vehicle = a.mode === 'riding' && a.rideOn ? this.vehicles.get(a.rideOn) : undefined;
+      const seat = vehicle ? this.seats[vehicle.role] : undefined;
       let w = this.walkers.get(a.id);
       if (!w) {
         w = { yaw: a.heading, phase: 0, last: _pos.clone(), speed: 0 };
@@ -107,8 +125,14 @@ export class CharacterSystem {
       w.phase += (moved / STRIDE_M) * Math.PI * 2;
       // Turn smoothly towards the simulation heading along the shortest arc.
       const d = Math.atan2(Math.sin(a.heading - w.yaw), Math.cos(a.heading - w.yaw));
-      w.yaw += d * Math.min(1, dt * TURN_RATE);
-      const pose = w.speed > 0.15 ? (a.carrying.length ? 'push' : 'walk') : 'idle';
+      w.yaw += d * Math.min(1, dt * (seat ? VEHICLE_TURN_RATE : TURN_RATE));
+      if (seat) {
+        // On the seat of the vehicle, turning with it.
+        const c = Math.cos(w.yaw);
+        const s = Math.sin(w.yaw);
+        _pos.set(_pos.x + c * seat[0] + s * seat[2], _pos.y + seat[1], _pos.z - s * seat[0] + c * seat[2]);
+      }
+      const pose = seat ? 'sit' : w.speed > 0.15 ? (a.carrying.length ? 'push' : 'walk') : 'idle';
       const res = place({
         id: a.id,
         role: a.role,

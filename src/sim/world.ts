@@ -140,6 +140,8 @@ export interface RoutineStep {
   drop?: string;
   /** Where a dropped asset ends up; defaults to just ahead of the agent at floor level. */
   dropAt?: Vec3;
+  /** Vehicles only: drive this leg backwards (a forklift backing out of a trailer, a tractor backing under one). */
+  reverse?: boolean;
 }
 
 export interface AgentDef {

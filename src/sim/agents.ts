@@ -28,6 +28,8 @@ export interface AgentState {
   current: RoutineStep | null;
   carrying: string[];
   rideOn: string | null;
+  /** Forklifts: height of the load on the forks (m). */
+  forkZ: number;
 }
 
 export interface AssetState {
@@ -37,6 +39,10 @@ export interface AssetState {
   prevPos: Vec3;
   heading: number;
   carriedBy: string | null;
+  /** A trailer being towed: its rear axle point, which follows the tractor (plan). */
+  towRear?: Vec2;
+  /** A load inside a trailer: the trailer and the load's place in the trailer's frame. */
+  inside?: { id: string; along: number; across: number; heading: number } | null;
 }
 
 /** Moves agents along nav graph routes with dwell times; carried assets follow their carrier. */
@@ -82,6 +88,7 @@ export class AgentSystem {
         current: null,
         carrying: [],
         rideOn: def.rideOn ?? null,
+        forkZ: this.cfg.agents.forkTravelM,
       });
     }
   }
@@ -142,6 +149,16 @@ export class AgentSystem {
     if (Math.hypot(asset.pos.x - agent.pos.x, asset.pos.y - agent.pos.y) > this.cfg.agents.pickupReachM)
       return false;
     asset.carriedBy = agentId;
+    asset.inside = null;
+    // A forklift lifts the load from where it stands (a rack level), then lowers it to travel height.
+    if (agent.role === 'forklift') agent.forkZ = Math.max(asset.pos.z, this.cfg.agents.forkTravelM);
+    if (agent.role === 'yard_tractor' && asset.cls === 'trailer') {
+      const L = this.cfg.agents.trailerAxleM;
+      asset.towRear = {
+        x: asset.pos.x + Math.cos(asset.heading) * L,
+        y: asset.pos.y + Math.sin(asset.heading) * L,
+      };
+    }
     agent.carrying.push(assetId);
     this.bus.emit({ type: 'asset.pickedUp', t, agentId, assetId });
     return true;
@@ -153,9 +170,26 @@ export class AgentSystem {
     if (asset.carriedBy !== agentId) return;
     asset.carriedBy = null;
     agent.carrying = agent.carrying.filter((id) => id !== assetId);
+    asset.towRear = undefined;
     if (at) asset.pos = { ...at };
     else asset.pos = { ...asset.pos, z: 0 };
+    if (asset.cls !== 'trailer') asset.inside = this.trailerAround(asset);
     this.bus.emit({ type: 'asset.dropped', t, agentId, assetId, at: { ...asset.pos } });
+  }
+
+  /** The parked trailer a dropped load sits in, with the load's place in the trailer's frame. */
+  private trailerAround(load: AssetState): AssetState['inside'] {
+    const { trailerLengthM: L, trailerWidthM: W } = this.cfg.agents;
+    for (const tr of this.assets.values()) {
+      if (tr.cls !== 'trailer' || tr.carriedBy) continue;
+      const dx = load.pos.x - tr.pos.x;
+      const dy = load.pos.y - tr.pos.y;
+      const along = dx * Math.cos(tr.heading) + dy * Math.sin(tr.heading);
+      const across = -dx * Math.sin(tr.heading) + dy * Math.cos(tr.heading);
+      if (along >= 0 && along <= L && Math.abs(across) <= W / 2)
+        return { id: tr.id, along, across, heading: load.heading - tr.heading };
+    }
+    return null;
   }
 
   /** Sandbox drag: teleport an asset (dropping it if carried). */
@@ -205,12 +239,54 @@ export class AgentSystem {
       if (!asset.carriedBy) continue;
       const c = this.agents.get(asset.carriedBy);
       if (!c) continue;
+      if (c.role === 'yard_tractor' && asset.cls === 'trailer') {
+        this.tow(c, asset);
+        continue;
+      }
       const k =
         c.kind === 'vehicle' ? this.cfg.agents.carryOffsetForkliftM : this.cfg.agents.carryOffsetPersonM;
-      const z = c.role === 'yard_tractor' ? 0 : c.kind === 'vehicle' ? 0.3 : 0;
+      let z = c.kind === 'vehicle' ? this.cfg.agents.forkTravelM : 0;
+      if (c.role === 'forklift') {
+        c.forkZ = Math.max(this.cfg.agents.forkTravelM, c.forkZ - this.cfg.agents.forkLowerMps * dt);
+        z = c.forkZ;
+      }
       asset.pos = { x: c.pos.x + Math.cos(c.heading) * k, y: c.pos.y + Math.sin(c.heading) * k, z };
       asset.heading = c.heading;
     }
+    // Loads inside a trailer move with it.
+    for (const asset of this.assets.values()) {
+      if (!asset.inside || asset.carriedBy) continue;
+      const tr = this.assets.get(asset.inside.id);
+      if (!tr) continue;
+      const { along, across } = asset.inside;
+      const h = tr.heading;
+      asset.pos = {
+        x: tr.pos.x + Math.cos(h) * along - Math.sin(h) * across,
+        y: tr.pos.y + Math.sin(h) * along + Math.cos(h) * across,
+        z: asset.pos.z,
+      };
+      asset.heading = h + asset.inside.heading;
+    }
+  }
+
+  /**
+   * A towed trailer: its nose (the asset position, where the tag sits) rides on the tractor's fifth
+   * wheel and its rear axle follows at a fixed distance, so the trailer swings in behind on turns.
+   */
+  private tow(c: AgentState, trailer: AssetState): void {
+    const { fifthWheelM: F, trailerAxleM: L } = this.cfg.agents;
+    const fx = c.pos.x - Math.cos(c.heading) * F;
+    const fy = c.pos.y - Math.sin(c.heading) * F;
+    const rear = trailer.towRear ?? {
+      x: fx + Math.cos(trailer.heading) * L,
+      y: fy + Math.sin(trailer.heading) * L,
+    };
+    const dx = rear.x - fx;
+    const dy = rear.y - fy;
+    const d = Math.hypot(dx, dy) || 1;
+    trailer.towRear = { x: fx + (dx / d) * L, y: fy + (dy / d) * L };
+    trailer.pos = { x: fx, y: fy, z: 0 };
+    trailer.heading = Math.atan2(dy, dx);
   }
 
   private startNextLeg(a: AgentState): void {
@@ -237,7 +313,7 @@ export class AgentSystem {
       const dx = target.x - a.pos.x;
       const dy = target.y - a.pos.y;
       const d = Math.hypot(dx, dy);
-      if (d > 1e-6) a.heading = Math.atan2(dy, dx);
+      if (d > 1e-6) a.heading = Math.atan2(dy, dx) + (a.current?.reverse ? Math.PI : 0);
       if (d <= budget) {
         a.pos = { ...target };
         a.path.shift();

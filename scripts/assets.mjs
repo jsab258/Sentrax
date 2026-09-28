@@ -1,7 +1,7 @@
 // Downloads the Poly Haven textures and HDRIs the scenes use (CC0), processes them and encodes KTX2.
 //
 //   node scripts/assets.mjs            fetch missing sources, then (re)encode everything
-//   node scripts/assets.mjs plaster    only (re)encode the named texture sets, keep the rest
+//   node scripts/assets.mjs plaster    only (re)encode the named texture sets or HDRIs, keep the rest
 //
 // Output (committed): public/assets/textures/<name>/<map>-<size>.ktx2, public/assets/hdri/<id>-1k.hdr,
 // src/scene/assets/manifest.json (paths, real-world size, credits). Sources are cached in .asset-cache/.
@@ -27,8 +27,15 @@ const TEXTURES = [
   { name: 'veneer', id: 'grey_oak_veneer_01', sizes: [1024, 512] },
   { name: 'leather', id: 'fabric_leather_01', sizes: [1024, 512], process: 'neutral-light' },
   { name: 'linen', id: 'cotton_jersey', sizes: [1024, 512], process: 'desaturate-light' },
+  // Warehouse (M4): hall floor, yard, wall cladding.
+  { name: 'concrete', id: 'smooth_concrete_floor', sizes: [2048, 1024], process: 'light-concrete' },
+  { name: 'asphalt', id: 'clean_asphalt', sizes: [1024, 512] },
+  { name: 'cladding', id: 'corrugated_iron_02', sizes: [1024, 512], process: 'desaturate-light' },
 ];
-const HDRIS = [{ id: 'hospital_room', size: '1k' }];
+const HDRIS = [
+  { id: 'hospital_room', size: '1k' },
+  { id: 'empty_warehouse_01', size: '1k' },
+];
 const MAPS = { diff: 'Diffuse', nor: 'nor_gl', rough: 'Rough' };
 
 async function json(url) {
@@ -59,6 +66,12 @@ async function processColor(src, dst, size, mode) {
     const eight = await img.modulate({ saturation: 0 }).png().toBuffer();
     const mean = (await sharp(eight).stats()).channels[0].mean;
     img = sharp(eight).linear(1.2, 205 - 1.2 * mean);
+  }
+  // Light, neutral polished concrete for the warehouse hall: mean near sRGB 180, variation kept at 80 percent.
+  if (mode === 'light-concrete') {
+    const eight = await img.modulate({ saturation: 0.15 }).png().toBuffer();
+    const mean = (await sharp(eight).stats()).channels[0].mean;
+    img = sharp(eight).linear(0.8, 180 - 0.8 * mean);
   }
   if (mode === 'white-paint') {
     const eight = await img.modulate({ saturation: 0.1 }).png().toBuffer();
@@ -126,7 +139,8 @@ async function main() {
     }
     manifest.textures[t.name] = entry;
   }
-  for (const h of only.length ? [] : HDRIS) {
+  for (const h of HDRIS) {
+    if (only.length && !only.includes(h.id)) continue;
     const info = await json(`${API}/info/${h.id}`);
     const files = await json(`${API}/files/${h.id}`);
     const url = files.hdri[h.size].hdr.url;

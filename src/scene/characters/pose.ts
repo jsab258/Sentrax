@@ -6,7 +6,7 @@ import { BODY, type PartName } from './mannequin';
  * so any renderer (the instanced mannequin today, skinned figures later) can use them.
  */
 
-export type Pose = 'idle' | 'walk' | 'push' | 'lie';
+export type Pose = 'idle' | 'walk' | 'push' | 'lie' | 'sit';
 
 export interface CharacterState {
   id: string;
@@ -72,7 +72,8 @@ export function poseCharacter(s: CharacterState): PoseResult {
     );
   }
 
-  const pelvis = chain(root, tr(0, BODY.hip, 0));
+  // Seated: `position` is the seat, so the pelvis sits on it.
+  const pelvis = s.pose === 'sit' ? chain(root, tr(0, 0.08, 0)) : chain(root, tr(0, BODY.hip, 0));
   const lean = s.pose === 'push' ? 0.12 : walking ? 0.04 : 0;
   const torso = chain(pelvis, tr(0, 0.05, 0), rot(Z, -lean));
   const head = chain(torso, tr(0.01, BODY.torsoLength, 0), rot(Z, lean * 0.6));
@@ -92,6 +93,10 @@ export function poseCharacter(s: CharacterState): PoseResult {
     if (s.pose === 'push') {
       shoulderA = 0.95 + lean;
       elbowA = 0.55;
+    } else if (s.pose === 'sit') {
+      // Hands on the steering wheel.
+      shoulderA = 0.7;
+      elbowA = 0.6;
     } else if (s.pose === 'lie') {
       shoulderA = 0.05;
       elbowA = 0.2;
@@ -110,10 +115,12 @@ export function poseCharacter(s: CharacterState): PoseResult {
     if (side === 'L') wrist = chain(elbow, tr(0, -BODY.forearm + 0.02, 0));
 
     // Legs: swing, knee bends while the leg travels forward.
-    const legA = s.pose === 'lie' ? 0 : 0.42 * swing * -sign;
+    const legA = s.pose === 'lie' ? 0 : s.pose === 'sit' ? Math.PI / 2 : 0.42 * swing * -sign;
     const kneeA = walking
       ? 0.1 + 0.55 * Math.max(0, Math.sin(s.phase + (sign > 0 ? 0 : Math.PI) - 0.6))
-      : 0.03;
+      : s.pose === 'sit'
+        ? Math.PI / 2
+        : 0.03;
     const hip = chain(pelvis, tr(0, -0.02, sign * BODY.pelvisHalfWidth), rot(Z, legA));
     const knee = chain(hip, tr(0, -BODY.thigh, 0), rot(Z, -kneeA));
     if (s.pose === 'lie') {

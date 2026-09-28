@@ -19,14 +19,23 @@ DECISIONS.md first. Branch: `claude/sentrax-3d-rtls-demo-jtoerz`. Preview: https
   heatmap tests, Playwright guided spec (e2e/guided.spec.ts). Screenshots in docs/screenshots/m3, including
   overlay-depth-before/after.
 
+- M4 warehouse (DECISIONS 89 to 103): hall with cutaway, racks and stock (instanced), docks with shelters and
+  trailers, yard one dock height below the hall, cold room, cage, office, stations, forklifts with a moving
+  carriage, yard tractor towing, seated drivers, hi-vis workers; stories W1 to W5 with exact-event tests
+  (`src/experience/__tests__/warehouseStories.test.ts`); dashboard slot, stations and muster panels; per-scene
+  chunks and a payload check in the build. Engine: RSSI fix floor, fresh-fix rule after BiLink, towing, loads
+  in trailers, reverse legs, fork lowering, muster anchor. Overlay lines now render (shader fix).
+  Screenshots: `docs/screenshots/m4`; M3 set recaptured with lines. Captures run against a production build
+  with dev tools (`VITE_ENABLE_DEV_TOOLS=true npx vite build --outDir dist-shots`, `vite preview --port 4173`,
+  `E2E_BASE_URL=http://127.0.0.1:4173/ SCREENSHOTS=1 SCREENSHOT_MILESTONE=m4 npx playwright test e2e/screenshots.spec.ts`).
+
 ## Next (goal: M3 to M6 without checkpoint stops)
 
 1. Rule 1 of the goal: re-run the Pages workflow and confirm the live preview loads (blocked, see below).
-2. M4 warehouse world in 3D plus stories W1 to W5 with the same tests. Then a payload budget check for both
-   scenes (script over the production build: 20 MB high, 8 MB low).
-3. M5 sandbox: drag, lens, event triggers, time controls, heatmap, device product cards, camera presets.
-4. M6 teaser mode, iframe hooks, accessibility, analytics, Credits panel, performance pass, Playwright smoke
-   test per story, live-preview checks.
+2. M5 sandbox: drag, lens, event triggers, time controls, heatmap, device product cards, camera presets.
+3. M6 teaser mode, iframe hooks, accessibility, analytics, Credits panel, performance pass, Playwright smoke
+   test per story, live-preview checks. Performance: the warehouse simulation costs about 1.4 ms per step
+   (hospital 0.26 ms); profile the radio sampling first.
 
 ## Open issues
 

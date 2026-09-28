@@ -31,14 +31,19 @@ export function MiniMap({
     c.width = Math.round(w * dpr);
     c.height = Math.round(h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const { min, max } = world.bounds;
+    // Fit the building (indoor zones); outdoor positions fall outside the map and are not drawn.
+    const indoor = world.zones.filter((z) => z.kind !== 'outdoor').flatMap((z) => z.polygon);
+    const min = { x: Math.min(...indoor.map((p) => p.x)) - 1, y: Math.min(...indoor.map((p) => p.y)) - 1 };
+    const max = { x: Math.max(...indoor.map((p) => p.x)) + 1, y: Math.max(...indoor.map((p) => p.y)) + 1 };
     const s = Math.min((w - 8) / (max.x - min.x), (h - 8) / (max.y - min.y));
     const X = (x: number) => 4 + (x - min.x) * s;
     const Y = (y: number) => h - 4 - (y - min.y) * s;
     ctx.clearRect(0, 0, w, h);
     const rooms = new Map<string, { x: number; y: number }>();
     for (const z of world.zones) {
-      if (z.kind === 'outdoor' || z.parent) continue;
+      // Rooms and areas; parts of a room (bathrooms, bed bays, a cold room entrance) stay inside it.
+      const parent = z.parent ? world.zones.find((p) => p.id === z.parent) : undefined;
+      if (z.kind === 'outdoor' || parent?.kind === 'room') continue;
       ctx.beginPath();
       z.polygon.forEach((p, i) => (i ? ctx.lineTo(X(p.x), Y(p.y)) : ctx.moveTo(X(p.x), Y(p.y))));
       ctx.closePath();

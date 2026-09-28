@@ -51,17 +51,26 @@ export class RssiPositioner {
     for (const [tagId, perTag] of this.samples) {
       if (t < (this.nextUpdate.get(tagId) ?? 0)) continue;
       this.nextUpdate.set(tagId, t + c.updateS);
-      const means: Array<{ g: InfraDeviceDef; rssi: number }> = [];
+      const means: Array<{ g: InfraDeviceDef; rssi: number; from: number }> = [];
       for (const [gwId, list] of perTag) {
         while (list.length && (list[0] as Sample).t < t - c.windowS) list.shift();
         if (!list.length) continue;
         const g = this.gateways.get(gwId);
         if (!g) continue;
-        means.push({ g, rssi: list.reduce((s, x) => s + x.rssi, 0) / list.length });
+        means.push({
+          g,
+          rssi: list.reduce((s, x) => s + x.rssi, 0) / list.length,
+          from: (list[0] as Sample).t,
+        });
       }
-      if (!means.length) continue;
-      means.sort((a, b) => b.rssi - a.rssi);
-      const used = means.slice(0, c.maxGateways);
+      const rx = (m: { g: InfraDeviceDef }) => this.cfg.receivers[m.g.model];
+      const usable = means.filter((m) => m.rssi >= (rx(m).fixFloorDbm ?? c.floorDbm));
+      const only = usable[0];
+      const proximity =
+        usable.length === 1 && !!only && only.rssi >= (rx(only).proximityDbm ?? c.proximityDbm);
+      if (usable.length < c.minGateways && !proximity) continue;
+      usable.sort((a, b) => b.rssi - a.rssi);
+      const used = usable.slice(0, c.maxGateways);
       const raw = this.solve(used);
       const prev = this.estimates.get(tagId);
       const a = c.smoothingAlpha;
@@ -80,6 +89,7 @@ export class RssiPositioner {
         position,
         uncertaintyM: raw.uncertainty,
         sources: used.map((u) => u.g.id),
+        from: Math.min(...used.map((u) => u.from)),
       });
     }
   }
@@ -100,6 +110,8 @@ export class RssiPositioner {
       const recent = list.filter((x) => x.t >= t - c.windowS);
       if (!recent.length) continue;
       const rssi = recent.reduce((s, x) => s + x.rssi, 0) / recent.length;
+      const g = this.gateways.get(gatewayId);
+      if (rssi < ((g && this.cfg.receivers[g.model].fixFloorDbm) ?? c.floorDbm)) continue;
       out.push({
         gatewayId,
         rssi,

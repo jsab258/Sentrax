@@ -3,6 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { useExperience } from '../../experience/store';
 import type { Simulation } from '../../sim/engine';
 import type { WorldDef } from '../../sim/world';
+import { flatGround, type Elevation } from '../elevation';
 import { Overlay } from '../overlay';
 import { simFrame } from '../simRuntime';
 import { labelBridge } from './labels';
@@ -23,15 +24,17 @@ export function Layers({
   world,
   network,
   glow,
+  ground = flatGround,
 }: {
   sim: Simulation;
   world: WorldDef;
   network?: NetworkLayout;
   glow: boolean;
+  ground?: Elevation;
 }) {
   const renderer = useMemo(
-    () => new LayerRenderer(sim, world, network, { reducedMotion: reducedMotion(), glow }),
-    [sim, world, network, glow],
+    () => new LayerRenderer(sim, world, network, { reducedMotion: reducedMotion(), glow }, ground),
+    [sim, world, network, glow, ground],
   );
   useEffect(() => () => renderer.dispose(), [renderer]);
   const size = useThree((s) => s.size);

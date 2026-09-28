@@ -37,7 +37,8 @@ export const RACK = {
   faceOffset: 2.3,
   levelHeights: [0, 1.8, 3.6, 5.4, 7.2],
 };
-const DOCKS = [6, 15, 24];
+/** Dock door centres on the south wall (x). */
+export const DOCKS = [6, 15, 24];
 const DOCK_HALF = 1.75;
 
 /** Plan position of a rack slot (pallet base). */
@@ -86,7 +87,7 @@ function zones(): ZoneDef[] {
     { id: 'cold-entry', kind: 'room', polygon: rect(64, 6, 68, 12.5), parent: 'cold', tags: ['cold'] },
     { id: 'cage', kind: 'area', polygon: rect(22, 14, 30, 20), parent: 'hall', tags: ['restricted'] },
     { id: 'office', kind: 'area', polygon: rect(0, 14, 12, 20), parent: 'hall', tags: ['office'] },
-    { id: 'yard', kind: 'outdoor', polygon: rect(-10, -45, 90, 0), tags: ['yard'] },
+    { id: 'yard', kind: 'outdoor', polygon: rect(-10, -52, 90, 0), tags: ['yard'] },
     { id: 'muster', kind: 'outdoor', polygon: rect(66, -38, 76, -30), parent: 'yard', tags: ['muster'] },
   ];
   for (const [aisle, y] of Object.entries(RACK.aisles)) {
@@ -217,12 +218,21 @@ function nav() {
   n.link('ls-31', 'exit-south-in', 'exit-south', 'yard-path');
   n.node('exit-east', 80, 20.6).node('yard-east', 84, 20.6).node('yard-se', 84, -20);
   n.link('ln-79', 'exit-east', 'yard-east', 'yard-se');
-  n.node('muster', 71, -34);
-  n.link('yard-path', 'muster', 'yard-se');
-  // Yard tractor loop and trailer parking.
-  n.node('yard-1', 10, -22).node('yard-2', 44, -24).node('yard-3', 58, -24).node('yard-4', 58, -14);
-  n.link('yard-path', 'yard-1', 'yard-2', 'yard-3', 'yard-4', 'yard-path');
-  DOCKS.forEach((_, i) => n.link(`trailer-${i + 1}`, 'yard-1'));
+  // Walk to the muster point north of the parked trailers.
+  n.node('yard-walk', 64, -20).node('muster', 71, -34);
+  n.link('yard-path', 'yard-walk', 'muster', 'yard-se');
+  // Yard lane south of the docks (y -22) and the tractor loop; trailer parking bays at y -46 to -32.
+  n.node('yard-1', 10, -22).node('yard-lane-w', 38, -22).node('yard-2', 44, -22).node('yard-3', 62, -22);
+  n.node('yard-4', 62, -14);
+  DOCKS.forEach((x, i) => {
+    // Coupling point under a docked trailer's nose: the tractor backs in from the lane.
+    n.node(`approach-${i + 1}`, x, -22).node(`couple-${i + 1}`, x, -15.4);
+    n.link(`approach-${i + 1}`, `couple-${i + 1}`);
+  });
+  n.link('approach-1', 'yard-1', 'approach-2', 'approach-3', 'yard-lane-w', 'yard-2', 'yard-3', 'yard-4');
+  n.link('yard-path', 'yard-lane-w');
+  n.node('park-a', 38, -47);
+  n.link('yard-lane-w', 'park-a');
   return n.build();
 }
 
@@ -298,6 +308,17 @@ function devices(): InfraDeviceDef[] {
     bilink: gate,
     power: 'battery',
   });
+  // NODIX CEN-1 on the assembly point sign: badges arriving at the muster point are confirmed room-level
+  // (one outdoor gateway alone cannot place a tag inside the muster area).
+  d.push({
+    id: 'cen-muster',
+    model: 'NODIX CEN-1',
+    kind: 'anchor',
+    position: vec3(71, -29.8, 2.3),
+    mount: 'pole',
+    roomId: 'muster',
+    power: 'battery',
+  });
   // Outdoor gateway on a yard pole.
   d.push({
     id: 'lef3-yard',
@@ -324,7 +345,8 @@ function assetsAndTags(): { assets: AssetDef[]; tags: TagDef[] } {
   };
   // The pallet from W1, and other tagged pallets in racks, staging and receiving.
   const w1: RackSlot = { aisle: 'C', bay: 14, level: 4 };
-  tow1({ id: 'pallet-2291', cls: 'pallet', position: slotPosition(w1), slot: w1 });
+  // Racked pallets stand 1.2 m deep into the rack (long side north-south).
+  tow1({ id: 'pallet-2291', cls: 'pallet', position: slotPosition(w1), slot: w1, headingDeg: 90 });
   const rng = new Rng('warehouse-pallets');
   const used = new Set(['C-14-4']);
   for (let i = 1; i <= 24; i++) {
@@ -335,7 +357,13 @@ function assetsAndTags(): { assets: AssetDef[]; tags: TagDef[] } {
       key = `${slot.aisle}-${slot.bay}-${slot.level}`;
     } while (used.has(key));
     used.add(key);
-    tow1({ id: `pallet-22${String(i).padStart(2, '0')}`, cls: 'pallet', position: slotPosition(slot), slot });
+    tow1({
+      id: `pallet-22${String(i).padStart(2, '0')}`,
+      cls: 'pallet',
+      position: slotPosition(slot),
+      slot,
+      headingDeg: 90,
+    });
   }
   [
     [38, 5],
@@ -347,12 +375,13 @@ function assetsAndTags(): { assets: AssetDef[]; tags: TagDef[] } {
   );
   tow1({ id: 'pallet-2401', cls: 'pallet', position: vec3(12, 8.5, 0) });
   tow1({ id: 'pallet-2402', cls: 'pallet', position: vec3(18, 8.5, 0) });
-  // Cold pallets with multi-sensor tags: three in the cold room, one on the truck at dock 3.
+  // Cold pallets with multi-sensor tags, all in the cold room. W5 starts with CP-04 on the refrigerated
+  // truck at dock 3 instead (inside the metal box it is not heard until it is unloaded).
   const cold: Array<[string, Vec3]> = [
     ['cold-pallet-01', vec3(70, 5, 0)],
     ['cold-pallet-02', vec3(73, 5, 0)],
     ['cold-pallet-03', vec3(76, 12, 0)],
-    ['cold-pallet-04', vec3(24, -6, 0)],
+    ['cold-pallet-04', vec3(76, 9, 0)],
   ];
   for (const [id, p] of cold) {
     assets.push({ id, cls: 'cold_pallet', position: p });
@@ -382,7 +411,7 @@ function assetsAndTags(): { assets: AssetDef[]; tags: TagDef[] } {
     tow1({ id: `trailer-0${i + 1}`, cls: 'trailer', position: vec3(x, -14.4, 0), headingDeg: 90 }, 3),
   );
   [44, 50, 56].forEach((x, i) =>
-    tow1({ id: `trailer-0${i + 4}`, cls: 'trailer', position: vec3(x, -30, 0), headingDeg: 90 }, 3),
+    tow1({ id: `trailer-0${i + 4}`, cls: 'trailer', position: vec3(x, -46, 0), headingDeg: 90 }, 3),
   );
   return { assets, tags };
 }
@@ -602,7 +631,7 @@ export function warehouseWorld(): WorldDef {
   const ag = agents();
   return {
     id: 'warehouse',
-    bounds: { min: { x: -10, y: -45 }, max: { x: 90, y: 50 } },
+    bounds: { min: { x: -10, y: -52 }, max: { x: 90, y: 50 } },
     zones: zones(),
     walls: walls(),
     doors: doors(),

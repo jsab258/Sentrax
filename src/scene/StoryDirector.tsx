@@ -1,5 +1,6 @@
 import { useThree } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
+import { devToolsEnabled, urlParam } from '../app/devtools';
 import { useExperience } from '../experience/store';
 import { activePlayer } from '../experience/runtime';
 import type { WorldDef } from '../sim/world';
@@ -32,6 +33,8 @@ export function StoryDirector({ world, network }: { world: WorldDef; network?: N
   useEffect(() => {
     const player = activePlayer();
     if (!storyId || !player || !cameraApi.fly) return;
+    // Dev tool: a fixed ?cam= view wins over the story camera, for reproducible close-ups.
+    if (devToolsEnabled && urlParam('cam')) return;
     const { aspect, fov } = visibleFrustum(size, insets);
     const cam = player.step.camera;
     const shot = resolveShot(cam, world, aspect, fov, cam.network && data ? network?.plane : undefined);

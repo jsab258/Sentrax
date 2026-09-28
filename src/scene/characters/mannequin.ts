@@ -124,5 +124,9 @@ export const OUTFITS: Record<string, { top: RGB; bottom: RGB }> = {
   biomed: { top: rgb('#4a4f57'), bottom: rgb('#2c3440') },
   porter: { top: rgb('#3d5a45'), bottom: rgb('#2f3336') },
   patient: { top: rgb('#c9d6de'), bottom: rgb('#c9d6de') },
+  // Warehouse: hi-vis yellow vests (yellow-green, clear of the amber warning colour) over navy.
+  picker: { top: rgb('#cfd83c'), bottom: rgb('#2b3442') },
+  forklift_driver: { top: rgb('#cfd83c'), bottom: rgb('#30353b') },
+  assembly: { top: rgb('#39475a'), bottom: rgb('#2f3336') },
   default: { top: rgb('#6d7278'), bottom: rgb('#3a3e44') },
 };

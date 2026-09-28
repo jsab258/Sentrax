@@ -1,6 +1,7 @@
 import { devToolsEnabled, urlParam } from '../../app/devtools';
 import {
   AdditiveBlending,
+  BufferAttribute,
   BufferGeometry,
   Color,
   GreaterDepth,
@@ -79,8 +80,9 @@ varying float vAlpha;
 varying float vDist;
 void main() {
   float aa = 0.8;
-  float outer = 1.0 - smoothstep(vWidth.y - aa, vWidth.y + aa, vDist);
-  float inner = 1.0 - smoothstep(vWidth.x - aa, vWidth.x + aa, vDist);
+  float d = abs(vDist);
+  float outer = 1.0 - smoothstep(vWidth.y - aa, vWidth.y + aa, d);
+  float inner = 1.0 - smoothstep(vWidth.x - aa, vWidth.x + aa, d);
   vec3 c = mix(vCasing, vColor, inner);
   float a = outer * vAlpha * uDim;
   if (a < 0.004) discard;
@@ -120,7 +122,8 @@ void main() {
   vec2 off = n * position.y * halfW + dir * along * aWidth.y * 0.5;
   p.xy += off * 2.0 / uViewport * p.w;
   gl_Position = p;
-  vDist = abs(position.y) * halfW;
+  // Signed distance from the centre line; the fragment takes its absolute value after interpolation.
+  vDist = position.y * halfW;
   vColor = aColor;
   vCasing = aCasing;
   vWidth = aWidth;
@@ -360,9 +363,10 @@ function widths(s: StrokeStyle): [number, number] {
 function lineBase(): BufferGeometry {
   const g = new BufferGeometry();
   // x: 0 at the start, 1 at the end; y: -1 to 1 across.
+  // Per-vertex corners of the unit quad (a plain attribute: the per-segment data is instanced).
   g.setAttribute(
     'position',
-    new InstancedBufferAttribute(new Float32Array([0, -1, 0, 1, -1, 0, 1, 1, 0, 0, 1, 0]), 3),
+    new BufferAttribute(new Float32Array([0, -1, 0, 1, -1, 0, 1, 1, 0, 0, 1, 0]), 3),
   );
   g.setIndex([0, 1, 2, 0, 2, 3]);
   return g;

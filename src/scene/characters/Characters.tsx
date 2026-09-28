@@ -1,7 +1,8 @@
 import { useFrame } from '@react-three/fiber';
 import { useEffect, useMemo } from 'react';
 import type { Simulation } from '../../sim/engine';
-import type { TagModel } from '../../sim/world';
+import type { AgentRole, TagModel } from '../../sim/world';
+import type { Elevation } from '../elevation';
 import type { ModelParts } from '../kit/instancing';
 import type { Palette } from '../materials/palette';
 import { simFrame } from '../simRuntime';
@@ -18,16 +19,20 @@ export function Characters({
   showFigures,
   castShadow,
   tagModels,
+  ground,
+  seats,
 }: {
   sim: Simulation;
   palette: Palette;
   showFigures: boolean;
   castShadow: boolean;
   tagModels: Partial<Record<TagModel, ModelParts>>;
+  ground?: Elevation;
+  seats?: Partial<Record<AgentRole, [number, number, number]>>;
 }) {
   const system = useMemo(
-    () => new CharacterSystem(sim, palette, { showFigures, castShadow, tagModels }),
-    [sim, palette, showFigures, castShadow, tagModels],
+    () => new CharacterSystem(sim, palette, { showFigures, castShadow, tagModels, ground, seats }),
+    [sim, palette, showFigures, castShadow, tagModels, ground, seats],
   );
   useEffect(() => () => system.dispose(), [system]);
   useFrame((state, delta) => system.update(simFrame.alpha, delta, state.clock.elapsedTime), -20);

@@ -1,10 +1,14 @@
 import { hospitalWorld } from '../sim/scenes/hospital';
+import { warehouseWorld } from '../sim/scenes/warehouse';
 import type { WorldDef } from '../sim/world';
 import type { SceneKey } from './types';
 
 /** One base world per scene, built once: static geometry and story worlds derive from it. */
 const cache = new Map<SceneKey, WorldDef>();
-const factories: Partial<Record<SceneKey, () => WorldDef>> = { hospital: hospitalWorld };
+const factories: Partial<Record<SceneKey, () => WorldDef>> = {
+  hospital: hospitalWorld,
+  warehouse: warehouseWorld,
+};
 
 export function baseWorld(scene: SceneKey): WorldDef {
   let w = cache.get(scene);

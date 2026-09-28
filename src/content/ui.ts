@@ -103,6 +103,13 @@ export const ui = {
     located: 'Located now',
     activeAlerts: 'Active alerts',
     temperature: 'Temperature',
+    stations: 'Work in progress',
+    wip: (n: number) => `${n} WIP`,
+    dwell: (s: number) => `longest ${formatDuration(s)}`,
+    muster: 'Muster point',
+    musterCount: (present: number, total: number) => `${present} of ${total} at the muster point`,
+    missing: 'Missing, last seen',
+    slot: (aisle: string, bay: number, level: number) => `Aisle ${aisle}, bay ${bay}, level ${level}`,
   },
   integrations: {
     solix: 'SOLIX',

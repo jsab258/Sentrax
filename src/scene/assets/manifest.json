@@ -137,6 +137,75 @@
           "low": "assets/textures/linen/rough-512.ktx2"
         }
       }
+    },
+    "concrete": {
+      "source": "https://polyhaven.com/a/smooth_concrete_floor",
+      "polyHavenId": "smooth_concrete_floor",
+      "title": "Smooth Concrete Floor",
+      "authors": ["Dimitrios Savva"],
+      "license": "CC0",
+      "sizeM": [2, 2],
+      "modified": "light-concrete",
+      "maps": {
+        "diff": {
+          "high": "assets/textures/concrete/diff-2048.ktx2",
+          "low": "assets/textures/concrete/diff-1024.ktx2"
+        },
+        "nor": {
+          "high": "assets/textures/concrete/nor-2048.ktx2",
+          "low": "assets/textures/concrete/nor-1024.ktx2"
+        },
+        "rough": {
+          "high": "assets/textures/concrete/rough-2048.ktx2",
+          "low": "assets/textures/concrete/rough-1024.ktx2"
+        }
+      }
+    },
+    "asphalt": {
+      "source": "https://polyhaven.com/a/clean_asphalt",
+      "polyHavenId": "clean_asphalt",
+      "title": "Clean Asphalt",
+      "authors": ["Dimitrios Savva"],
+      "license": "CC0",
+      "sizeM": [2.0999999046325684, 2.0999999046325684],
+      "modified": null,
+      "maps": {
+        "diff": {
+          "high": "assets/textures/asphalt/diff-1024.ktx2",
+          "low": "assets/textures/asphalt/diff-512.ktx2"
+        },
+        "nor": {
+          "high": "assets/textures/asphalt/nor-1024.ktx2",
+          "low": "assets/textures/asphalt/nor-512.ktx2"
+        },
+        "rough": {
+          "high": "assets/textures/asphalt/rough-1024.ktx2",
+          "low": "assets/textures/asphalt/rough-512.ktx2"
+        }
+      }
+    },
+    "cladding": {
+      "source": "https://polyhaven.com/a/corrugated_iron_02",
+      "polyHavenId": "corrugated_iron_02",
+      "title": "Corrugated Iron 02",
+      "authors": ["Jenelle van Heerden", "Sergej Majboroda"],
+      "license": "CC0",
+      "sizeM": [2.700000047683716, 2.700000047683716],
+      "modified": "desaturate-light",
+      "maps": {
+        "diff": {
+          "high": "assets/textures/cladding/diff-1024.ktx2",
+          "low": "assets/textures/cladding/diff-512.ktx2"
+        },
+        "nor": {
+          "high": "assets/textures/cladding/nor-1024.ktx2",
+          "low": "assets/textures/cladding/nor-512.ktx2"
+        },
+        "rough": {
+          "high": "assets/textures/cladding/rough-1024.ktx2",
+          "low": "assets/textures/cladding/rough-512.ktx2"
+        }
+      }
     }
   },
   "hdri": {
@@ -146,6 +215,13 @@
       "authors": ["Oliksiy Yakovlyev"],
       "license": "CC0",
       "path": "assets/hdri/hospital_room-1k.hdr"
+    },
+    "empty_warehouse_01": {
+      "source": "https://polyhaven.com/a/empty_warehouse_01",
+      "title": "Empty Warehouse 01",
+      "authors": ["Sergej Majboroda"],
+      "license": "CC0",
+      "path": "assets/hdri/empty_warehouse_01-1k.hdr"
     }
   }
 }

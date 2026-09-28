@@ -42,6 +42,14 @@ export interface StepUi {
   nearest?: { cls: string; zoneId: string };
   /** Dashboard panel section to bring forward. */
   panel?: 'assets' | 'alerts';
+  /** Mark the rack slot the system reports for this asset (warehouse W1). */
+  slot?: string;
+  /** Dashboard: work in progress and dwell per station (W3). */
+  stations?: boolean;
+  /** Switch the dwell heatmap on for this step (W3). */
+  heatmap?: boolean;
+  /** Dashboard: live muster count and missing people (W4). */
+  muster?: boolean;
 }
 
 export interface StepUntil {

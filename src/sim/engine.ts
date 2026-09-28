@@ -317,7 +317,7 @@ export class Simulation implements PositionSource {
     const asg = this.bilink.assignment(tagId);
     const leftRoomAt = asg && asg.roomId === null ? asg.since : -Infinity;
     const rs = this.rssi.get(tagId, t);
-    if (rs?.position && this.rssi.lastSampleAt(tagId) > leftRoomAt) {
+    if (rs?.position && (rs.from ?? rs.t) > leftRoomAt) {
       let p: Vec3 = rs.position;
       // BiLink negative evidence: a room with an anchor that does not report the tag is not where the tag
       // is, so an RSSI fix inside such a room is moved to the nearest zone without an anchor.

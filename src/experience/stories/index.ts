@@ -1,7 +1,8 @@
 import type { SceneKey, StoryDef } from '../types';
 import { hospitalStories } from './hospital';
+import { warehouseStories } from './warehouse';
 
-const all: StoryDef[] = [...hospitalStories];
+const all: StoryDef[] = [...hospitalStories, ...warehouseStories];
 
 export const storiesByScene: Record<SceneKey, StoryDef[]> = {
   hospital: all.filter((s) => s.scene === 'hospital'),

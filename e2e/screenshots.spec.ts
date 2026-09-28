@@ -172,6 +172,26 @@ shots.m3 = [
   },
 ];
 
+shots.m4 = [
+  story('warehouse-overview', 'mode=sandbox&scene=warehouse&layers=physical'),
+  story('w1-step1-search', 'scene=warehouse&story=w1&step=1'),
+  story('w1-step2-slot', 'scene=warehouse&story=w1&step=2'),
+  {
+    ...story('w1-step2-slot-close', 'scene=warehouse&story=w1&step=2&cam=49,10,-32,53.2,6,-39.8'),
+    desktopOnly: true,
+  },
+  story('w2-step1-checkout', 'scene=warehouse&story=w2&step=1'),
+  story('w2-step2-yard', 'scene=warehouse&story=w2&step=2'),
+  {
+    ...story('docks-and-yard', 'mode=sandbox&scene=warehouse&layers=physical&cam=46,24,22,20,0,8'),
+    desktopOnly: true,
+  },
+  story('w3-step2-bottleneck', 'scene=warehouse&story=w3&step=2'),
+  story('w4-step1-cage', 'scene=warehouse&story=w4&step=1'),
+  story('w4-step4-located', 'scene=warehouse&story=w4&step=4'),
+  story('w5-step2-excursion', 'scene=warehouse&story=w5&step=2'),
+];
+
 for (const shot of shots[milestone] ?? []) {
   test(`screenshot ${shot.name}`, async ({ page }, info) => {
     test.skip(!!shot.desktopOnly && info.project.name !== 'desktop', 'desktop only');

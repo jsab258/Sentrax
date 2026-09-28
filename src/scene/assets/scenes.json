@@ -1,0 +1,12 @@
+{
+  "hospital": {
+    "textures": ["plaster", "vinyl", "bath-tiles", "veneer", "linen", "leather"],
+    "hdri": "hospital_room",
+    "chunk": "HospitalScene"
+  },
+  "warehouse": {
+    "textures": ["cladding", "concrete", "asphalt", "linen", "leather", "veneer"],
+    "hdri": "empty_warehouse_01",
+    "chunk": "WarehouseScene"
+  }
+}

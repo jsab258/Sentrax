@@ -1,6 +1,7 @@
 import { useFrame } from '@react-three/fiber';
 import { useEffect, useMemo } from 'react';
 import { Euler, InstancedMesh, Matrix4, Quaternion, Vector3 } from 'three';
+import type { AssetState } from '../../sim/agents';
 import type { Simulation } from '../../sim/engine';
 import type { AssetClass, TagModel } from '../../sim/world';
 import type { Palette } from '../materials/palette';
@@ -50,6 +51,7 @@ class AssetSystem {
     tagMounts: Partial<Record<AssetClass, TagMount>>,
     palette: Palette,
     castShadow: boolean,
+    private readonly ground: AssetGround,
   ) {
     const assets = [...sim.agents.assets.values()];
     for (const [cls, parts] of Object.entries(models) as Array<[AssetClass, ModelParts]>) {
@@ -97,11 +99,9 @@ class AssetSystem {
     for (const g of this.groups) {
       g.ids.forEach((id, i) => {
         const a = this.sim.agents.asset(id);
-        _p.set(
-          a.prevPos.x + (a.pos.x - a.prevPos.x) * alpha,
-          a.prevPos.z + (a.pos.z - a.prevPos.z) * alpha,
-          -(a.prevPos.y + (a.pos.y - a.prevPos.y) * alpha),
-        );
+        const x = a.prevPos.x + (a.pos.x - a.prevPos.x) * alpha;
+        const y = a.prevPos.y + (a.pos.y - a.prevPos.y) * alpha;
+        _p.set(x, a.prevPos.z + (a.pos.z - a.prevPos.z) * alpha + this.ground(x, y, a), -y);
         _q.setFromAxisAngle(_up, this.yaw.get(id) ?? a.heading);
         _m.compose(_p, _q, _one);
         const local = g.locals?.[i];
@@ -119,6 +119,10 @@ class AssetSystem {
 
 export type TagMount = { at: [number, number, number]; rot: [number, number, number] };
 
+/** Ground height under an asset (see scene/elevation.ts); an asset may sit on another's floor. */
+export type AssetGround = (x: number, y: number, asset: AssetState) => number;
+const flatAssetGround: AssetGround = () => 0;
+
 export function TrackedAssets({
   sim,
   models,
@@ -126,6 +130,7 @@ export function TrackedAssets({
   tagMounts,
   palette,
   castShadow,
+  ground = flatAssetGround,
 }: {
   sim: Simulation;
   models: Partial<Record<AssetClass, ModelParts>>;
@@ -133,10 +138,11 @@ export function TrackedAssets({
   tagMounts: Partial<Record<AssetClass, TagMount>>;
   palette: Palette;
   castShadow: boolean;
+  ground?: AssetGround;
 }) {
   const system = useMemo(
-    () => new AssetSystem(sim, models, tagModels, tagMounts, palette, castShadow),
-    [sim, models, tagModels, tagMounts, palette, castShadow],
+    () => new AssetSystem(sim, models, tagModels, tagMounts, palette, castShadow, ground),
+    [sim, models, tagModels, tagMounts, palette, castShadow, ground],
   );
   useEffect(() => () => system.dispose(), [system]);
   useFrame((_, delta) => system.update(simFrame.alpha, delta), -30);

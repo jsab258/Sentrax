@@ -7,3 +7,4 @@ test-results
 coverage
 node_modules/.tmp
 .asset-cache
+dist-shots

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { lazy, Suspense, useLayoutEffect, useRef } from 'react';
 import { useExperience } from '../experience/store';
 import { useActiveSim } from '../experience/useActiveSim';
 import { baseWorld } from '../experience/worlds';
@@ -11,7 +11,6 @@ import { LabelLayer } from '../ui/LabelLayer';
 import { LayerToolbar, SceneBar } from '../ui/StageToolbar';
 import { useStageInsets } from '../ui/useStageInsets';
 import { bootExperience } from './boot';
-import HospitalScene from './hospital/HospitalScene';
 import { QualityMenu, SceneLoader, StatsHud } from './SceneOverlay';
 import { useSceneStore } from './store';
 
@@ -24,6 +23,10 @@ function swatchesRequested(): 'sheet' | 'strip' | null {
 
 bootExperience();
 
+// Each scene is its own chunk, loaded when the visitor first opens it (SPEC section 11).
+const HospitalScene = lazy(() => import('./hospital/HospitalScene'));
+const WarehouseScene = lazy(() => import('./warehouse/WarehouseScene'));
+
 /** The 3D stage (lazy chunk): canvas, labels, guided UI, dashboard, simulated-data label and menus. */
 export default function SceneStage() {
   const ready = useSceneStore((s) => s.ready);
@@ -34,6 +37,8 @@ export default function SceneStage() {
   const swatches = swatchesRequested();
   const ref = useRef<HTMLDivElement>(null);
   useStageInsets(ref);
+  // A new scene shows its loading poster until its first frame.
+  useLayoutEffect(() => useSceneStore.getState().setReady(false), [scene]);
   return (
     <div
       ref={ref}
@@ -43,7 +48,13 @@ export default function SceneStage() {
       data-mode={mode}
       data-scene={scene}
     >
-      <HospitalScene swatches={swatches !== null} />
+      <Suspense fallback={null}>
+        {scene === 'warehouse' ? (
+          <WarehouseScene key="warehouse" />
+        ) : (
+          <HospitalScene key="hospital" swatches={swatches !== null} />
+        )}
+      </Suspense>
       <LabelLayer />
       {!ready && <SceneLoader />}
       <div className="stage-top">

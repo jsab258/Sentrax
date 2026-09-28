@@ -7,6 +7,7 @@ import { BACKGROUND, BACKGROUND_HDR } from './backdrop';
 import { OverlayRoot } from './overlay';
 import type { SceneFrameBounds } from './framing';
 import { Lighting } from './Lighting';
+import type { HdriName } from './materials/textures';
 import { PostEffects } from './PostEffects';
 import { tierSettings } from './quality';
 import { StatsProbe } from './stats';
@@ -19,10 +20,16 @@ import { useSceneStore } from './store';
 export function SceneCanvas({
   bounds,
   reach,
+  hdri = 'hospital_room',
+  fog = [110, 220],
   children,
 }: {
   bounds: SceneFrameBounds;
   reach?: SceneFrameBounds;
+  /** Environment light for the scene (Poly Haven HDRI, ambient and reflections only). */
+  hdri?: HdriName;
+  /** Fog start and end distance (m): larger scenes push it out. */
+  fog?: [number, number];
   children: ReactNode;
 }) {
   const tier = useSceneStore((s) => s.tier);
@@ -43,14 +50,14 @@ export function SceneCanvas({
         // Lifts AgX's mid-grey rendering of white walls.
         toneMappingExposure: 1.15,
       }}
-      camera={{ fov: BASE_FOV, near: 0.3, far: 400, position: [20, 40, 30] }}
+      camera={{ fov: BASE_FOV, near: 0.3, far: 600, position: [20, 40, 30] }}
       data-testid="scene-canvas"
       data-tier={tier}
     >
       <color attach="background" args={[usePost ? BACKGROUND_HDR : new Color(BACKGROUND)]} />
-      <fog attach="fog" args={[usePost ? BACKGROUND_HDR : new Color(BACKGROUND), 110, 220]} />
+      <fog attach="fog" args={[usePost ? BACKGROUND_HDR : new Color(BACKGROUND), fog[0], fog[1]]} />
       <Suspense fallback={null}>
-        <Lighting bounds={bounds} settings={settings} />
+        <Lighting bounds={bounds} settings={settings} hdri={hdri} />
       </Suspense>
       <CameraRig bounds={bounds} reach={reach} />
       <OverlayRoot afterComposer={usePost}>

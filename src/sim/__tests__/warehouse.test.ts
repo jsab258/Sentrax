@@ -39,7 +39,7 @@ describe('warehouse scene data (SPEC section 8)', () => {
         .filter((d) => d.model === 'NODIX CEN-1')
         .map((d) => d.roomId)
         .sort(),
-    ).toEqual(['cold-entry', 'dock-1', 'dock-2', 'dock-3']);
+    ).toEqual(['cold-entry', 'dock-1', 'dock-2', 'dock-3', 'muster']);
     expect(world.devices.filter((d) => d.model === 'ZENIX LON-2').length).toBeGreaterThanOrEqual(12);
     const roles = world.agents.map((a) => a.role);
     expect(roles.filter((r) => r === 'forklift')).toHaveLength(3);

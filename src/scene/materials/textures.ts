@@ -12,13 +12,14 @@ import manifest from '../assets/manifest.json';
 
 export type TextureName = keyof typeof manifest.textures;
 export type TextureTier = 'high' | 'low';
+export type HdriName = keyof typeof manifest.hdri;
 
 export function texturePaths(name: TextureName, tier: TextureTier): [string, string, string] {
   const maps = manifest.textures[name].maps;
   return [assetUrl(maps.diff[tier]), assetUrl(maps.nor[tier]), assetUrl(maps.rough[tier])];
 }
 
-export function hdriPath(id: keyof typeof manifest.hdri): string {
+export function hdriPath(id: HdriName): string {
   return assetUrl(manifest.hdri[id].path);
 }
 

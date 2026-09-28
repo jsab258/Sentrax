@@ -81,6 +81,7 @@ function applyStep(bump: boolean) {
     focus: step.focus ?? [],
     highlight: step.highlight ?? [],
     stepUi: step.ui ?? {},
+    heatmap: step.ui?.heatmap ?? false,
     compare: 'bilink',
     simVersion: bump ? prev.simVersion + 1 : prev.simVersion,
   });

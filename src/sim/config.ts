@@ -1,3 +1,5 @@
+import type { InfraModel } from './world';
+
 /**
  * Simulation parameters.
  *
@@ -46,14 +48,21 @@ export const simConfig = {
     },
   },
 
-  /** Receiver sensitivity and maximum range per model. Ranges echo the datasheet figures. */
+  /**
+   * Receiver sensitivity and maximum range per model. Ranges echo the datasheet figures. Gateways may set
+   * their own RSSI fix floor and proximity level (see rssi below): the outdoor LEF-3 on its pole hears
+   * across open ground, so any packet it receives places a tag in its coverage area.
+   */
   receivers: {
     'NODIX CEN-1': { sensitivityDbm: -90, rangeM: 15 },
     'ZENIX LEN-1': { sensitivityDbm: -92, rangeM: 50 },
     'ZENIX LEN-2': { sensitivityDbm: -92, rangeM: 50 },
     'ZENIX LON-2': { sensitivityDbm: -90, rangeM: 30 },
-    'ZENIX LEF-3': { sensitivityDbm: -94, rangeM: 60 },
-  },
+    'ZENIX LEF-3': { sensitivityDbm: -94, rangeM: 60, fixFloorDbm: -92, proximityDbm: -92 },
+  } as Record<
+    InfraModel,
+    { sensitivityDbm: number; rangeM: number; fixFloorDbm?: number; proximityDbm?: number }
+  >,
 
   /** Advertising interval per tag model at rest (s). Datasheets allow 100 ms to 10 s; demo settings. */
   tagAdvIntervalS: {
@@ -79,6 +88,14 @@ export const simConfig = {
     estimatorPathLossExponent: 2.3,
     /** Gateways used for an estimate: the strongest N. */
     maxGateways: 5,
+    /**
+     * A fix needs at least this many gateways whose mean RSSI is above the floor. Fewer or weaker links
+     * give no fix rather than a wild one (one weak packet from a gateway 40 m away cannot place a tag).
+     */
+    minGateways: 2,
+    floorDbm: -88,
+    /** With a single usable gateway this strong, the tag is reported near it (proximity). */
+    proximityDbm: -80,
     /** Estimate is recomputed at this interval (s). */
     updateS: 0.5,
     /** Exponential smoothing of successive position estimates (0 to 1, higher is snappier). */
@@ -182,6 +199,15 @@ export const simConfig = {
     carryOffsetPersonM: 0.7,
     carryOffsetForkliftM: 1.3,
     pickupReachM: 2.5,
+    /** Forklift: load height right after a pick, then lowered to travel height at this speed (m/s). */
+    forkLowerMps: 0.5,
+    forkTravelM: 0.3,
+    /** Yard tractor: fifth wheel behind the tractor centre, and kingpin to rear axle of a trailer (m). */
+    fifthWheelM: 1.0,
+    trailerAxleM: 10.5,
+    /** Box trailer footprint from the nose (m), for loads carried inside it. */
+    trailerLengthM: 13.6,
+    trailerWidthM: 2.5,
   },
 } as const;
 

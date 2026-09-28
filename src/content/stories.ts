@@ -121,6 +121,102 @@ export const storyCopy: Record<string, StoryCopy> = {
     },
     takeaway: 'One button press brings help to the right room.',
   },
+  w1: {
+    title: 'Find pallet PL-2291',
+    summary: 'A pallet is needed for an order. Search the aisles, then search SOLIX.',
+    steps: {
+      search: {
+        title: 'Searching without RTLS',
+        body: 'Pallet PL-2291 is needed for an order. Without location data a picker walks the aisles and reads labels, level by level.',
+      },
+      located: {
+        title: 'With Sentrax: the exact slot',
+        body: 'SOLIX shows the pallet in aisle C, bay 14, level 4. AoA locators in the ceiling measure the angle to its tag, and the rays meet at the pallet.',
+      },
+      dispatch: {
+        title: 'Dispatched and tracked',
+        body: 'A forklift is sent to the slot, takes the pallet down and brings it to staging. Its position updates the whole way.',
+      },
+    },
+    takeaway: `Pallets are found at their slot, level included: AoA gives ${claims.aoaAccuracy.text} positions under the racking.`,
+  },
+  w2: {
+    title: 'Automatic check-out at the dock',
+    summary: 'A pallet is loaded through dock door 2 and the trailer leaves for the yard.',
+    steps: {
+      checkout: {
+        title: 'Checked out at the dock door',
+        body: 'The forklift carries the pallet through dock door 2 into the trailer. The NODIX anchor at the door confirms the crossing and SOLIX sends a check-out with a timestamp to the WMS.',
+      },
+      yard: {
+        title: 'Into the yard',
+        body: 'The yard tractor takes the loaded trailer to its parking bay. Coverage hands over from the gateways in the hall to the ZENIX LEF-3 on the yard pole, and the trailer stays visible.',
+      },
+    },
+    takeaway: 'Shipments check out on their own at the dock door, and trailers stay visible in the yard.',
+  },
+  w3: {
+    title: 'Work in progress on the line',
+    summary: 'Carriers move through three stations. Station 2 turns into a bottleneck.',
+    steps: {
+      flow: {
+        title: 'Carriers through the stations',
+        body: 'Each WIP carrier has a tag. SOLIX follows it from the line-side buffer through stations 1 to 3 and records how long it stays at each.',
+      },
+      bottleneck: {
+        title: 'A bottleneck at station 2',
+        body: 'The carrier stays at station 2 longer than its limit (illustrative: 150 s). SOLIX flags the bottleneck, the heatmap shows where work piles up, and the MES gets the alert.',
+      },
+      released: {
+        title: 'Flow restored',
+        body: 'The carrier moves on to station 3 and the alert closes. The dwell times stay on record for the shift review.',
+      },
+    },
+    takeaway: 'Bottlenecks show up while they happen, not in the end-of-shift report.',
+  },
+  w4: {
+    title: 'Safety zones and evacuation',
+    summary: 'A zone violation at the battery cage, then an evacuation drill with a live muster count.',
+    steps: {
+      cage: {
+        title: 'Unauthorised entry',
+        body: 'A picker walks into the battery charging cage, where only forklift drivers are allowed. SOLIX raises a zone alert with who, where and for how long.',
+      },
+      leaves: {
+        title: 'Zone clear',
+        body: 'The picker leaves the cage and the alert closes, with its duration on record.',
+      },
+      drill: {
+        title: 'Evacuation drill',
+        body: 'Everyone walks to the muster point in the yard. The count updates live as badges arrive.',
+      },
+      located: {
+        title: 'The last person, located',
+        body: 'One person is still missing. The dashboard shows where their badge was last seen, so they can be found at once.',
+      },
+    },
+    takeaway: 'Restricted zones are enforced and every badge is accounted for in a drill.',
+  },
+  w5: {
+    title: 'Cold chain at the dock',
+    summary: 'A cold pallet is unloaded, waits too long outside cold storage, and is stored.',
+    steps: {
+      unload: {
+        title: 'Unloaded from the reefer',
+        body: 'A forklift unloads cold pallet CP-04 from the refrigerated trailer at dock 3. Its PINIX TOW-5 reports temperature on the way.',
+      },
+      excursion: {
+        title: 'Too long outside',
+        body: 'The pallet waits in staging longer than its limit outside cold storage (illustrative: 5 minutes). SOLIX raises an excursion alert with location and duration.',
+      },
+      stored: {
+        title: 'Back in the cold',
+        body: 'The forklift takes the pallet into cold storage. The alert closes and the check-in is logged.',
+      },
+    },
+    takeaway:
+      'Temperature-sensitive goods are tracked from trailer to cold room, with every excursion on record.',
+  },
 };
 
 function capitalize(s: string): string {

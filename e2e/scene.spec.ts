@@ -53,3 +53,14 @@ test('the quality menu switches tiers and the low tier draws less', async ({ pag
   expect(low.calls).toBeLessThan(high.calls);
   expect(errors).toEqual([]);
 });
+
+test('warehouse renders on the high tier within the draw call budget', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.goto('./?mode=sandbox&scene=warehouse&quality=high&stats=1');
+  await expect(page.getByTestId('scene-stage')).toHaveAttribute('data-ready', 'true', { timeout: 90_000 });
+  await expect(page.getByTestId('scene-canvas')).toHaveAttribute('data-tier', 'high');
+  const stats = await statsAfterFrames(page, 4);
+  expect(stats.calls).toBeGreaterThan(50);
+  expect(stats.calls).toBeLessThan(300);
+  expect(errors).toEqual([]);
+});

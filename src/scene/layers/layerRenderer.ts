@@ -12,12 +12,15 @@ import {
 import { brand } from '../../brand/brand';
 import { tagName, zoneName, type CardId } from '../../content/alerts';
 import { integrationLog } from '../../experience/integrationLog';
+import { slotFromReport } from '../../experience/slot';
+import { RACK, slotPosition } from '../../sim/scenes/warehouse';
 import { ui } from '../../content/ui';
 import type { Simulation } from '../../sim/engine';
 import type { InfraDeviceDef, WorldDef } from '../../sim/world';
 import type { ExperienceState } from '../../experience/store';
 import type { Lens } from '../../experience/types';
 import { DotBatch, HIDDEN_OPACITY, LineBatch, RingBatch, type StrokeStyle } from '../overlays/primitives';
+import { flatGround, type Elevation } from '../elevation';
 import { labelBridge } from './labels';
 import type { NetworkLayout } from './sceneLayout';
 
@@ -129,11 +132,12 @@ export class LayerRenderer {
     private readonly world: WorldDef,
     private readonly layout: NetworkLayout | undefined,
     private readonly opts: { reducedMotion: boolean; glow: boolean },
+    private readonly ground: Elevation = flatGround,
   ) {
     this.tagIds = new Set(world.tags.map((t) => t.id));
     for (const d of world.devices) {
       this.devices.set(d.id, d);
-      this.devicePos.set(d.id, P(d.position.x, d.position.y, d.position.z));
+      this.devicePos.set(d.id, this.G(d.position.x, d.position.y, d.position.z));
     }
     const bilinkRooms = new Set(world.devices.filter((d) => d.kind === 'anchor').map((d) => d.roomId));
     for (const z of world.zones) {
@@ -241,9 +245,14 @@ export class LayerRenderer {
     });
   }
 
+  /** Plan position and height above the local ground (the warehouse yard lies below the hall floor). */
+  private G(x: number, y: number, h: number): Vector3 {
+    return P(x, y, h + this.ground(x, y));
+  }
+
   private tagPos(tagId: string, alpha: number): Vector3 {
     const p = this.sim.truthInterpolated(tagId, alpha);
-    return P(p.x, p.y, p.z);
+    return this.G(p.x, p.y, p.z);
   }
 
   private entityPos(id: string, alpha: number): Vector3 | undefined {
@@ -326,25 +335,25 @@ export class LayerRenderer {
             if (!g) continue;
             const dz = g.position.z - tagH;
             const radius = Math.sqrt(Math.max(0.04, r.distanceM * r.distanceM - dz * dz));
-            this.rings.ring(P(g.position.x, g.position.y, tagH), radius, style(o.rssiLine, 1.2, 0.85));
+            this.rings.ring(this.G(g.position.x, g.position.y, tagH), radius, style(o.rssiLine, 1.2, 0.85));
           }
           const est = sim.estimate(tagId, 'rssi');
           if (est?.position) {
-            const c = P(est.position.x, est.position.y, 0.05);
+            const c = this.G(est.position.x, est.position.y, 0.05);
             this.rings.ring(c, Math.max(0.5, est.uncertaintyM ?? 1), style(o.rssiLine, 1.5), {
               color: o.rssi,
               opacity: 0.3,
             });
-            this.dots.dot(P(est.position.x, est.position.y, est.position.z), style(o.rssiLine, 4.5));
+            this.dots.dot(this.G(est.position.x, est.position.y, est.position.z), style(o.rssiLine, 4.5));
           }
         } else if (lens === 'aoa') {
           const est = sim.estimate(tagId, 'aoa');
           if (!est && !(sim.lastRays.get(tagId) ?? []).length) this.noFix(tagId, alpha, ui.lens.noFix.aoa);
           const target = est?.position ?? sim.truth(tagId);
           for (const ray of sim.lastRays.get(tagId) ?? []) {
-            const origin = P(ray.origin.x, ray.origin.y, ray.origin.z);
+            const origin = this.G(ray.origin.x, ray.origin.y, ray.origin.z);
             const len = Math.hypot(target.x - ray.origin.x, target.y - ray.origin.y, target.z - ray.origin.z);
-            const end = P(
+            const end = this.G(
               ray.origin.x + ray.dir.x * len,
               ray.origin.y + ray.dir.y * len,
               ray.origin.z + ray.dir.z * len,
@@ -352,7 +361,7 @@ export class LayerRenderer {
             this.lines.segment(origin, end, style(o.aoa, 1.2, 0.9));
           }
           if (est?.position)
-            this.dots.dot(P(est.position.x, est.position.y, est.position.z), style(o.aoa, 4.5));
+            this.dots.dot(this.G(est.position.x, est.position.y, est.position.z), style(o.aoa, 4.5));
         } else {
           const roomId = sim.bilink.assignment(tagId)?.roomId;
           if (roomId) {
@@ -420,8 +429,10 @@ export class LayerRenderer {
       for (const [id, path] of this.cardLinks) {
         this.lines.polyline(path, style(o.data, 1.5, 0.85));
         const proto = L.cards.find((c) => c.id === id)?.protocol;
-        // Near the target card, where the two links are furthest apart.
-        const mid = (path[0] as Vector3).clone().lerp(path[1] as Vector3, 0.62);
+        // A fixed distance out from SOLIX, where the links fan apart.
+        const a = path[0] as Vector3;
+        const b = path[1] as Vector3;
+        const mid = a.clone().lerp(b, Math.min(0.6, 7 / Math.max(1, a.distanceTo(b))));
         labelBridge.add({
           id: `proto:${id}`,
           kind: 'protocol',
@@ -468,6 +479,37 @@ export class LayerRenderer {
       this.packets = this.packets.filter((p) => now - p.start < p.duration);
     }
 
+    // Rack slot marker (W1): the slot the system reports for the asset, its level beam and a label.
+    const slotAsset = state.stepUi.slot;
+    if (slotAsset && state.layers.insight) {
+      const tagId = this.world.tags.find((t) => t.carrier.type === 'asset' && t.carrier.id === slotAsset)?.id;
+      const slot = tagId ? slotFromReport(sim.report(tagId)) : null;
+      if (slot) {
+        const base = slotPosition(slot);
+        const hx = 0.5;
+        const hy = 0.66;
+        const z0 = base.z;
+        const z1 = base.z + 1.35;
+        const c = (dx: number, dy: number, z: number) => this.G(base.x + dx, base.y + dy, z);
+        const box = style(o.insight, 1.6);
+        for (const z of [z0, z1])
+          this.lines.polyline(
+            [c(-hx, -hy, z), c(hx, -hy, z), c(hx, hy, z), c(-hx, hy, z), c(-hx, -hy, z)],
+            box,
+          );
+        for (const [dx, dy] of [
+          [-hx, -hy],
+          [hx, -hy],
+          [hx, hy],
+          [-hx, hy],
+        ] as Array<[number, number]>)
+          this.lines.segment(c(dx, dy, z0), c(dx, dy, z1), box);
+        // The level's beam across the whole bay.
+        const half = RACK.bayPitch / 2 - 0.05;
+        this.lines.segment(c(-half, 0, z0 - 0.06), c(half, 0, z0 - 0.06), style(o.insight, 3.5));
+      }
+    }
+
     // Highlight halos (Insight): the asset, its room anchor, the gateway.
     if (this.opts.glow) {
       for (const id of state.highlight) {
@@ -484,9 +526,11 @@ export class LayerRenderer {
     if (state.layers.insight) {
       for (const tagId of focus) {
         const r = sim.report(tagId);
-        const room = r?.roomId ?? r?.zoneIds[0] ?? null;
+        // The most specific place: the BiLink room, else the innermost zone (an aisle rather than the hall).
+        const room = r?.roomId ?? r?.zoneIds[r.zoneIds.length - 1] ?? null;
+        const slot = slotFromReport(r);
         const at = r?.position
-          ? P(r.position.x, r.position.y, 2.3)
+          ? this.G(r.position.x, r.position.y, Math.max(2.3, r.position.z + 1.2))
           : room
             ? (this.roomCenter.get(room)?.clone().setY(2.3) ?? this.tagPos(tagId, alpha))
             : this.tagPos(tagId, alpha);
@@ -495,7 +539,13 @@ export class LayerRenderer {
           kind: 'asset',
           at,
           title: tagName(this.world, tagId),
-          lines: [room ? zoneName(room) : ui.dashboard.unknownLocation],
+          lines: [
+            slot
+              ? ui.dashboard.slot(slot.aisle, slot.bay, slot.level)
+              : room
+                ? zoneName(room)
+                : ui.dashboard.unknownLocation,
+          ],
           tone: r ? (r.tech === 'bilink' ? 'bilink' : r.tech) : 'insight',
         });
       }

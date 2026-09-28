@@ -7,7 +7,7 @@ export interface SceneFrameBounds {
 }
 
 /** Largest camera distance the orbit allows (portrait screens need the most). */
-export const MAX_DISTANCE = 100;
+export const MAX_DISTANCE = 170;
 
 /** Closest a story shot comes: near enough to read a room, far enough to keep its neighbours in view. */
 export const MIN_SHOT_DISTANCE = 18;
@@ -27,7 +27,7 @@ export function framing(bounds: SceneFrameBounds, aspect: number, fovDeg: number
   const along = w * Math.abs(Math.sin(azimuth)) + d * Math.abs(Math.cos(azimuth));
   const fitH = (across * (portrait ? 0.56 : 0.5)) / halfH;
   const fitV = (along * 0.62) / halfV;
-  const distance = Math.min(Math.max(fitH, fitV * 0.75, 24), portrait ? MAX_DISTANCE : 70);
+  const distance = Math.min(Math.max(fitH, fitV * 0.75, 24), MAX_DISTANCE);
   return { azimuth, polar, distance };
 }
 

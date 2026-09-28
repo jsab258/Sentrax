@@ -15,4 +15,6 @@ export interface Estimate {
   roomId?: string | null;
   /** Receivers that contributed. */
   sources: string[];
+  /** Time of the oldest measurement the estimate is based on (RSSI averages over a window). */
+  from?: number;
 }

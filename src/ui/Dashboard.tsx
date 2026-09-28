@@ -5,9 +5,11 @@ import { useExperience } from '../experience/store';
 import type { Simulation } from '../sim/engine';
 import type { AssetClass, WorldDef } from '../sim/world';
 import { alertFeed } from '../experience/alertFeed';
+import { slotFromReport } from '../experience/slot';
 import { MiniMap } from './MiniMap';
 import { TempChart } from './TempChart';
 import { useSimTick } from './useSimTick';
+import { MusterPanel, StationsPanel } from './WarehousePanels';
 
 /** The zone a report places a tag in: the BiLink room, else the most specific zone. */
 function reportedZone(sim: Simulation, world: WorldDef, tagId: string): string | null {
@@ -36,6 +38,7 @@ export function Dashboard({ sim, world }: { sim: Simulation; world: WorldDef }) 
   const focus = useExperience((s) => s.focus);
   const selected = useExperience((s) => s.selectedTag);
   const heatmap = useExperience((s) => s.heatmap);
+  const mode = useExperience((s) => s.mode);
   const set = useExperience((s) => s.set);
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
@@ -46,14 +49,23 @@ export function Dashboard({ sim, world }: { sim: Simulation; world: WorldDef }) 
     .map((t) => {
       const zone = reportedZone(sim, world, t.id);
       const seen = sim.lastSeen(t.id);
+      // Racked pallets: the slot from the reported 3D position (AoA), otherwise the zone.
+      const slot = slotFromReport(sim.report(t.id));
+      const where = slot
+        ? ui.dashboard.slot(slot.aisle, slot.bay, slot.level)
+        : zone
+          ? zoneName(zone)
+          : sim.report(t.id)
+            ? ui.dashboard.notInRoom
+            : ui.dashboard.unknownLocation;
       return {
         tagId: t.id,
         name: tagName(world, t.id),
-        zone,
+        where,
         age: seen === undefined ? null : sim.time - seen,
       };
     })
-    .filter((a) => !q || a.name.toLowerCase().includes(q) || zoneName(a.zone).toLowerCase().includes(q))
+    .filter((a) => !q || a.name.toLowerCase().includes(q) || a.where.toLowerCase().includes(q))
     .sort((a, b) => a.name.localeCompare(b.name));
 
   const alerts = alertFeed(sim);
@@ -128,6 +140,13 @@ export function Dashboard({ sim, world }: { sim: Simulation; world: WorldDef }) 
           })}
         </section>
 
+        {(stepUi.stations || (mode === 'sandbox' && world.id === 'warehouse')) && (
+          <StationsPanel sim={sim} world={world} />
+        )}
+        {(stepUi.muster || sim.rules.musterStatus('muster').present > 0) && (
+          <MusterPanel sim={sim} world={world} />
+        )}
+
         {chartTag && <TempChart sim={sim} tagId={chartTag} limit={limit} />}
 
         <section className="alerts" aria-label={ui.dashboard.alerts} data-testid="alerts">
@@ -186,8 +205,8 @@ export function Dashboard({ sim, world }: { sim: Simulation; world: WorldDef }) 
                   onClick={() => set({ selectedTag: selected === a.tagId ? null : a.tagId })}
                 >
                   <strong>{a.name}</strong>
-                  <span>
-                    {a.zone ? zoneName(a.zone) : ui.dashboard.notInRoom}
+                  <span data-testid={`asset-where-${a.tagId}`}>
+                    {a.where}
                     {a.age !== null ? `, ${ui.dashboard.lastSeen(a.age)}` : ''}
                   </span>
                 </button>

@@ -13,19 +13,23 @@ Sources (M1 review): textures and HDRIs come from Poly Haven only. Clean finishe
 
 ## Recorded assets
 
-| Asset                                   | Source URL                                                       | Author                   | License           | Modifications                                                                                                                     |
-| --------------------------------------- | ---------------------------------------------------------------- | ------------------------ | ----------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| Texture `vinyl`: Terrazzo Tiles         | https://polyhaven.com/a/terrazzo_tiles                           | Amal Kumar               | CC0               | Color map desaturated to 12 percent and brightened 35 percent; resized; encoded to KTX2 (ETC1S color and roughness, UASTC normal) |
-| Texture `plaster`: Painted Plaster Wall | https://polyhaven.com/a/painted_plaster_wall                     | Amal Kumar               | CC0               | Color map turned into an off-white paint (saturation 10 percent, variation halved, mean near sRGB 225); resized; encoded to KTX2  |
-| Texture `bath-tiles`: Interior Tiles    | https://polyhaven.com/a/interior_tiles                           | Charlotte Baglioni       | CC0               | None; resized; encoded to KTX2 (ETC1S color and roughness, UASTC normal)                                                          |
-| Texture `veneer`: Grey Oak Veneer 01    | https://polyhaven.com/a/grey_oak_veneer_01                       | Jenelle van Heerden      | CC0               | None; resized; encoded to KTX2 (ETC1S color and roughness, UASTC normal)                                                          |
-| Texture `leather`: Fabric Leather 01    | https://polyhaven.com/a/fabric_leather_01                        | Rob Tuytel               | CC0               | Color map made a neutral light grey (grain kept) so vertex colours tint it; resized; encoded to KTX2                              |
-| Texture `linen`: Cotton Jersey          | https://polyhaven.com/a/cotton_jersey                            | colormass, Rico Cilliers | CC0               | Color map desaturated to 12 percent and brightened 35 percent; resized; encoded to KTX2 (ETC1S color and roughness, UASTC normal) |
-| HDRI: Hospital Room                     | https://polyhaven.com/a/hospital_room                            | Oliksiy Yakovlyev        | CC0               | None (1k HDR)                                                                                                                     |
-| Lato (400, 700, latin)                  | https://www.npmjs.com/package/@fontsource/lato (Google Fonts)    | Lukasz Dziedzic          | SIL OFL 1.1       | Subset to latin by the package; self-hosted                                                                                       |
-| Poppins (500, 600, latin)               | https://www.npmjs.com/package/@fontsource/poppins (Google Fonts) | Indian Type Foundry      | SIL OFL 1.1       | Subset to latin by the package; self-hosted                                                                                       |
-| Basis Universal transcoder              | https://github.com/mrdoob/three.js (examples/jsm/libs/basis)     | Binomial LLC             | Apache 2.0        | None; bundled from the three package by Vite                                                                                      |
-| Sentrax logo                            | https://sentrax.com/wp-content/uploads/2023/10/sentrax_logo.png  | Sentrax GmbH             | Client's own mark | None (no device wordmark decals: illegible at true scale)                                                                         |
+| Asset                                     | Source URL                                                       | Author                                | License           | Modifications                                                                                                                     |
+| ----------------------------------------- | ---------------------------------------------------------------- | ------------------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Texture `vinyl`: Terrazzo Tiles           | https://polyhaven.com/a/terrazzo_tiles                           | Amal Kumar                            | CC0               | Color map desaturated to 12 percent and brightened 35 percent; resized; encoded to KTX2 (ETC1S color and roughness, UASTC normal) |
+| Texture `plaster`: Painted Plaster Wall   | https://polyhaven.com/a/painted_plaster_wall                     | Amal Kumar                            | CC0               | Color map turned into an off-white paint (saturation 10 percent, variation halved, mean near sRGB 225); resized; encoded to KTX2  |
+| Texture `bath-tiles`: Interior Tiles      | https://polyhaven.com/a/interior_tiles                           | Charlotte Baglioni                    | CC0               | None; resized; encoded to KTX2 (ETC1S color and roughness, UASTC normal)                                                          |
+| Texture `veneer`: Grey Oak Veneer 01      | https://polyhaven.com/a/grey_oak_veneer_01                       | Jenelle van Heerden                   | CC0               | None; resized; encoded to KTX2 (ETC1S color and roughness, UASTC normal)                                                          |
+| Texture `leather`: Fabric Leather 01      | https://polyhaven.com/a/fabric_leather_01                        | Rob Tuytel                            | CC0               | Color map made a neutral light grey (grain kept) so vertex colours tint it; resized; encoded to KTX2                              |
+| Texture `linen`: Cotton Jersey            | https://polyhaven.com/a/cotton_jersey                            | colormass, Rico Cilliers              | CC0               | Color map desaturated to 12 percent and brightened 35 percent; resized; encoded to KTX2 (ETC1S color and roughness, UASTC normal) |
+| HDRI: Hospital Room                       | https://polyhaven.com/a/hospital_room                            | Oliksiy Yakovlyev                     | CC0               | None (1k HDR)                                                                                                                     |
+| Texture `concrete`: Smooth Concrete Floor | https://polyhaven.com/a/smooth_concrete_floor                    | Dimitrios Savva                       | CC0               | Color map made a light neutral grey (saturation 15 percent, mean near sRGB 180); resized; encoded to KTX2                         |
+| Texture `asphalt`: Clean Asphalt          | https://polyhaven.com/a/clean_asphalt                            | Dimitrios Savva                       | CC0               | None; resized; encoded to KTX2                                                                                                    |
+| Texture `cladding`: Corrugated Iron 02    | https://polyhaven.com/a/corrugated_iron_02                       | Jenelle van Heerden, Sergej Majboroda | CC0               | Color map desaturated to 12 percent and brightened 35 percent; resized; encoded to KTX2                                           |
+| HDRI: Empty Warehouse 01                  | https://polyhaven.com/a/empty_warehouse_01                       | Sergej Majboroda                      | CC0               | None (1k HDR)                                                                                                                     |
+| Lato (400, 700, latin)                    | https://www.npmjs.com/package/@fontsource/lato (Google Fonts)    | Lukasz Dziedzic                       | SIL OFL 1.1       | Subset to latin by the package; self-hosted                                                                                       |
+| Poppins (500, 600, latin)                 | https://www.npmjs.com/package/@fontsource/poppins (Google Fonts) | Indian Type Foundry                   | SIL OFL 1.1       | Subset to latin by the package; self-hosted                                                                                       |
+| Basis Universal transcoder                | https://github.com/mrdoob/three.js (examples/jsm/libs/basis)     | Binomial LLC                          | Apache 2.0        | None; bundled from the three package by Vite                                                                                      |
+| Sentrax logo                              | https://sentrax.com/wp-content/uploads/2023/10/sentrax_logo.png  | Sentrax GmbH                          | Client's own mark | None (no device wordmark decals: illegible at true scale)                                                                         |
 
 ## Pipeline
 
@@ -37,17 +41,12 @@ Texture sizes per quality tier (high / low): floor vinyl 2048 / 1024; everything
 
 Payload measured at the M2 checkpoint (textures, gzipped HDRI, gzipped scene JavaScript and Basis transcoder): 12.0 MB on high, 4.2 MB on low (budgets 20 MB and 8 MB). Initial JavaScript: 70 KB gzip (budget 400 KB).
 
-## Planned: warehouse (M4), Poly Haven only
+## Warehouse (M4)
 
-| Material                              | Candidates (Poly Haven ids)                                 |
-| ------------------------------------- | ----------------------------------------------------------- |
-| Sealed concrete floor                 | concrete_floor_02, concrete_floor_painted                   |
-| Pallet wood                           | worn_planks, oak_wood_planks                                |
-| Asphalt (yard)                        | asphalt_02, clean_asphalt                                   |
-| Corrugated metal (trailers, cladding) | corrugated_iron_02, container_side, box_profile_metal_sheet |
-| Painted steel (racking)               | untextured PBR (Poly Haven has no clean painted steel)      |
-| Cardboard (boxes)                     | untextured PBR, or a Poly Haven CC0 box model if one fits   |
-| Outdoor HDRI                          | an overcast outdoor HDRI, for example belfast_open_field    |
+Used: the concrete floor, asphalt yard, corrugated cladding and warehouse HDRI above. Racking, pallets, cartons,
+vehicles and dock equipment are procedural with untextured PBR materials (the pallet wood uses the `veneer` set).
+Payload per scene and tier is checked on every build (scripts/check-payload.mjs): hospital 12.0 MB high and 4.5 MB
+low, warehouse 14.0 MB high and 5.3 MB low (budgets 20 MB and 8 MB).
 
 ## Models
 
