@@ -55,10 +55,12 @@ test('the quality menu switches tiers and the low tier draws less', async ({ pag
 });
 
 test('warehouse renders on the high tier within the draw call budget', async ({ page }) => {
+  // The largest scene: software rendering on the CI runner needs more than the default minute.
+  test.setTimeout(150_000);
   const errors = collectErrors(page);
   await page.goto('./?mode=sandbox&scene=warehouse&quality=high&stats=1');
-  await expect(page.getByTestId('scene-stage')).toHaveAttribute('data-ready', 'true', { timeout: 90_000 });
-  await expect(page.getByTestId('scene-canvas')).toHaveAttribute('data-tier', 'high');
+  await expect(page.getByTestId('scene-stage')).toHaveAttribute('data-ready', 'true', { timeout: 120_000 });
+  await expect(page.getByTestId('scene-canvas')).toHaveAttribute('data-tier', 'high', { timeout: 15_000 });
   const stats = await statsAfterFrames(page, 4);
   expect(stats.calls).toBeGreaterThan(50);
   expect(stats.calls).toBeLessThan(300);
