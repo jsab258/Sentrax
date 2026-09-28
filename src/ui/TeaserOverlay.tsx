@@ -59,7 +59,7 @@ export function TeaserOverlay() {
       >
         <span aria-hidden="true" />
       </button>
-      <div className="teaser-bar">
+      <div className="teaser-bar" data-testid="teaser-bar">
         {copy && stepCopy && (
           <div
             className="teaser-caption"
