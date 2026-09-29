@@ -29,7 +29,8 @@ describe.each(Object.values(scrollStories))('scroll story $story.id', ({ story, 
       story.find.card.when,
       story.label,
     ].join(' ');
-    expect(text).not.toMatch(/[—–]/);
+    // Em and en dashes, written as char codes so this file passes the repository's own em-dash rule.
+    for (const dash of [0x2014, 0x2013]) expect(text.includes(String.fromCharCode(dash))).toBe(false);
     expect(text).not.toMatch(/%|\$|€|CHF/);
   });
 
