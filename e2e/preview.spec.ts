@@ -108,36 +108,34 @@ test('preview: the homepage mock loads and scrolls through the story without err
 });
 
 /**
- * Scroll story payload per look, measured from the bytes a production build actually transfers (only
- * against a build or the live preview: the dev server serves unbundled modules). Budgets from
- * SCROLL-SPEC.md section 8.
+ * Scroll story 3D payload, measured from the bytes a production build actually transfers (only against a
+ * build or the live preview: the dev server serves unbundled modules). Budget from SCROLL-SPEC.md section 8
+ * for the realistic look (look C, the one kept).
  */
-test('preview: scroll story 3D payload per look within budget, desktop and phone', async ({ browser }) => {
+test('preview: scroll story 3D payload within budget, desktop and phone', async ({ browser }) => {
   test.skip(!process.env.E2E_BASE_URL, 'needs a production build (E2E_BASE_URL)');
   test.setTimeout(300_000);
-  const budgetMB = { a: { desktop: 6, phone: 3 }, b: { desktop: 6, phone: 3 }, c: { desktop: 9, phone: 4 } };
-  for (const look of ['a', 'b', 'c'] as const) {
-    for (const device of ['desktop', 'phone'] as const) {
-      const context = await browser.newContext(
-        device === 'phone'
-          ? { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 }
-          : { viewport: { width: 1440, height: 900 } },
-      );
-      const page = await context.newPage();
-      const responses: Array<Promise<number>> = [];
-      page.on('requestfinished', (r) =>
-        responses.push(r.sizes().then((s) => s.responseBodySize + s.responseHeadersSize)),
-      );
-      await page.goto(`./scroll/?force=3d&look=${look}`);
-      await expect(page.locator('.ss')).toHaveAttribute('data-ready', 'true', { timeout: 120_000 });
-      await page.waitForLoadState('networkidle');
-      const bytes = (await Promise.all(responses)).reduce((s, b) => s + b, 0);
-      const mb = bytes / 1024 / 1024;
-      console.log(
-        `scroll story look ${look} ${device}: ${mb.toFixed(2)} MB in ${responses.length} requests (budget ${budgetMB[look][device]} MB)`,
-      );
-      expect(mb).toBeLessThanOrEqual(budgetMB[look][device]);
-      await context.close();
-    }
+  const budgetMB = { desktop: 9, phone: 4 };
+  for (const device of ['desktop', 'phone'] as const) {
+    const context = await browser.newContext(
+      device === 'phone'
+        ? { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 }
+        : { viewport: { width: 1440, height: 900 } },
+    );
+    const page = await context.newPage();
+    const responses: Array<Promise<number>> = [];
+    page.on('requestfinished', (r) =>
+      responses.push(r.sizes().then((s) => s.responseBodySize + s.responseHeadersSize)),
+    );
+    await page.goto('./scroll/?force=3d');
+    await expect(page.locator('.ss')).toHaveAttribute('data-ready', 'true', { timeout: 120_000 });
+    await page.waitForLoadState('networkidle');
+    const bytes = (await Promise.all(responses)).reduce((s, b) => s + b, 0);
+    const mb = bytes / 1024 / 1024;
+    console.log(
+      `scroll story ${device}: ${mb.toFixed(2)} MB in ${responses.length} requests (budget ${budgetMB[device]} MB)`,
+    );
+    expect(mb).toBeLessThanOrEqual(budgetMB[device]);
+    await context.close();
   }
 });

@@ -12,11 +12,7 @@ Replace `https://STORY-HOST/` with the address the story is deployed to (for the
 `https://jsab258.github.io/Sentrax/`).
 
 ```html
-<div
-  class="sentrax-scroll"
-  data-look="a"
-  style="position: relative; height: 600vh; background: #05040f"
-></div>
+<div class="sentrax-scroll" style="position: relative; height: 600vh; background: #03040a"></div>
 <script src="https://STORY-HOST/scroll-embed.js" async></script>
 ```
 
@@ -31,7 +27,6 @@ Replace `https://STORY-HOST/` with the address the story is deployed to (for the
 
 | Attribute     | Values                  | Default                  | Purpose                                     |
 | ------------- | ----------------------- | ------------------------ | ------------------------------------------- |
-| `data-look`   | `a`, `b`, `c`           | `a`                      | Night model, Glass, Realistic night         |
 | `data-src`    | URL                     | `scroll/` next to loader | Where the story page lives                  |
 | `data-height` | number (vh)             | `600`                    | Only used when the inline height is missing |
 | `data-force`  | `3d`, `video`, `static` | none (device detection)  | Testing only                                |

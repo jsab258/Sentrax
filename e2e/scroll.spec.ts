@@ -5,12 +5,11 @@ import { links } from '../src/content/links';
 import { collectErrors, collectTracked } from './helpers';
 
 /**
- * Homepage scroll story (SCROLL-SPEC.md): every beat forwards and backwards, the tap and the auto-find in
- * each look on the /home-preview/ mock (desktop and phone projects), the calls to action, detection and the
- * ?force overrides, determinism, and the embed in a plain HTML host page.
+ * Homepage scroll story (SCROLL-SPEC.md): every beat forwards and backwards, the tap and the auto-find on
+ * the /home-preview/ mock (desktop and phone projects), the calls to action, detection and the ?force
+ * overrides, determinism, and the embed in a plain HTML host page.
  */
 
-const LOOKS = ['a', 'b', 'c'] as const;
 const BEATS = ['establish', 'tag', 'rooms', 'relay', 'find'] as const;
 const SHOTS = join(import.meta.dirname, '..', 'docs', 'screenshots', 'scroll');
 
@@ -66,105 +65,100 @@ async function storyFrame(page: Page): Promise<Frame> {
 
 const mid = (r: [number, number], at = 0.5) => r[0] + (r[1] - r[0]) * at;
 
-for (const look of LOOKS) {
-  test(`home preview, look ${look}: every beat forwards and backwards, Find, both calls to action`, async ({
-    page,
-  }, info) => {
-    test.setTimeout(600_000);
-    const errors = collectErrors(page);
-    const tracked = collectTracked(page);
-    mkdirSync(SHOTS, { recursive: true });
-    // The booking link opens an external page in a new tab; keep the test offline.
-    await page
-      .context()
-      .route('https://outlook.office365.com/**', (r) => r.fulfill({ status: 200, body: 'ok' }));
+test('home preview: every beat forwards and backwards, Find, both calls to action', async ({
+  page,
+}, info) => {
+  test.setTimeout(600_000);
+  const errors = collectErrors(page);
+  const tracked = collectTracked(page);
+  mkdirSync(SHOTS, { recursive: true });
+  // The booking link opens an external page in a new tab; keep the test offline.
+  await page
+    .context()
+    .route('https://outlook.office365.com/**', (r) => r.fulfill({ status: 200, body: 'ok' }));
 
-    await page.goto(`home-preview/?look=${look}&force=3d`);
-    await expect(page.getByRole('heading', { name: 'Smart Locating and Sensing Systems' })).toBeVisible();
-    await expect(page.getByText('Mock', { exact: true })).toBeVisible();
-    await scrollTo(page, 0, '.sentrax-scroll');
-    const frame = await storyFrame(page);
-    const ranges = await frame.evaluate(() => (window.__scrollStory as StoryHooks).ranges());
-    expect(ranges).toHaveLength(BEATS.length);
-    await expect(frame.locator('.ss')).toHaveAttribute('data-look', look);
-    await expect(frame.locator('.ss-label')).toHaveText('Illustrative animation');
+  await page.goto('home-preview/?force=3d');
+  await expect(page.getByRole('heading', { name: 'Smart Locating and Sensing Systems' })).toBeVisible();
+  await expect(page.getByText('Mock', { exact: true })).toBeVisible();
+  await scrollTo(page, 0, '.sentrax-scroll');
+  const frame = await storyFrame(page);
+  const ranges = await frame.evaluate(() => (window.__scrollStory as StoryHooks).ranges());
+  expect(ranges).toHaveLength(BEATS.length);
+  await expect(frame.locator('.ss-label')).toHaveText('Illustrative animation');
 
-    // Forwards through every beat, a screenshot per beat.
-    for (const [i, beat] of BEATS.entries()) {
-      const r = ranges[i] as [number, number];
-      // In the last beat, stop before the auto-find window to show the Find button.
-      const p = beat === 'find' ? mid(r, 0.12) : mid(r, 0.6);
-      await scrollTo(page, p, '.sentrax-scroll');
-      await settle(frame, p);
-      await expect(frame.locator('.ss')).toHaveAttribute('data-beat', beat);
-      await expect(frame.locator('.ss')).toHaveAttribute('data-text', beat === 'find' ? 'try' : 'beat');
-      await page.waitForTimeout(1200); // word-by-word reveal
-      await page.screenshot({
-        path: join(SHOTS, `${look}-${info.project.name}-${i + 1}-${beat}.jpg`),
-        quality: 82,
-      });
-    }
-
-    // The tap: Find the pump, then the found state with both calls to action.
-    const find = frame.getByRole('button', { name: 'Find the pump' });
-    await expect(find).toBeVisible();
-    if (info.project.use.hasTouch) await find.tap();
-    else await find.click();
-    // The find plays over 2.4 s of story time; software rendering can take seconds per frame.
-    await expect(frame.locator('.ss')).toHaveAttribute('data-text', 'found', { timeout: 90_000 });
-    await expect(frame.locator('.ss')).toHaveAttribute('data-cta', 'true', { timeout: 90_000 });
-    await expect(frame.getByRole('heading', { name: 'Found. Room 104.' })).toBeVisible();
-    await expect
-      .poll(() => frame.evaluate(() => (window.__scrollStory as StoryHooks).settled()), { timeout: 60_000 })
-      .toBe(true);
-    await page.waitForTimeout(1200);
-    await page.screenshot({ path: join(SHOTS, `${look}-${info.project.name}-6-found.jpg`), quality: 82 });
-
-    const book = frame.getByRole('link', { name: /Book a meeting/ });
-    const demo = frame.getByRole('link', { name: /Explore the full demo/ });
-    await expect(book).toBeVisible();
-    await expect(demo).toBeVisible();
-    await expect(book).toHaveAttribute('href', links.bookMeeting);
-    // Without VITE_DEMO_URL the secondary button opens this app's full demo (the site root).
-    const demoHref = await demo.getAttribute('href');
-    expect(new URL(demoHref ?? '').href).toBe(
-      new URL('./', page.url().replace(/home-preview\/.*$/, '')).href,
-    );
-    for (const a of [book, demo]) {
-      await expect(a).toHaveAttribute('target', '_blank');
-      await expect(a).toHaveAttribute('rel', /noopener/);
-    }
-    const popup = page.waitForEvent('popup');
-    await book.click();
-    await (await popup).close();
-
-    // Backwards through every beat: the tap is undone when leaving the last beat.
-    for (let i = BEATS.length - 2; i >= 0; i--) {
-      const p = mid(ranges[i] as [number, number], 0.6);
-      await scrollTo(page, p, '.sentrax-scroll');
-      await settle(frame, p);
-      await expect(frame.locator('.ss')).toHaveAttribute('data-beat', BEATS[i] as string);
-      await expect(frame.locator('.ss')).toHaveAttribute('data-text', 'beat');
-    }
-
-    // Auto-find: scrolling past the last beat without tapping finds the pump by itself.
-    await scrollTo(page, 1, '.sentrax-scroll');
-    await settle(frame, 1);
-    await expect(frame.locator('.ss')).toHaveAttribute('data-text', 'found');
-    await expect(frame.locator('.ss')).toHaveAttribute('data-cta', 'true');
-
-    const events = tracked.map((t) => t.event);
-    expect(events).toContain('scroll_story_view');
-    expect(events).toContain('find_tapped');
-    expect(events).toContain('find_auto');
-    expect(tracked).toContainEqual({
-      event: 'cta_clicked',
-      props: { cta: 'book_meeting', placement: 'scroll_story' },
+  // Forwards through every beat, a screenshot per beat.
+  for (const [i, beat] of BEATS.entries()) {
+    const r = ranges[i] as [number, number];
+    // In the last beat, stop before the auto-find window to show the Find button.
+    const p = beat === 'find' ? mid(r, 0.12) : mid(r, 0.6);
+    await scrollTo(page, p, '.sentrax-scroll');
+    await settle(frame, p);
+    await expect(frame.locator('.ss')).toHaveAttribute('data-beat', beat);
+    await expect(frame.locator('.ss')).toHaveAttribute('data-text', beat === 'find' ? 'try' : 'beat');
+    await page.waitForTimeout(1200); // word-by-word reveal
+    await page.screenshot({
+      path: join(SHOTS, `${info.project.name}-${i + 1}-${beat}.jpg`),
+      quality: 82,
     });
-    for (const beat of BEATS) expect(tracked).toContainEqual({ event: 'scroll_beat', props: { beat } });
-    expect(errors).toEqual([]);
+  }
+
+  // The tap: Find the pump, then the found state with both calls to action.
+  const find = frame.getByRole('button', { name: 'Find the pump' });
+  await expect(find).toBeVisible();
+  if (info.project.use.hasTouch) await find.tap();
+  else await find.click();
+  // The find plays over 2.4 s of story time; software rendering can take seconds per frame.
+  await expect(frame.locator('.ss')).toHaveAttribute('data-text', 'found', { timeout: 90_000 });
+  await expect(frame.locator('.ss')).toHaveAttribute('data-cta', 'true', { timeout: 90_000 });
+  await expect(frame.getByRole('heading', { name: 'Found. Room 104.' })).toBeVisible();
+  await expect
+    .poll(() => frame.evaluate(() => (window.__scrollStory as StoryHooks).settled()), { timeout: 60_000 })
+    .toBe(true);
+  await page.waitForTimeout(1200);
+  await page.screenshot({ path: join(SHOTS, `${info.project.name}-6-found.jpg`), quality: 82 });
+
+  const book = frame.getByRole('link', { name: /Book a meeting/ });
+  const demo = frame.getByRole('link', { name: /Explore the full demo/ });
+  await expect(book).toBeVisible();
+  await expect(demo).toBeVisible();
+  await expect(book).toHaveAttribute('href', links.bookMeeting);
+  // Without VITE_DEMO_URL the secondary button opens this app's full demo (the site root).
+  const demoHref = await demo.getAttribute('href');
+  expect(new URL(demoHref ?? '').href).toBe(new URL('./', page.url().replace(/home-preview\/.*$/, '')).href);
+  for (const a of [book, demo]) {
+    await expect(a).toHaveAttribute('target', '_blank');
+    await expect(a).toHaveAttribute('rel', /noopener/);
+  }
+  const popup = page.waitForEvent('popup');
+  await book.click();
+  await (await popup).close();
+
+  // Backwards through every beat: the tap is undone when leaving the last beat.
+  for (let i = BEATS.length - 2; i >= 0; i--) {
+    const p = mid(ranges[i] as [number, number], 0.6);
+    await scrollTo(page, p, '.sentrax-scroll');
+    await settle(frame, p);
+    await expect(frame.locator('.ss')).toHaveAttribute('data-beat', BEATS[i] as string);
+    await expect(frame.locator('.ss')).toHaveAttribute('data-text', 'beat');
+  }
+
+  // Auto-find: scrolling past the last beat without tapping finds the pump by itself.
+  await scrollTo(page, 1, '.sentrax-scroll');
+  await settle(frame, 1);
+  await expect(frame.locator('.ss')).toHaveAttribute('data-text', 'found');
+  await expect(frame.locator('.ss')).toHaveAttribute('data-cta', 'true');
+
+  const events = tracked.map((t) => t.event);
+  expect(events).toContain('scroll_story_view');
+  expect(events).toContain('find_tapped');
+  expect(events).toContain('find_auto');
+  expect(tracked).toContainEqual({
+    event: 'cta_clicked',
+    props: { cta: 'book_meeting', placement: 'scroll_story' },
   });
-}
+  for (const beat of BEATS) expect(tracked).toContainEqual({ event: 'scroll_beat', props: { beat } });
+  expect(errors).toEqual([]);
+});
 
 test.describe('stage selection', () => {
   test.skip(({ isMobile }) => isMobile, 'detection runs the same on both viewports; desktop covers it');
@@ -208,7 +202,7 @@ test.describe('stage selection', () => {
     await expect
       .poll(() => img.evaluate((i: HTMLImageElement) => i.naturalWidth), { timeout: 30_000 })
       .toBeGreaterThan(0);
-    expect(await img.getAttribute('src')).toMatch(/scroll-media\/a\/landscape\/establish\.webp$/);
+    expect(await img.getAttribute('src')).toMatch(/scroll-media\/landscape\/establish\.webp$/);
 
     expect(failed).toEqual([]);
     expect(errors).toEqual([]);
@@ -335,7 +329,11 @@ test.describe('embed', () => {
     let loadedAt: number | null = null;
     for (let y = 0; y < 20_000 && loadedAt === null; y += Math.round(vh / 4)) {
       await page.evaluate((top) => window.scrollTo(0, top), y);
-      await page.waitForTimeout(120);
+      // Two animation frames: the loader's intersection callback for this position has run (a fixed
+      // delay is not enough when the machine is busy).
+      await page.evaluate(
+        () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r(null)))),
+      );
       const distance = await box.evaluate((e) => e.getBoundingClientRect().top - window.innerHeight);
       const count = await page.locator('.sentrax-scroll iframe').count();
       if (count) loadedAt = distance;
@@ -358,7 +356,9 @@ test.describe('embed', () => {
     const vw = await page.evaluate(() => window.innerWidth);
     await page.mouse.move(vw / 2, vh / 2);
     await page.mouse.wheel(0, 600);
-    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(before + 300);
+    await expect
+      .poll(() => page.evaluate(() => window.scrollY), { timeout: 30_000 })
+      .toBeGreaterThan(before + 300);
 
     const hostEvents = await page.evaluate(
       () =>

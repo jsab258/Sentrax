@@ -46,31 +46,25 @@ DECISIONS.md first. Branch: `claude/sentrax-3d-rtls-demo-jtoerz`. Preview: https
 
 ## Scroll story (SCROLL-SPEC.md, done)
 
-Goal: the homepage scroll story with looks A, B and C, video and poster fallbacks, the embed loader, the
-/home-preview/ mock, budgets, tests, CI and Pages. The full demo stays unchanged (own build, own chunks).
-
-State: complete and pushed. All 36 fallback clips are committed (`node scripts/scroll-clips.mjs`, or with
-`SKIP_EXISTING=1` to resume). Pages serves /home-preview/, /scroll/ and /embed-test/.
+The homepage scroll story with one look, "Realistic night" (look C; A and B dropped after review,
+DECISIONS.md 140), video and poster fallbacks, the embed loader, the /home-preview/ mock, budgets, tests,
+CI and Pages. The full demo stays unchanged (own build, own chunks).
 
 - Story data `src/scroll/stories/hospital-bilink.ts` (copy approved: false), recorded timeline
   `hospital-bilink.timeline.json` (`npm run scroll:record`; a unit test checks it matches a fresh recording),
   pure `storyState` (`src/scroll/state.ts`), `ScrollController` (easing, tap, auto-find, 0.25 s frame cap).
-- 3D stage in vanilla three (`src/scroll/three/`: looks, ward crop, props, effects, reflective floor, stage).
+- 3D stage in vanilla three (`src/scroll/three/`: look, ward crop, props, effects, stage floor, stage).
   Detection and fallbacks (`detect.ts`, `media.ts`; the probe starts on first view), overlay, app, styles,
   pages `scroll/`, `home-preview/` (+ `src/home/`), `embed-test/`, loader `src/scroll/loader.ts` (IIFE build
   `vite.loader.config.ts`), story build `vite.scroll.config.ts` (relative base; runtime URLs via `paths.ts`).
-- Clip script `scripts/scroll-clips.mjs` (capture mode + ffmpeg, bitrate ceilings), budget script
-  `scripts/check-scroll.mjs` (in `npm run build`).
+- Clips: `node scripts/scroll-clips.mjs` (capture mode + ffmpeg, bitrate ceilings) writes
+  `public/scroll-media/<orientation>/`; `SKIP_EXISTING=1` resumes. Budget check `scripts/check-scroll.mjs`.
 - Tests: unit (`src/scroll/__tests__`), e2e `e2e/scroll.spec.ts`, `e2e/preview.spec.ts` (live /home-preview/
-  check, payload per look with E2E_BASE_URL). EMBED.md, DECISIONS 122 to 139, README section.
-- Results: unit 22 files / 129 tests; scroll e2e 10 passed (looks A, B, C on desktop and phone, stage
-  selection, determinism, embed); existing desktop e2e 53 passed; `npm run build` budgets: loader 0.9 KB,
-  story JS 214 KB gzip, 3D assets A and B 0.38 MB, C 2.87 MB, phone video A 0.79 MB, B 1.20 MB, C 1.20 MB.
-  Live Pages check (commit 005f3d5): homepage mock scrolls without errors; transferred payload A and B
-  0.26 MB, C 2.76 MB. Frame cost on software WebGL: up to 374 draw calls and 304k triangles on desktop
-  (look A with reflection), up to 137 draw calls and 69k triangles on phones.
+  check, payload with E2E_BASE_URL). EMBED.md, DECISIONS 122 to 140, README section.
+- Results after dropping A and B: build budgets loader 0.9 KB, story JS 207 KB gzip, 3D assets 2.86 MB
+  (desktop and phone), phone video 1.20 MB; scroll e2e desktop and phone pass; unit 22 files / 129 tests.
 
-Open: the team picks one look after the demo; copy approval by Sentrax (all lines approved: false); M7 host.
+Open: copy approval by Sentrax (all lines approved: false); M7 host.
 
 ## Next
 

@@ -6,8 +6,7 @@
  * page's own styles and scripts are never touched; the story's CSS and JavaScript stay inside the iframe.
  *
  * Container attributes: data-src (story page URL, relative to the page; default: scroll/ next to this
- * script), data-look (a, b or c), data-force (3d, video or static, for testing), data-height (track length
- * in vh, default 600).
+ * script), data-force (3d, video or static, for testing), data-height (track length in vh, default 600).
  */
 (() => {
   const HOST = 'sentrax-scroll-host';
@@ -23,13 +22,12 @@
     if (!el.style.height) el.style.height = `${Number(d.height) || 600}vh`;
     if (!el.style.position) el.style.position = 'relative';
     const stick = document.createElement('div');
-    stick.style.cssText = 'position:sticky;top:0;width:100%;height:100vh;overflow:hidden;background:#05040f';
+    stick.style.cssText = 'position:sticky;top:0;width:100%;height:100vh;overflow:hidden;background:#03040a';
     el.append(stick);
 
     // data-src is relative to the host page, like any URL in its HTML; the default sits next to this script.
     const url = d.src ? new URL(d.src, window.location.href) : new URL('scroll/', base);
     url.searchParams.set('embed', '1');
-    if (d.look) url.searchParams.set('look', d.look);
     if (d.force) url.searchParams.set('force', d.force);
     let frame: HTMLIFrameElement | null = null;
     let ready = false;
@@ -56,7 +54,7 @@
       frame.src = url.href;
       frame.title = d.title || 'Sentrax scroll story';
       frame.setAttribute('allow', 'autoplay; fullscreen');
-      frame.style.cssText = 'display:block;width:100%;height:100%;border:0;background:#05040f';
+      frame.style.cssText = 'display:block;width:100%;height:100%;border:0;background:#03040a';
       stick.append(frame);
       el.dataset.ssLoaded = '1';
     };

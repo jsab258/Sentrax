@@ -23,7 +23,7 @@ import {
 import type { WorldDef } from '../../sim/world';
 import type { StoryState } from '../state';
 import type { PlanPoint } from '../stories/types';
-import { glow, type Look } from './looks';
+import { glow, LOOK } from './look';
 import { P, type Props } from './props';
 
 /** Sets a float uniform (the uniforms record is untyped, so each access is checked). */
@@ -190,19 +190,15 @@ export class Effects {
   private readonly tmp = new Vector3();
 
   constructor(
-    readonly look: Look,
     readonly world: WorldDef,
     readonly props: Props,
     readonly solixAt: PlanPoint,
     /** Tag the find marks with the beam. */
     readonly findTagId: string,
   ) {
-    // In the model looks the devices sit on top of the (lowered) walls.
-    const top = look.wallHeight ?? Infinity;
-    for (const d of world.devices)
-      this.devicePos.set(d.id, P(d.position.x, d.position.y, Math.min(d.position.z, top)));
-    const radio = glow(look.signal.radio, 1.7);
-    const data = glow(look.signal.data, 2);
+    for (const d of world.devices) this.devicePos.set(d.id, P(d.position.x, d.position.y, d.position.z));
+    const radio = glow(LOOK.signal.radio, 1.7);
+    const data = glow(LOOK.signal.data, 2);
 
     // Room volumes.
     for (const z of world.zones) {
@@ -210,7 +206,7 @@ export class Effects {
       const xs = z.polygon.map((p) => p.x);
       const ys = z.polygon.map((p) => p.y);
       const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
-      const height = Math.min(2.3, (look.wallHeight ?? 2.4) - 0.05);
+      const height = 2.3;
       // Inset from the walls so the volume's faces never coincide with wall faces (no z-fighting).
       const geo = boxGeometry(x1 - x0 - 0.7, height, y1 - y0 - 0.7);
       const mat = new ShaderMaterial({
@@ -389,7 +385,7 @@ export class Effects {
     this.geometries.push(shellGeo, coreGeo);
 
     // Found beam (button red, only for this).
-    const red = glow(look.signal.found, 2);
+    const red = glow(LOOK.signal.found, 2);
     const bgeo = new CylinderGeometry(0.42, 0.42, 7, 32, 1, true);
     bgeo.translate(0, 3.5, 0);
     const bmat = new ShaderMaterial({
@@ -434,7 +430,7 @@ export class Effects {
     this.materials.push(bmat, spot.material, ring.material);
     this.geometries.push(bgeo);
 
-    this.unassigned = this.makePulse(glow(look.signal.unassigned, 1.2), 0.6);
+    this.unassigned = this.makePulse(glow(LOOK.signal.unassigned, 1.2), 0.6);
   }
 
   private makePulse(color: Color, size: number): Pulse {
@@ -488,7 +484,7 @@ export class Effects {
     fx.pulses.forEach((pulse, i) => {
       let p = this.pulses[i];
       if (!p) {
-        p = this.makePulse(glow(this.look.signal.radio, 1.8), 0.35);
+        p = this.makePulse(glow(LOOK.signal.radio, 1.8), 0.35);
         this.pulses.push(p);
       }
       const at = this.props.tagPosition(pulse.tagId, state.t, this.tmp);
@@ -501,7 +497,7 @@ export class Effects {
       const v = fx.rooms[id] ?? 0;
       r.mesh.visible = v > 0.005;
       setU(r.mat, 'uFill', 0.15 + 0.85 * smooth(v));
-      setU(r.mat, 'uStrength', v * this.look.signalGain);
+      setU(r.mat, 'uStrength', v * LOOK.signalGain);
     }
     for (const [id, p] of this.anchors) {
       const v = fx.anchors[id] ?? 0;
@@ -515,7 +511,7 @@ export class Effects {
       shownArcs.add(a.anchorId);
       arc.mesh.visible = a.strength > 0.01;
       setU(arc.mat, 'uHead', a.head);
-      setU(arc.mat, 'uStrength', a.strength * this.look.signalGain);
+      setU(arc.mat, 'uStrength', a.strength * LOOK.signalGain);
     }
     for (const [id, arc] of this.arcs) if (!shownArcs.has(id)) arc.mesh.visible = false;
 

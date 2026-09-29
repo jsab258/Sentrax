@@ -1,6 +1,5 @@
 import { siteUrl } from './paths';
 import type { StoryState } from './state';
-import type { LookId } from './three/looks';
 
 /** Clip or poster for a state: one per beat, and the last beat's try and found states. */
 export function clipFor(state: StoryState): string {
@@ -9,13 +8,8 @@ export function clipFor(state: StoryState): string {
   return state.beatId;
 }
 
-export function mediaUrl(
-  look: LookId,
-  orientation: 'landscape' | 'portrait',
-  clip: string,
-  ext: string,
-): string {
-  return siteUrl(`scroll-media/${look}/${orientation}/${clip}.${ext}`);
+export function mediaUrl(orientation: 'landscape' | 'portrait', clip: string, ext: string): string {
+  return siteUrl(`scroll-media/${orientation}/${clip}.${ext}`);
 }
 
 /**
@@ -30,7 +24,6 @@ export class MediaStage {
 
   constructor(
     readonly kind: 'video' | 'static',
-    readonly look: LookId,
     private orientation: () => 'landscape' | 'portrait',
   ) {
     this.el = document.createElement('div');
@@ -69,16 +62,16 @@ export class MediaStage {
     const prev = this.layers[this.front] as HTMLVideoElement | HTMLImageElement;
     const o = this.orientation();
     if (next instanceof HTMLImageElement) {
-      next.src = mediaUrl(this.look, o, clip, 'webp');
+      next.src = mediaUrl(o, clip, 'webp');
     } else {
       next.replaceChildren();
-      next.poster = mediaUrl(this.look, o, clip, 'webp');
+      next.poster = mediaUrl(o, clip, 'webp');
       for (const [ext, type] of [
         ['webm', 'video/webm'],
         ['mp4', 'video/mp4'],
       ] as const) {
         const s = document.createElement('source');
-        s.src = mediaUrl(this.look, o, clip, ext);
+        s.src = mediaUrl(o, clip, ext);
         s.type = type;
         next.append(s);
       }

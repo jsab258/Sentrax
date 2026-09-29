@@ -86,8 +86,8 @@ Plain TypeScript, no three.js or React, so it runs in Vitest, in the 2D debug vi
 
 A scroll-driven story for the sentrax.com homepage, built next to the demo in the same `dist/`:
 
-- `scroll/` the story page (`?look=a|b|c`, `?force=3d|video|static`), `home-preview/` the homepage mock
-  (`?looks=1` shows a look switcher), `embed-test/` a plain HTML host page, `scroll-embed.js` the embed loader.
+- `scroll/` the story page (`?force=3d|video|static`), `home-preview/` the homepage mock, `embed-test/` a
+  plain HTML host page, `scroll-embed.js` the embed loader. One look, "Realistic night" (DECISIONS.md 140).
 - Embedding in WordPress (Elementor): [EMBED.md](EMBED.md).
 - Story data: `src/scroll/stories/<id>.ts` (beats, copy, camera keys, effects, the tap). After changing the story's
   world or seed, `npm run scroll:record` rewrites the recorded timeline, then `node scripts/scroll-clips.mjs`

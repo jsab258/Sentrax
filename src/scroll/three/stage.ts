@@ -6,7 +6,6 @@ import {
   HemisphereLight,
   Mesh,
   MeshBasicMaterial,
-  PCFShadowMap,
   PerspectiveCamera,
   PlaneGeometry,
   PMREMGenerator,
@@ -32,7 +31,7 @@ import type { StoryState } from '../state';
 import type { CameraPose, ScrollStory } from '../stories/types';
 import type { Timeline } from '../timeline/timeline';
 import { Effects } from './effects';
-import { LOOKS, type LookId } from './looks';
+import { LOOK } from './look';
 import { P, Props } from './props';
 import { buildStageFloor, type StageFloor } from './floor';
 import { buildWard, cropWorld, type Ward } from './ward';
@@ -70,7 +69,6 @@ function gradientTexture(center: string, edge: string): CanvasTexture {
 }
 
 export interface StageOptions {
-  look: LookId;
   phone: boolean;
   /** Device pixel ratio cap. */
   dpr: number;
@@ -78,14 +76,13 @@ export interface StageOptions {
 
 /**
  * The 3D stage of the scroll story (vanilla three.js, no React, to keep the story's JavaScript small):
- * the cropped ward in one of the three looks, people and equipment from the recording, the signals and a
- * post-processing chain with bloom, depth of field on close-ups and a vignette.
+ * the cropped ward at night, people and equipment from the recording, the signals and a post-processing
+ * chain with bloom, depth of field on close-ups and a vignette.
  */
 export class ThreeStage {
   readonly renderer: WebGLRenderer;
   readonly scene = new Scene();
   readonly camera = new PerspectiveCamera(34, 1, 0.5, 400);
-  readonly look;
   private readonly world: WorldDef;
   private readonly ward: Ward;
   private readonly floor: StageFloor;
@@ -95,7 +92,7 @@ export class ThreeStage {
   private readonly bloom: UnrealBloomPass;
   private readonly bokeh: BokehPass | null;
   private readonly vignette: ShaderPass;
-  private readonly loader: KTX2Loader | undefined;
+  private readonly loader: KTX2Loader;
   private readonly background: CanvasTexture;
   private readonly envTarget: ReturnType<PMREMGenerator['fromScene']>;
   private size = new Vector2(1, 1);
@@ -108,8 +105,7 @@ export class ThreeStage {
     fullWorld: WorldDef,
     readonly opts: StageOptions,
   ) {
-    this.look = LOOKS[opts.look];
-    const look = this.look;
+    const look = LOOK;
     this.renderer = new WebGLRenderer({
       canvas,
       antialias: false,
@@ -122,9 +118,6 @@ export class ThreeStage {
     this.renderer.outputColorSpace = SRGBColorSpace;
     // The composer renders several passes per frame; count them all (reset in render()).
     this.renderer.info.autoReset = false;
-    const shadows = look.light.key.shadows && !opts.phone;
-    this.renderer.shadowMap.enabled = shadows;
-    this.renderer.shadowMap.type = PCFShadowMap;
 
     this.background = gradientTexture(look.background.center, look.background.edge);
     this.scene.background = this.background;
@@ -145,76 +138,22 @@ export class ThreeStage {
     const key = new DirectionalLight(look.light.key.color, look.light.key.intensity);
     key.position.copy(center).add(new Vector3(-14, 26, 20));
     key.target.position.copy(center);
-    key.castShadow = shadows;
-    if (shadows) {
-      key.shadow.mapSize.set(2048, 2048);
-      const cam = key.shadow.camera;
-      cam.left = -20;
-      cam.right = 20;
-      cam.top = 16;
-      cam.bottom = -16;
-      cam.near = 1;
-      cam.far = 80;
-      key.shadow.bias = -0.0005;
-      key.shadow.normalBias = 0.03;
-      key.shadow.radius = 4;
-    }
     this.scene.add(key, key.target);
     const rim = new DirectionalLight(look.light.rim.color, look.light.rim.intensity);
     rim.position.copy(center).add(new Vector3(8, 10, -30));
     rim.target.position.copy(center);
     this.scene.add(rim, rim.target);
 
-    // Realistic night: warm practical lights with pools of light on the floor.
-    if (look.practicals) {
-      const pool = gradientTexture('rgba(255,214,160,0.9)', 'rgba(255,214,160,0)');
-      const lights: Array<[number, number]> = [];
-      for (const z of this.world.zones) {
-        if (z.parent || z.kind === 'outdoor') continue;
-        const xs = z.polygon.map((p) => p.x);
-        const ys = z.polygon.map((p) => p.y);
-        const [zx0, zx1, zy0, zy1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
-        if (z.kind === 'corridor') for (let x = zx0 + 3; x < zx1; x += 7) lights.push([x, (zy0 + zy1) / 2]);
-        else lights.push([(zx0 + zx1) / 2, (zy0 + zy1) / 2 + (z.kind === 'room' ? 1 : 0)]);
-      }
-      for (const [lx, ly] of lights) {
-        const l = new PointLight('#ffd6a0', 4, 7, 1.6);
-        l.position.copy(P(lx, ly, 2.4));
-        this.scene.add(l);
-        const m = new Mesh(
-          new PlaneGeometry(4.5, 4.5).rotateX(-Math.PI / 2),
-          new MeshBasicMaterial({
-            map: pool,
-            transparent: true,
-            opacity: 0.12,
-            blending: AdditiveBlending,
-            depthWrite: false,
-          }),
-        );
-        m.position.copy(P(lx, ly, 0.05));
-        this.scene.add(m);
-      }
-    }
+    this.addPracticals();
 
-    this.loader = look.model === 'realistic' ? new KTX2Loader().detectSupport(this.renderer) : undefined;
-    this.ward = buildWard(look, this.world, {
-      phone: opts.phone,
-      ...(this.loader ? { loader: this.loader } : {}),
-    });
+    this.loader = new KTX2Loader().detectSupport(this.renderer);
+    this.ward = buildWard(this.world, this.loader);
     this.scene.add(this.ward.group);
-    // Real (blurred) floor reflection for the model looks on desktop; phones get the plain floor.
-    this.floor = buildStageFloor(look, this.ward.base.center, this.ward.base.y, {
-      reflect: look.model !== 'realistic' && !opts.phone,
-      width: window.innerWidth * Math.min(window.devicePixelRatio || 1, opts.dpr),
-      height: window.innerHeight * Math.min(window.devicePixelRatio || 1, opts.dpr),
-    });
+    this.floor = buildStageFloor(this.ward.base.center, this.ward.base.y);
     this.scene.add(this.floor.mesh);
-    this.props = new Props(look, this.world, fullWorld, timeline, {
-      shadows,
-      ...(this.loader ? { loader: this.loader } : {}),
-    });
+    this.props = new Props(this.world, fullWorld, timeline, this.loader);
     this.scene.add(this.props.group);
-    this.effects = new Effects(look, this.world, this.props, story.solix, story.find.tagId);
+    this.effects = new Effects(this.world, this.props, story.solix, story.find.tagId);
     this.scene.add(this.effects.group);
 
     // Post-processing: bloom on the signals (HDR above the threshold), depth of field on close-ups.
@@ -238,6 +177,37 @@ export class ThreeStage {
     this.composer.addPass(new OutputPass());
 
     this.ready = Promise.all([this.ward.ready, this.props.ready]).then(() => undefined);
+  }
+
+  /** Warm practical lights with pools of light on the floor: one per room, every 7 m along the corridor. */
+  private addPracticals(): void {
+    const pool = gradientTexture('rgba(255,214,160,0.9)', 'rgba(255,214,160,0)');
+    const lights: Array<[number, number]> = [];
+    for (const z of this.world.zones) {
+      if (z.parent || z.kind === 'outdoor') continue;
+      const xs = z.polygon.map((p) => p.x);
+      const ys = z.polygon.map((p) => p.y);
+      const [zx0, zx1, zy0, zy1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+      if (z.kind === 'corridor') for (let x = zx0 + 3; x < zx1; x += 7) lights.push([x, (zy0 + zy1) / 2]);
+      else lights.push([(zx0 + zx1) / 2, (zy0 + zy1) / 2 + (z.kind === 'room' ? 1 : 0)]);
+    }
+    for (const [lx, ly] of lights) {
+      const l = new PointLight('#ffd6a0', 4, 7, 1.6);
+      l.position.copy(P(lx, ly, 2.4));
+      this.scene.add(l);
+      const m = new Mesh(
+        new PlaneGeometry(4.5, 4.5).rotateX(-Math.PI / 2),
+        new MeshBasicMaterial({
+          map: pool,
+          transparent: true,
+          opacity: 0.12,
+          blending: AdditiveBlending,
+          depthWrite: false,
+        }),
+      );
+      m.position.copy(P(lx, ly, 0.05));
+      this.scene.add(m);
+    }
   }
 
   resize(width: number, height: number): void {
@@ -280,7 +250,6 @@ export class ThreeStage {
     this.props.update(state.t, state.fx.look);
     this.effects.update(state);
     this.renderer.info.reset();
-    this.floor.frame();
     this.composer.render();
   }
 
@@ -298,7 +267,7 @@ export class ThreeStage {
     this.composer.dispose();
     this.background.dispose();
     this.envTarget.dispose();
-    this.loader?.dispose();
+    this.loader.dispose();
     this.renderer.dispose();
   }
 }

@@ -16,14 +16,12 @@ import { siteUrl } from './paths';
 import { Overlay } from './overlay';
 import { beatRanges, storyState, type StoryState } from './state';
 import type { ScrollStory } from './stories/types';
-import type { LookId } from './three/looks';
 import type { ThreeStage } from './three/stage';
 import { Timeline, type TimelineData } from './timeline/timeline';
 
 export interface AppOptions {
   story: ScrollStory;
   timeline: TimelineData;
-  look: LookId;
   /** Inside the embed loader's iframe: the host page scrolls and sends the progress. */
   embed: boolean;
   /** Clip capture: no loop, frames rendered on request, no text. */
@@ -78,8 +76,7 @@ export class ScrollApp {
     this.reason = choice.reason;
 
     this.root = document.createElement('div');
-    this.root.className = `ss ss-look-${opts.look}${opts.embed ? ' is-embed' : ''}${opts.capture ? ' is-capture' : ''}`;
-    this.root.dataset.look = opts.look;
+    this.root.className = `ss${opts.embed ? ' is-embed' : ''}${opts.capture ? ' is-capture' : ''}`;
     this.stageEl = document.createElement('div');
     this.stageEl.className = 'ss-stage';
     if (opts.embed || opts.capture) this.root.append(this.stageEl);
@@ -141,7 +138,6 @@ export class ScrollApp {
       const { ThreeStage } = await import('./three/stage');
       const phone = Math.min(window.innerWidth, window.innerHeight) < 600;
       this.three = new ThreeStage(canvas, this.opts.story, this.timeline, hospitalWorld(), {
-        look: this.opts.look,
         phone,
         dpr: phone ? 1.5 : 1.5,
       });
@@ -157,7 +153,7 @@ export class ScrollApp {
   }
 
   private startMedia(kind: 'video' | 'static'): void {
-    this.media = new MediaStage(kind, this.opts.look, this.orientation);
+    this.media = new MediaStage(kind, this.orientation);
     this.stageEl.prepend(this.media.el);
     this.media.update(this.state);
     this.root.dataset.ready = 'true';
@@ -210,7 +206,7 @@ export class ScrollApp {
       this.visible = entries.some((e) => e.isIntersecting);
       if (this.visible && !this.viewed) {
         this.viewed = true;
-        track('scroll_story_view', { story: this.opts.story.id, look: this.opts.look, mode: this.mode });
+        track('scroll_story_view', { story: this.opts.story.id, mode: this.mode });
       }
     });
     io.observe(this.stageEl);

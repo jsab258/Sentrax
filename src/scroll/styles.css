@@ -10,12 +10,12 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #05040f;
+  background: #03040a;
 }
 
 .ss {
-  --ss-bg: #05040f;
-  --ss-bg-rgb: 5, 4, 15;
+  --ss-bg: #03040a;
+  --ss-bg-rgb: 3, 4, 10;
   --ss-blue: #6683c2;
   --ss-red: #d31f4c;
   --ss-text: #fff;
@@ -27,14 +27,6 @@ body {
   background: var(--ss-bg);
   font-family: var(--ss-body);
   -webkit-font-smoothing: antialiased;
-}
-.ss-look-b {
-  --ss-bg: #02050c;
-  --ss-bg-rgb: 2, 5, 12;
-}
-.ss-look-c {
-  --ss-bg: #03040a;
-  --ss-bg-rgb: 3, 4, 10;
 }
 .ss *,
 .ss *::before,

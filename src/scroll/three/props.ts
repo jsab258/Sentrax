@@ -27,7 +27,6 @@ import { cutawayDepthMaterial, withCutaway } from '../../scene/materials/cutaway
 import type { Palette } from '../../scene/materials/palette';
 import type { AssetClass, WorldDef } from '../../sim/world';
 import type { Timeline } from '../timeline/timeline';
-import { modelBucketMaterials, type Look } from './looks';
 import { shownAt } from './ward';
 
 const STRIDE_M = 1.35;
@@ -106,49 +105,31 @@ export class Props {
   private lastLook = '';
 
   constructor(
-    readonly look: Look,
     readonly world: WorldDef,
     readonly fullWorld: WorldDef,
     readonly timeline: Timeline,
-    opts: { shadows: boolean; loader?: KTX2Loader },
+    loader: KTX2Loader,
   ) {
-    const realistic = look.model === 'realistic';
     const textures: Texture[] = [];
-    let mats: Record<Bucket, MeshStandardMaterial>;
-    let ready: Promise<unknown> = Promise.resolve();
-    if (realistic && opts.loader) {
-      const r = realisticMaterials(opts.loader, textures);
-      mats = r.mats;
-      ready = r.ready;
-    } else mats = modelBucketMaterials(look);
+    const { mats, ready } = realisticMaterials(loader, textures);
     this.ready = ready;
     this.disposables.push(...Object.values(mats));
-    const cut = realistic
-      ? (Object.fromEntries(Object.entries(mats).map(([k, m]) => [k, withCutaway(m.clone())])) as Record<
-          Bucket,
-          MeshStandardMaterial
-        >)
-      : mats;
-    if (realistic) this.disposables.push(...Object.values(cut));
+    const cut = Object.fromEntries(
+      Object.entries(mats).map(([k, m]) => [k, withCutaway(m.clone())]),
+    ) as Record<Bucket, MeshStandardMaterial>;
+    this.disposables.push(...Object.values(cut));
     const palette: Palette = { mats, cut, cutDepth: cutawayDepthMaterial() };
-    const shadows = { cast: opts.shadows, receive: true };
+    const shadows = { cast: false, receive: true };
 
-    // Furniture of the shown rooms (the model looks drop the wall cutaway attachments).
-    const furniture = hospitalFurniture(fullWorld)
-      .filter((p) => shownAt(world, p.x, p.y))
-      .map((p) => (realistic ? p : { ...p, wall: undefined }));
+    // Furniture of the shown rooms.
+    const furniture = hospitalFurniture(fullWorld).filter((p) => shownAt(world, p.x, p.y));
     const furnitureModels = hospitalFurnitureModels();
     for (const m of buildInstances(furnitureModels, furniture, palette, shadows)) this.group.add(m);
     this.disposeModels(furnitureModels);
 
     // Devices (room anchors, corridor gateways).
     const devModels = deviceModels();
-    // In the model looks the devices sit on top of the lowered walls.
-    const top = look.wallHeight ?? Infinity;
-    const devs: Placement[] = world.devices.map((d) => {
-      const p = devicePlacement(fullWorld, d);
-      return { ...p, z: Math.min(p.z ?? d.position.z, top) };
-    });
+    const devs: Placement[] = world.devices.map((d) => devicePlacement(fullWorld, d));
     for (const m of buildInstances(devModels as Record<string, ModelParts>, devs, palette, shadows))
       this.group.add(m);
 
@@ -206,13 +187,12 @@ export class Props {
       const per = name === 'upperArm' || name === 'forearm' || name === 'thigh' || name === 'shin' ? 2 : 1;
       const mesh = new InstancedMesh(def.geometry, mats[def.mat], Math.max(1, count * per));
       mesh.name = `person:${name}`;
-      mesh.castShadow = opts.shadows;
       mesh.frustumCulled = false;
       const slot = CLOTHED[name];
       const c = new Color();
       roles.forEach((role, i) => {
         const outfit = OUTFITS[role] ?? OUTFITS.default;
-        if (realistic && slot && outfit) c.setRGB(...outfit[slot]);
+        if (slot && outfit) c.setRGB(...outfit[slot]);
         else c.setRGB(1, 1, 1);
         for (let k = 0; k < per; k++) mesh.setColorAt(i * per + k, c);
       });

@@ -1,10 +1,10 @@
 // Generates the scroll story's video and poster fallbacks (SCROLL-SPEC.md section 6) from the recorded
 // timeline: renders every frame headlessly in the story page's capture mode (?capture=1&force=3d), then
 // encodes one short seamless loop per beat as MP4 (H.264) and WebM (VP9), plus a WebP poster, for each
-// look and orientation, into public/scroll-media/<look>/<orientation>/.
+// orientation, into public/scroll-media/<orientation>/.
 //
-//   node scripts/scroll-clips.mjs            all looks
-//   node scripts/scroll-clips.mjs a c        some looks
+//   node scripts/scroll-clips.mjs                      all clips
+//   SKIP_EXISTING=1 node scripts/scroll-clips.mjs      only the missing ones (resume an interrupted run)
 //
 // Needs ffmpeg with libx264, libvpx-vp9 and libwebp on the PATH. Commit the output.
 import { spawn } from 'node:child_process';
@@ -36,7 +36,6 @@ const CLIPS = {
 /** Where in each clip the poster (and the reduced-motion still) is taken, 0 to 1. */
 const POSTER_AT = { establish: 0.5, tag: 0.7, rooms: 0.85, relay: 0.7, try: 0.3, found: 0.8 };
 
-const looks = process.argv.slice(2).length ? process.argv.slice(2) : ['a', 'b', 'c'];
 /** SKIP_EXISTING=1 keeps clips that already have all three files (to resume an interrupted run). */
 const skipExisting = process.env.SKIP_EXISTING === '1';
 const ffmpeg = (args) =>
@@ -69,7 +68,7 @@ async function encode({ dir, out, clip, orientation, label, t0 }, poster) {
     '[v]',
     '-an',
   ];
-  // Constant quality with a bitrate ceiling, so busy looks (glass edges, bloom) stay inside the budget.
+  // Constant quality with a bitrate ceiling, so busy shots (bloom, fine detail) stay inside the budget.
   const crf =
     orientation === 'portrait' ? { h264: '30', vp9: '40', max: 450 } : { h264: '28', vp9: '38', max: 1000 };
   await ffmpeg([
@@ -143,49 +142,47 @@ const browser = await chromium.launch({
 const work = mkdtempSync(join(tmpdir(), 'scroll-clips-'));
 
 try {
-  for (const look of looks) {
-    for (const [orientation, size] of Object.entries(ORIENTATIONS)) {
-      const page = await browser.newPage({ viewport: size, deviceScaleFactor: 1 });
-      page.on('pageerror', (e) => console.error(`pageerror: ${e.message}`));
-      await page.goto(`${base}scroll/?capture=1&force=3d&look=${look}`);
-      await page.waitForSelector('[data-capture="ready"][data-ready="true"]', {
-        state: 'attached',
-        timeout: 180_000,
-      });
-      console.log(`${look}/${orientation}: page ready`);
-      const out = join(root, 'public', 'scroll-media', look, orientation);
-      mkdirSync(out, { recursive: true });
-      for (const [clip, [beat, from, to, find]] of Object.entries(CLIPS)) {
-        if (skipExisting && ['mp4', 'webm', 'webp'].every((e) => existsSync(join(out, `${clip}.${e}`))))
-          continue;
-        const dir = join(work, `${look}-${orientation}-${clip}`);
-        mkdirSync(dir, { recursive: true });
-        const t0 = Date.now();
-        for (let i = 0; i < FRAMES; i++) {
-          const u = i / (FRAMES - 1);
-          const local = from + (to - from) * u;
-          const data = await page.evaluate(
-            ([b, l, f]) => {
-              const cap = window.__scrollCapture;
-              cap.frame(cap.progressOf(b, l), f);
-              return document.querySelector('.ss-canvas').toDataURL('image/jpeg', 0.92);
-            },
-            [beat, local, find],
-          );
-          writeFileSync(
-            join(dir, `${String(i).padStart(4, '0')}.jpg`),
-            Buffer.from(data.split(',')[1], 'base64'),
-          );
-        }
-        const poster = String(Math.round(POSTER_AT[clip] * (FRAMES - 1))).padStart(4, '0');
-        const target = { dir, out, clip, orientation, label: `${look}/${orientation}/${clip}`, t0 };
-        // Encode in the background while the next clip renders (at most two encodes at a time).
-        while (encoding.size >= 2) await Promise.race(encoding);
-        const job = encode(target, poster).finally(() => encoding.delete(job));
-        encoding.add(job);
+  for (const [orientation, size] of Object.entries(ORIENTATIONS)) {
+    const page = await browser.newPage({ viewport: size, deviceScaleFactor: 1 });
+    page.on('pageerror', (e) => console.error(`pageerror: ${e.message}`));
+    await page.goto(`${base}scroll/?capture=1&force=3d`);
+    await page.waitForSelector('[data-capture="ready"][data-ready="true"]', {
+      state: 'attached',
+      timeout: 180_000,
+    });
+    console.log(`${orientation}: page ready`);
+    const out = join(root, 'public', 'scroll-media', orientation);
+    mkdirSync(out, { recursive: true });
+    for (const [clip, [beat, from, to, find]] of Object.entries(CLIPS)) {
+      if (skipExisting && ['mp4', 'webm', 'webp'].every((e) => existsSync(join(out, `${clip}.${e}`))))
+        continue;
+      const dir = join(work, `${orientation}-${clip}`);
+      mkdirSync(dir, { recursive: true });
+      const t0 = Date.now();
+      for (let i = 0; i < FRAMES; i++) {
+        const u = i / (FRAMES - 1);
+        const local = from + (to - from) * u;
+        const data = await page.evaluate(
+          ([b, l, f]) => {
+            const cap = window.__scrollCapture;
+            cap.frame(cap.progressOf(b, l), f);
+            return document.querySelector('.ss-canvas').toDataURL('image/jpeg', 0.92);
+          },
+          [beat, local, find],
+        );
+        writeFileSync(
+          join(dir, `${String(i).padStart(4, '0')}.jpg`),
+          Buffer.from(data.split(',')[1], 'base64'),
+        );
       }
-      await page.close();
+      const poster = String(Math.round(POSTER_AT[clip] * (FRAMES - 1))).padStart(4, '0');
+      const target = { dir, out, clip, orientation, label: `${orientation}/${clip}`, t0 };
+      // Encode in the background while the next clip renders (at most two encodes at a time).
+      while (encoding.size >= 2) await Promise.race(encoding);
+      const job = encode(target, poster).finally(() => encoding.delete(job));
+      encoding.add(job);
     }
+    await page.close();
   }
   await Promise.all(encoding);
 } finally {

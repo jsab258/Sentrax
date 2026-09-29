@@ -6,12 +6,11 @@ import './styles.css';
 import { ScrollApp } from './app';
 import { readEnv } from './detect';
 import { defaultStoryId, scrollStories } from './stories';
-import { parseLook } from './three/looks';
 
 /**
  * Entry of the scroll story page (scroll/index.html). Standalone it scrolls itself; inside the embed
- * loader's iframe (?embed=1) the host page scrolls and sends the progress. ?look=a|b|c picks the look,
- * ?force=3d|video|static overrides device detection, ?capture=1 is for the clip script.
+ * loader's iframe (?embed=1) the host page scrolls and sends the progress. ?force=3d|video|static
+ * overrides device detection, ?capture=1 is for the clip script.
  */
 const q = new URLSearchParams(window.location.search);
 const entry = scrollStories[q.get('story') ?? defaultStoryId] ?? scrollStories[defaultStoryId];
@@ -20,7 +19,6 @@ if (entry && host) {
   const app = new ScrollApp(host, {
     story: entry.story,
     timeline: entry.timeline,
-    look: parseLook(q.get('look')),
     embed: q.get('embed') === '1',
     capture: q.get('capture') === '1',
     env: readEnv(window.location.search),
