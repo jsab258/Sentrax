@@ -110,8 +110,9 @@ for (const look of LOOKS) {
     await expect(find).toBeVisible();
     if (info.project.use.hasTouch) await find.tap();
     else await find.click();
-    await expect(frame.locator('.ss')).toHaveAttribute('data-text', 'found', { timeout: 30_000 });
-    await expect(frame.locator('.ss')).toHaveAttribute('data-cta', 'true', { timeout: 30_000 });
+    // The find plays over 2.4 s of story time; software rendering can take seconds per frame.
+    await expect(frame.locator('.ss')).toHaveAttribute('data-text', 'found', { timeout: 90_000 });
+    await expect(frame.locator('.ss')).toHaveAttribute('data-cta', 'true', { timeout: 90_000 });
     await expect(frame.getByRole('heading', { name: 'Found. Room 104.' })).toBeVisible();
     await expect
       .poll(() => frame.evaluate(() => (window.__scrollStory as StoryHooks).settled()), { timeout: 60_000 })

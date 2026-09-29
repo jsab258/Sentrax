@@ -56,6 +56,7 @@ export class ScrollApp {
   private last = 0;
   private dirty = true;
   private probeUntil = 0;
+  private probePending = false;
   private probeTimes: number[] = [];
   private slowTimes: number[] = [];
   private slowFor = 0;
@@ -148,7 +149,8 @@ export class ScrollApp {
       await this.three.ready;
       this.three.render(this.state);
       this.root.dataset.ready = 'true';
-      this.probeUntil = performance.now() + PROBE_MS;
+      // The probe runs over the first second the story is on screen (an embed loads a viewport early).
+      this.probePending = true;
     } catch {
       this.switchToMedia('video', 'no-webgl2');
     }
@@ -233,7 +235,13 @@ export class ScrollApp {
     const dtMs = now - this.last;
     this.last = now;
     if (!this.visible || document.visibilityState === 'hidden') return;
-    const moving = this.controller.update(Math.min(0.1, dtMs / 1000));
+    if (this.probePending && this.three) {
+      this.probePending = false;
+      this.probeUntil = now + PROBE_MS;
+    }
+    // Long frame gaps (a background tab) must not jump the story; a quarter second per frame still keeps
+    // the find and the easing moving on very slow renderers.
+    const moving = this.controller.update(Math.min(0.25, dtMs / 1000));
     const probing = this.three !== null && now < this.probeUntil;
     // One more frame after the motion stops, so the settled state is drawn and reported.
     const stopped = this.wasMoving && !moving;

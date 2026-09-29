@@ -69,7 +69,9 @@ async function encode({ dir, out, clip, orientation, label, t0 }, poster) {
     '[v]',
     '-an',
   ];
-  const crf = orientation === 'portrait' ? { h264: '30', vp9: '40' } : { h264: '28', vp9: '38' };
+  // Constant quality with a bitrate ceiling, so busy looks (glass edges, bloom) stay inside the budget.
+  const crf =
+    orientation === 'portrait' ? { h264: '30', vp9: '40', max: 450 } : { h264: '28', vp9: '38', max: 1000 };
   await ffmpeg([
     ...input,
     '-c:v',
@@ -78,6 +80,10 @@ async function encode({ dir, out, clip, orientation, label, t0 }, poster) {
     'medium',
     '-crf',
     crf.h264,
+    '-maxrate',
+    `${crf.max}k`,
+    '-bufsize',
+    `${crf.max * 2}k`,
     '-profile:v',
     'main',
     '-movflags',
@@ -91,7 +97,7 @@ async function encode({ dir, out, clip, orientation, label, t0 }, poster) {
     '-crf',
     crf.vp9,
     '-b:v',
-    '0',
+    `${crf.max}k`,
     '-row-mt',
     '1',
     '-deadline',
