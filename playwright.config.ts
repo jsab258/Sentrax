@@ -9,7 +9,9 @@ const SCROLL_STORY = /scroll\.spec\.ts/;
 
 export default defineConfig({
   testDir: './e2e',
-  timeout: 60_000,
+  // Above the 90 s scene-ready waits many specs declare (software WebGL on a slow CI runner): a lower
+  // limit ended tests before their own waits did (DECISIONS.md 142).
+  timeout: 150_000,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
