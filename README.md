@@ -82,6 +82,19 @@ Plain TypeScript, no three.js or React, so it runs in Vitest, in the 2D debug vi
 - It posts `ready`, `cta_click`, `story_complete` and `content_height` messages to the parent window, each tagged `source: 'sentrax-3d-demo'`.
 - Set `VITE_EMBED_PARENT_ORIGIN` at build time to restrict messages to the host origin.
 
+## Homepage scroll story (SCROLL-SPEC.md)
+
+A scroll-driven story for the sentrax.com homepage, built next to the demo in the same `dist/`:
+
+- `scroll/` the story page (`?look=a|b|c`, `?force=3d|video|static`), `home-preview/` the homepage mock
+  (`?looks=1` shows a look switcher), `embed-test/` a plain HTML host page, `scroll-embed.js` the embed loader.
+- Embedding in WordPress (Elementor): [EMBED.md](EMBED.md).
+- Story data: `src/scroll/stories/<id>.ts` (beats, copy, camera keys, effects, the tap). After changing the story's
+  world or seed, `npm run scroll:record` rewrites the recorded timeline, then `node scripts/scroll-clips.mjs`
+  regenerates the video and poster fallbacks in `public/scroll-media/` (needs ffmpeg; commit the output).
+- `npm run build` checks the budgets of SCROLL-SPEC.md section 8 (`scripts/check-scroll.mjs`); e2e coverage is
+  in `e2e/scroll.spec.ts`, screenshots in `docs/screenshots/scroll/`.
+
 ## Online preview
 
 `.github/workflows/pages.yml` builds the working branch and deploys it to GitHub Pages on every push: https://jsab258.github.io/Sentrax/ (the path follows the repository name, so it changes with the M7 rename).

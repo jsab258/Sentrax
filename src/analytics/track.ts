@@ -10,7 +10,13 @@ export type AnalyticsEvent =
   | 'sandbox_opened'
   | 'device_inspected'
   | 'lens_changed'
-  | 'cta_clicked';
+  | 'cta_clicked'
+  // Homepage scroll story (SCROLL-SPEC.md section 8).
+  | 'scroll_story_view'
+  | 'scroll_beat'
+  | 'find_tapped'
+  | 'find_auto'
+  | 'fallback_used';
 
 export type AnalyticsProps = Record<string, string | number | boolean | undefined>;
 export type AnalyticsSink = (event: AnalyticsEvent, props: AnalyticsProps) => void;

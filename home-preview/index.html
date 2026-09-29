@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="Mock of the Sentrax homepage with the scroll story, for internal review."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Sentrax homepage mock</title>
+    <script type="module" src="/src/home/main.ts"></script>
+  </head>
+  <body>
+    <header class="hp-header">
+      <a class="hp-logo" href="https://sentrax.com/" target="_blank" rel="noopener noreferrer">
+        <img id="hp-logo" alt="Sentrax" width="150" height="40" />
+      </a>
+      <nav class="hp-nav" aria-label="Main">
+        <a href="https://sentrax.com/technology/" target="_blank" rel="noopener noreferrer">Technology</a>
+        <a href="https://sentrax.com/solutions/bilink-tracking/" target="_blank" rel="noopener noreferrer"
+          >Solutions</a
+        >
+        <a href="https://sentrax.com/applications/healthcare/" target="_blank" rel="noopener noreferrer"
+          >Applications</a
+        >
+        <a href="https://sentrax.com/documents/" target="_blank" rel="noopener noreferrer">Support</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hp-hero">
+        <h1>Smart Locating and Sensing Systems</h1>
+        <p>
+          Advanced multisensory and real-time location system hardware and software for precise positioning
+          and tracking in various sectors, including smart building, healthcare, and manufacturing.
+        </p>
+        <a class="hp-button" href="https://sentrax.com/technology/" target="_blank" rel="noopener noreferrer"
+          >Learn More</a
+        >
+      </section>
+
+      <!-- The embed snippet from EMBED.md; the loader's path is relative to this page. -->
+      <div
+        class="sentrax-scroll"
+        data-look="a"
+        style="position: relative; height: 600vh; background: #05040f"
+      ></div>
+      <script src="../scroll-embed.js" defer></script>
+
+      <section class="hp-placeholder">
+        <h2>Placeholder section</h2>
+        <p>The rest of the homepage continues here: products, evaluation kits and solutions.</p>
+      </section>
+      <section class="hp-placeholder hp-placeholder-alt">
+        <h2>Placeholder section</h2>
+        <p>Application areas and articles follow here.</p>
+      </section>
+    </main>
+
+    <footer class="hp-footer">
+      <div>
+        <strong>Sentrax GmbH</strong>
+        <span>Platz 4, 6039 Root, Switzerland</span>
+      </div>
+      <div>
+        <span>info(a)sentrax.com</span>
+        <span>+41 41 505 0065</span>
+      </div>
+    </footer>
+
+    <div class="hp-mock" aria-hidden="true">Mock</div>
+  </body>
+</html>

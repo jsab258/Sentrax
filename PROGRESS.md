@@ -44,6 +44,34 @@ DECISIONS.md first. Branch: `claude/sentrax-3d-rtls-demo-jtoerz`. Preview: https
 - Review fixes (DECISIONS 120, 121): floor layers centimetres apart and a 1 m near plane (no more bright
   patches or sawtooth edges on real GPUs); proximity-only RSSI fixes label the asset, not the gateway pole.
 
+## Scroll story (SCROLL-SPEC.md, in progress)
+
+Goal: the homepage scroll story with looks A, B and C, video and poster fallbacks, the embed loader, the
+/home-preview/ mock, budgets, tests, CI and Pages. The full demo stays unchanged (own build, own chunks).
+
+Done so far (uncommitted until the first scroll commit):
+
+- Story data `src/scroll/stories/hospital-bilink.ts` (copy approved: false), recorded timeline
+  `hospital-bilink.timeline.json` (`npm run scroll:record` regenerates it; a unit test checks it matches a fresh
+  recording), pure `storyState` (`src/scroll/state.ts`), `ScrollController` (easing, tap, auto-find).
+- 3D stage in vanilla three (`src/scroll/three/`: looks, ward crop, props, effects, reflective floor, stage with
+  bloom, desktop depth of field, vignette). Detection and fallbacks (`detect.ts`, `media.ts`), text overlay
+  (`overlay.ts`), app (`app.ts`), styles, pages `scroll/`, `home-preview/` (+ `src/home/`), `embed-test/`,
+  loader `src/scroll/loader.ts` (own IIFE build `vite.loader.config.ts`), story build `vite.scroll.config.ts`.
+- Clip script `scripts/scroll-clips.mjs` (capture mode + ffmpeg) writes `public/scroll-media/<look>/<orientation>/`.
+- Budget script `scripts/check-scroll.mjs` (runs in `npm run build`).
+- Dev helpers: `?capture=1` (window.__scrollCapture), window.__scrollStory (state, key, settled, mode, clip).
+
+Also done: e2e `e2e/scroll.spec.ts` (looks x desktop/mobile on /home-preview/, force modes, no-WebGL2,
+low memory, reduced motion, determinism, embed host with CLS and lazy-load checks, wheel over the iframe),
+`e2e/preview.spec.ts` live /home-preview/ check and payload per look (only with E2E_BASE_URL), EMBED.md,
+DECISIONS 122 to 138, README section, `src/scroll/paths.ts` (site root for runtime URLs, relative base).
+Passed locally so far: stage selection (3 tests), embed, look A desktop.
+
+Next: wait for `node scripts/scroll-clips.mjs` (writes public/scroll-media), `npm run build` (budgets), full
+e2e, commit and push, CI green, Pages deploy and live check, final report. While the clip script runs, do
+not edit files the story page imports (the dev server reloads the capture page).
+
 ## Next
 
 1. M7 (deploy target) is not started: it needs the user's choice of host (SPEC section 12).

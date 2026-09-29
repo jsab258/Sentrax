@@ -1,0 +1,12 @@
+{
+  "a": [],
+  "b": [],
+  "c": [
+    { "name": "vinyl", "maps": ["diff", "nor", "rough"] },
+    { "name": "bath-tiles", "maps": ["diff", "nor", "rough"] },
+    { "name": "plaster", "maps": ["diff", "nor", "rough"] },
+    { "name": "linen", "maps": ["diff", "nor"] },
+    { "name": "leather", "maps": ["diff", "nor"] },
+    { "name": "veneer", "maps": ["diff", "nor"] }
+  ]
+}

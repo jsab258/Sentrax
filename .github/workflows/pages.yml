@@ -69,7 +69,8 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       # Both scenes, one story per scene, the teaser and both tiers load from the deployed URL with their
-      # textures, HDRI and transcoder, without console errors (e2e/preview.spec.ts).
+      # textures, HDRI and transcoder, without console errors; the homepage mock scrolls through the scroll
+      # story; the scroll story's transferred payload per look stays within budget (e2e/preview.spec.ts).
       - run: npx playwright test e2e/preview.spec.ts --project=desktop
         env:
           E2E_BASE_URL: ${{ needs.deploy.outputs.page_url }}

@@ -16,5 +16,11 @@
     "allowImportingTsExtensions": true,
     "noEmit": true
   },
-  "include": ["vite.config.ts", "playwright.config.ts", "e2e"]
+  "include": [
+    "vite.config.ts",
+    "vite.scroll.config.ts",
+    "vite.loader.config.ts",
+    "playwright.config.ts",
+    "e2e"
+  ]
 }

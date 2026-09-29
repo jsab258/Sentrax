@@ -10,3 +10,4 @@ SCROLL-SPEC.md
 .asset-cache
 public/basis
 dist-shots
+src/scroll/stories/*.timeline.json
