@@ -6,6 +6,7 @@ test-results
 reference
 docs/screenshots
 SPEC.md
+SCROLL-SPEC.md
 .asset-cache
 public/basis
 dist-shots
