@@ -64,6 +64,8 @@ async function storyFrame(page: Page): Promise<Frame> {
 }
 
 const mid = (r: [number, number], at = 0.5) => r[0] + (r[1] - r[0]) * at;
+/** desktop or mobile, from the Playwright project name (scroll-desktop, scroll-mobile). */
+const viewport = (project: string) => project.replace(/^scroll-/, '');
 
 test('home preview: every beat forwards and backwards, Find, both calls to action', async ({
   page,
@@ -97,7 +99,7 @@ test('home preview: every beat forwards and backwards, Find, both calls to actio
     await expect(frame.locator('.ss')).toHaveAttribute('data-text', beat === 'find' ? 'try' : 'beat');
     await page.waitForTimeout(1200); // word-by-word reveal
     await page.screenshot({
-      path: join(SHOTS, `${info.project.name}-${i + 1}-${beat}.jpg`),
+      path: join(SHOTS, `${viewport(info.project.name)}-${i + 1}-${beat}.jpg`),
       quality: 82,
     });
   }
@@ -115,7 +117,7 @@ test('home preview: every beat forwards and backwards, Find, both calls to actio
     .poll(() => frame.evaluate(() => (window.__scrollStory as StoryHooks).settled()), { timeout: 60_000 })
     .toBe(true);
   await page.waitForTimeout(1200);
-  await page.screenshot({ path: join(SHOTS, `${info.project.name}-6-found.jpg`), quality: 82 });
+  await page.screenshot({ path: join(SHOTS, `${viewport(info.project.name)}-6-found.jpg`), quality: 82 });
 
   const book = frame.getByRole('link', { name: /Book a meeting/ });
   const demo = frame.getByRole('link', { name: /Explore the full demo/ });
@@ -262,7 +264,9 @@ test.describe('stage selection', () => {
   test('the same scroll position renders the same timeline state forwards and backwards', async ({
     page,
   }) => {
-    test.setTimeout(300_000);
+    test.setTimeout(600_000);
+    // The state under test does not depend on the canvas size; a smaller one renders faster.
+    await page.setViewportSize({ width: 960, height: 600 });
     await page.goto('scroll/?force=3d');
     await expect(page.locator('.ss')).toHaveAttribute('data-ready', 'true', { timeout: 120_000 });
     const positions = [0.08, 0.27, 0.46, 0.63, 0.78];

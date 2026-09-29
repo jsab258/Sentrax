@@ -3,6 +3,9 @@ import { defineConfig, devices } from '@playwright/test';
 const port = 5173;
 /** Run against another server (a production build, the online preview) instead of the dev server. */
 const external = process.env.E2E_BASE_URL;
+const desktop = { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } };
+const mobile = { ...devices['Pixel 7'], viewport: { width: 360, height: 780 } };
+const SCROLL_STORY = /scroll\.spec\.ts/;
 
 export default defineConfig({
   testDir: './e2e',
@@ -20,8 +23,12 @@ export default defineConfig({
     },
   },
   projects: [
-    { name: 'desktop', use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } } },
-    { name: 'mobile', use: { ...devices['Pixel 7'], viewport: { width: 360, height: 780 } } },
+    { name: 'desktop', use: desktop, testIgnore: SCROLL_STORY },
+    { name: 'mobile', use: mobile, testIgnore: SCROLL_STORY },
+    // The scroll story's specs render heavy software-WebGL frames for minutes. They run after the demo's
+    // projects, so the demo's timing-sensitive tests keep the machine they had before the story existed.
+    { name: 'scroll-desktop', use: desktop, testMatch: SCROLL_STORY, dependencies: ['desktop', 'mobile'] },
+    { name: 'scroll-mobile', use: mobile, testMatch: SCROLL_STORY, dependencies: ['desktop', 'mobile'] },
   ],
   webServer: external
     ? undefined
