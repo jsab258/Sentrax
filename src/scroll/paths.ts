@@ -6,7 +6,7 @@
  */
 const base = import.meta.env.BASE_URL;
 const root = base.startsWith('.')
-  ? new URL('../', import.meta.url).href
+  ? new URL(/* @vite-ignore */ '../', import.meta.url).href
   : new URL(base, window.location.href).href;
 
 export function siteUrl(path = ''): string {
