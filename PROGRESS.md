@@ -44,14 +44,13 @@ DECISIONS.md first. Branch: `claude/sentrax-3d-rtls-demo-jtoerz`. Preview: https
 - Review fixes (DECISIONS 120, 121): floor layers centimetres apart and a 1 m near plane (no more bright
   patches or sawtooth edges on real GPUs); proximity-only RSSI fixes label the asset, not the gateway pole.
 
-## Scroll story (SCROLL-SPEC.md, in progress)
+## Scroll story (SCROLL-SPEC.md, done)
 
 Goal: the homepage scroll story with looks A, B and C, video and poster fallbacks, the embed loader, the
 /home-preview/ mock, budgets, tests, CI and Pages. The full demo stays unchanged (own build, own chunks).
 
-State: all code, docs and tests are committed and pushed (commits 9c34bfc onwards). Fallback clips for
-looks A, B and C landscape are committed; look C portrait is the last set (resume with
-`SKIP_EXISTING=1 node scripts/scroll-clips.mjs c`, it keeps finished clips).
+State: complete and pushed. All 36 fallback clips are committed (`node scripts/scroll-clips.mjs`, or with
+`SKIP_EXISTING=1` to resume). Pages serves /home-preview/, /scroll/ and /embed-test/.
 
 - Story data `src/scroll/stories/hospital-bilink.ts` (copy approved: false), recorded timeline
   `hospital-bilink.timeline.json` (`npm run scroll:record`; a unit test checks it matches a fresh recording),
@@ -64,12 +63,14 @@ looks A, B and C landscape are committed; look C portrait is the last set (resum
   `scripts/check-scroll.mjs` (in `npm run build`).
 - Tests: unit (`src/scroll/__tests__`), e2e `e2e/scroll.spec.ts`, `e2e/preview.spec.ts` (live /home-preview/
   check, payload per look with E2E_BASE_URL). EMBED.md, DECISIONS 122 to 139, README section.
-- Local results: unit 22 files / 129 tests pass; existing desktop e2e 53 pass; scroll e2e looks A, B (both
-  viewports), C mobile, stage selection, determinism and embed pass (C desktop needed the frame cap, rerun
-  pending). Measured payload on the build: A and B 0.26 MB, C 3.03 MB (desktop and phone).
+- Results: unit 22 files / 129 tests; scroll e2e 10 passed (looks A, B, C on desktop and phone, stage
+  selection, determinism, embed); existing desktop e2e 53 passed; `npm run build` budgets: loader 0.9 KB,
+  story JS 214 KB gzip, 3D assets A and B 0.38 MB, C 2.87 MB, phone video A 0.79 MB, B 1.20 MB, C 1.20 MB.
+  Live Pages check (commit 005f3d5): homepage mock scrolls without errors; transferred payload A and B
+  0.26 MB, C 2.76 MB. Frame cost on software WebGL: up to 374 draw calls and 304k triangles on desktop
+  (look A with reflection), up to 137 draw calls and 69k triangles on phones.
 
-Next: finish look C portrait clips, `npm run build`, full scroll e2e (refreshes docs/screenshots/scroll),
-commit and push, CI green, Pages deploy and live check, final report.
+Open: the team picks one look after the demo; copy approval by Sentrax (all lines approved: false); M7 host.
 
 ## Next
 
