@@ -20,6 +20,8 @@ async function openDashboard(page: Page) {
 test('explore mode has time controls, presets and triggers; an SOS trigger raises the alert', async ({
   page,
 }) => {
+  // Waits up to 60 s for the nurse to arrive in simulation time, on top of loading and a camera flight.
+  test.setTimeout(150_000);
   const errors = collectErrors(page);
   await page.goto('./?mode=sandbox&scene=hospital&quality=low');
   const panel = page.getByTestId('sandbox-panel');

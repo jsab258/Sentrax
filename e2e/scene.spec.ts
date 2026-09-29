@@ -43,6 +43,8 @@ test('hospital renders on the high tier within the draw call budget', async ({ p
 });
 
 test('the quality menu switches tiers and the low tier draws less', async ({ page }) => {
+  // Loads the high tier (waits up to 90 s for it), then builds a new WebGL context for the low tier.
+  test.setTimeout(150_000);
   const errors = collectErrors(page);
   await page.goto('./?quality=high&stats=1');
   await expect(page.getByTestId('scene-stage')).toHaveAttribute('data-ready', 'true', { timeout: 90_000 });
