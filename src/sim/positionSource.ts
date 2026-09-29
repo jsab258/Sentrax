@@ -14,6 +14,11 @@ export interface ReportedPosition {
   /** Coordinates for RSSI and AoA reports; absent for BiLink (room-level). */
   position?: Vec3;
   uncertaintyM?: number;
+  /**
+   * Only one gateway heard the tag: the position is that gateway and means "somewhere near it"
+   * (uncertaintyM is the implied range), not a location estimate.
+   */
+  proximity?: boolean;
   /** BiLink room, when the report is room-level. */
   roomId?: string | null;
   /** Zones containing the report, including parent zones. */

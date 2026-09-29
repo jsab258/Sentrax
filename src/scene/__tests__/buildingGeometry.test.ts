@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import { hospitalWorld } from '../../sim/scenes/hospital';
-import { buildDoors, buildFloors, buildSlab, buildWalls, classifyWall, footprint } from '../buildingGeometry';
+import {
+  buildDoors,
+  buildFloors,
+  buildSlab,
+  buildWalls,
+  classifyWall,
+  FLOOR_LAYERS,
+  footprint,
+} from '../buildingGeometry';
 import { hospitalVisualDoors, hospitalWindows } from '../hospital/dressing';
 
 const world = hospitalWorld();
@@ -64,5 +72,25 @@ describe('building geometry', () => {
     const doors = buildDoors(world);
     expect(doors.leaf).toBeDefined();
     expect(doors.steel).toBeDefined();
+  });
+});
+
+describe('floor layers', () => {
+  it('stay at least 1 cm apart, so hardware depth buffers never mix them at 100 m and more', () => {
+    const ys = [FLOOR_LAYERS.slabTop, FLOOR_LAYERS.base, FLOOR_LAYERS.inset, FLOOR_LAYERS.lines].sort(
+      (a, b) => a - b,
+    );
+    for (let i = 1; i < ys.length; i++)
+      expect((ys[i] as number) - (ys[i - 1] as number)).toBeGreaterThanOrEqual(0.01);
+    expect(FLOOR_LAYERS.catcher).toBeGreaterThanOrEqual(0.01);
+  });
+
+  it('puts the slab top under the floor and bathroom tiles on their own layer', () => {
+    const slab = buildSlab(hospitalWorld());
+    slab.computeBoundingBox();
+    expect(slab.boundingBox?.max.y).toBeCloseTo(FLOOR_LAYERS.slabTop, 5);
+    const floors = buildFloors(hospitalWorld());
+    floors.tiles?.computeBoundingBox();
+    expect(floors.tiles?.boundingBox?.max.y).toBeCloseTo(FLOOR_LAYERS.inset, 5);
   });
 });

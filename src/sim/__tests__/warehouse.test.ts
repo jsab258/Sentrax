@@ -115,4 +115,16 @@ describe('warehouse scene data (SPEC section 8)', () => {
       .filter((a) => a.kind !== 'dwell' || !String(a.tagId).startsWith('tag-wip'));
     expect(unexpected).toEqual([]);
   });
+  it('marks single-gateway RSSI fixes as proximity: docked trailers are only near the yard gateway', () => {
+    const sim = new Simulation(world, { seed: 2 });
+    sim.runUntil(60);
+    const lef3 = world.devices.find((d) => d.id === 'lef3-yard');
+    const r = sim.report('tag-trailer-02');
+    expect(r?.tech).toBe('rssi');
+    expect(r?.proximity).toBe(true);
+    // The fix is the gateway itself, not where the trailer stands (the label goes on the trailer).
+    expect(r?.position && lef3 && dist2(r.position, lef3.position)).toBeLessThan(0.01);
+    // Pallets in the racks have real AoA fixes, never proximity.
+    expect(sim.report('tag-pallet-2291')?.proximity).toBeUndefined();
+  });
 });

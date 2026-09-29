@@ -261,6 +261,22 @@ function addDoorSurround(
 export type FloorFinish = 'vinyl' | 'tiles';
 
 /** Subtle per-zone tints, multiplied with the floor texture. */
+/**
+ * Heights of stacked floor layers (m). Hardware depth buffers cannot separate surfaces a few millimetres
+ * apart at 100 m or more, so layers sit centimetres apart: invisible at dollhouse scale, never flickering.
+ */
+export const FLOOR_LAYERS = {
+  /** Top of the building slab, under the floor. */
+  slabTop: -0.03,
+  base: 0,
+  /** Floors laid over the base floor: station areas, bathroom tiles, tinted rooms. */
+  inset: 0.015,
+  /** Painted lines, above every floor. */
+  lines: 0.03,
+  /** Shadow catcher above the ground disc outside the building. */
+  catcher: 0.01,
+} as const;
+
 export function floorTint(z: ZoneDef): [number, number, number] {
   const tags = z.tags ?? [];
   if (z.kind === 'corridor') return [0.93, 0.95, 0.98];
@@ -280,13 +296,15 @@ export function buildFloors(world: WorldDef): Partial<Record<FloorFinish, Buffer
     const ys = z.polygon.map((p) => p.y);
     const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
     if (z.id.endsWith('-bath')) {
-      tiles.floorRect(x0, -y1, x1, -y0, 0.004);
+      tiles.floorRect(x0, -y1, x1, -y0, FLOOR_LAYERS.inset);
       continue;
     }
     // Floors for rooms, corridors and top-level areas; nested areas (bays) share their parent's floor.
     if (z.parent && z.kind === 'area') continue;
     if (z.kind === 'area' && !z.tags?.some((t) => t === 'station')) continue;
-    vinyl.floorRect(x0, -y1, x1, -y0, 0, { color: floorTint(z) });
+    // Station areas lie inside corridors: a layer above them, not on the same plane.
+    const y = z.kind === 'area' ? FLOOR_LAYERS.inset : FLOOR_LAYERS.base;
+    vinyl.floorRect(x0, -y1, x1, -y0, y, { color: floorTint(z) });
   }
   const out: Partial<Record<FloorFinish, BufferGeometry>> = {};
   if (!vinyl.empty) out.vinyl = vinyl.build();
@@ -311,7 +329,7 @@ export function buildSlab(world: WorldDef, depth = 0.3, margin = 0.2): BufferGeo
     const ys = z.polygon.map((p) => p.y);
     const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
     b.box(
-      [(x0 + x1) / 2, -depth / 2 - 0.002, -(y0 + y1) / 2],
+      [(x0 + x1) / 2, -depth / 2 + FLOOR_LAYERS.slabTop, -(y0 + y1) / 2],
       [x1 - x0 + 2 * margin, depth, y1 - y0 + 2 * margin],
     );
   }

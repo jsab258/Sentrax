@@ -52,7 +52,9 @@ export function SceneCanvas({
         // Lifts AgX's mid-grey rendering of white walls.
         toneMappingExposure: 1.15,
       }}
-      camera={{ fov: BASE_FOV, near: 0.3, far: 600, position: [20, 40, 30] }}
+      // A 1 m near plane keeps depth precision for floor layers seen from 100 m and more (the camera
+      // never comes closer than 3 m to its target).
+      camera={{ fov: BASE_FOV, near: 1, far: 600, position: [20, 40, 30] }}
       data-testid="scene-canvas"
       data-tier={tier}
     >

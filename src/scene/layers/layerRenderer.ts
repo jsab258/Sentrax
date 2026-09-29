@@ -529,11 +529,19 @@ export class LayerRenderer {
         // The most specific place: the BiLink room, else the innermost zone (an aisle rather than the hall).
         const room = r?.roomId ?? r?.zoneIds[r.zoneIds.length - 1] ?? null;
         const slot = slotFromReport(r);
-        const at = r?.position
-          ? this.G(r.position.x, r.position.y, Math.max(2.3, r.position.z + 1.2))
-          : room
-            ? (this.roomCenter.get(room)?.clone().setY(2.3) ?? this.tagPos(tagId, alpha))
-            : this.tagPos(tagId, alpha);
+        // A proximity fix places the tag at the one gateway that heard it, which is not where the tag is:
+        // label the asset itself and name the zone (the RSSI lens still draws the range ring).
+        const onAsset = () => {
+          const p = this.tagPos(tagId, alpha);
+          return p.setY(p.y + 1.2);
+        };
+        const at = r?.proximity
+          ? onAsset()
+          : r?.position
+            ? this.G(r.position.x, r.position.y, Math.max(2.3, r.position.z + 1.2))
+            : room
+              ? (this.roomCenter.get(room)?.clone().setY(2.3) ?? this.tagPos(tagId, alpha))
+              : this.tagPos(tagId, alpha);
         labelBridge.add({
           id: `asset:${tagId}`,
           kind: 'asset',

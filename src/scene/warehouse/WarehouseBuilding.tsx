@@ -16,7 +16,7 @@ import {
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import type { WorldDef } from '../../sim/world';
 import { GROUND_HDR } from '../backdrop';
-import { buildSlab, buildWalls } from '../buildingGeometry';
+import { buildSlab, buildWalls, FLOOR_LAYERS } from '../buildingGeometry';
 import { GeometryBuilder } from '../geometryBuilder';
 import { cutawayDepthMaterial, withCutaway } from '../materials/cutaway';
 import { usePbrMaps, type TextureTier } from '../materials/textures';
@@ -50,14 +50,16 @@ function buildHallFloors(world: WorldDef) {
       color: tint(id),
     });
   };
-  if (hall) rect('hall', 0);
-  for (const id of ['cold', 'office', 'cage']) rect(id, 0.003);
+  if (hall) rect('hall', FLOOR_LAYERS.base);
+  for (const id of ['cold', 'office', 'cage']) rect(id, FLOOR_LAYERS.inset);
   const lines = new GeometryBuilder();
   for (const l of floorLines())
-    lines.floorRect(l.x0, -l.y1, l.x1, -l.y0, 0.006, { color: LINE_COLORS[l.color] });
+    lines.floorRect(l.x0, -l.y1, l.x1, -l.y0, FLOOR_LAYERS.lines, { color: LINE_COLORS[l.color] });
   // Yard: parking bay lines for the trailer parking at y -47 to -31.
   for (let x = 35; x <= 59; x += 6)
-    lines.floorRect(x - 0.06, 31, x + 0.06, 47, -DOCK_HEIGHT + 0.006, { color: LINE_COLORS.walk });
+    lines.floorRect(x - 0.06, 31, x + 0.06, 47, -DOCK_HEIGHT + FLOOR_LAYERS.lines, {
+      color: LINE_COLORS.walk,
+    });
   return { concrete: concrete.build(), lines: lines.build() };
 }
 
@@ -217,7 +219,7 @@ export function WarehouseBuilding({ world, textures }: { world: WorldDef; textur
         {walls.frame && <mesh geometry={walls.frame} material={mat.occluder} />}
       </Occluder>
       <mesh geometry={geo.ground} material={mat.ground} />
-      <mesh geometry={geo.ground} material={mat.catcher} position-y={0.001} receiveShadow />
+      <mesh geometry={geo.ground} material={mat.catcher} position-y={FLOOR_LAYERS.catcher} receiveShadow />
     </group>
   );
 }

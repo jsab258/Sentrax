@@ -11,7 +11,7 @@ import {
 } from 'three';
 import type { WorldDef } from '../../sim/world';
 import { GROUND_HDR } from '../backdrop';
-import { buildDoors, buildFloors, buildSlab, buildWalls } from '../buildingGeometry';
+import { buildDoors, buildFloors, buildSlab, buildWalls, FLOOR_LAYERS } from '../buildingGeometry';
 import { cutawayDepthMaterial, withCutaway } from '../materials/cutaway';
 import { Occluder } from '../overlay';
 import { occluderMaterial } from '../overlays/occluders';
@@ -139,7 +139,7 @@ export function HospitalBuilding({ world, textures }: { world: WorldDef; texture
         {doors.steel && <mesh geometry={doors.steel} material={mat.occluder} />}
       </Occluder>
       <mesh geometry={geo.ground} material={mat.ground} />
-      <mesh geometry={geo.ground} material={mat.catcher} position-y={0.001} receiveShadow />
+      <mesh geometry={geo.ground} material={mat.catcher} position-y={FLOOR_LAYERS.catcher} receiveShadow />
     </group>
   );
 }

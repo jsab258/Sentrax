@@ -58,7 +58,8 @@ class HeatmapLayer {
     // Plan (x, y) maps to three (x, -z): facing up, texture row 0 lands on the plan's smallest y.
     this.geometry = new PlaneGeometry(w, h)
       .rotateX(-Math.PI / 2)
-      .translate(this.grid.x0 + w / 2, 0.025, -(this.grid.y0 + h / 2));
+      // Above the painted lines (FLOOR_LAYERS.lines), below the overlay marks.
+      .translate(this.grid.x0 + w / 2, 0.045, -(this.grid.y0 + h / 2));
     this.material = new MeshBasicMaterial({
       map: this.texture,
       transparent: true,

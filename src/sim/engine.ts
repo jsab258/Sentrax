@@ -376,6 +376,7 @@ export class Simulation implements PositionSource {
       t: e.t,
       position: p,
       ...(e.uncertaintyM !== undefined ? { uncertaintyM: e.uncertaintyM } : {}),
+      ...(e.tech === 'rssi' && e.sources.length === 1 ? { proximity: true } : {}),
       zoneIds,
     };
   }

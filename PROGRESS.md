@@ -41,6 +41,9 @@ DECISIONS.md first. Branch: `claude/sentrax-3d-rtls-demo-jtoerz`. Preview: https
   (all eight events, no cookies, no third-party requests), `a11y` (axe WCAG A and AA, keyboard, reduced
   motion), `credits`, `stories` (all ten stories end to end with their narration and takeaway).
 
+- Review fixes (DECISIONS 120, 121): floor layers centimetres apart and a 1 m near plane (no more bright
+  patches or sawtooth edges on real GPUs); proximity-only RSSI fixes label the asset, not the gateway pole.
+
 ## Next
 
 1. M7 (deploy target) is not started: it needs the user's choice of host (SPEC section 12).
