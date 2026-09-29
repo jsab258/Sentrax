@@ -83,15 +83,17 @@ test('preview: the homepage mock loads and scrolls through the story without err
   const beats: string[] = [];
   for (const p of [0.1, 0.3, 0.5, 0.65, 1]) {
     await scrollStory(page, p);
+    // Settled at the new position (the progress reaches the story one animation frame after the scroll).
     await expect
       .poll(
         () =>
-          frame.evaluate(() =>
-            (window as unknown as { __scrollStory: { settled: () => boolean } }).__scrollStory.settled(),
-          ),
-        {
-          timeout: 60_000,
-        },
+          frame.evaluate((q) => {
+            const s = (
+              window as unknown as { __scrollStory: { settled: () => boolean; target: () => number } }
+            ).__scrollStory;
+            return Math.abs(s.target() - q) < 0.003 && s.settled();
+          }, p),
+        { timeout: 60_000 },
       )
       .toBe(true);
     beats.push((await frame.locator('.ss').getAttribute('data-beat')) ?? '');
