@@ -49,28 +49,27 @@ DECISIONS.md first. Branch: `claude/sentrax-3d-rtls-demo-jtoerz`. Preview: https
 Goal: the homepage scroll story with looks A, B and C, video and poster fallbacks, the embed loader, the
 /home-preview/ mock, budgets, tests, CI and Pages. The full demo stays unchanged (own build, own chunks).
 
-Done so far (uncommitted until the first scroll commit):
+State: all code, docs and tests are committed and pushed (commits 9c34bfc onwards). Fallback clips for
+looks A, B and C landscape are committed; look C portrait is the last set (resume with
+`SKIP_EXISTING=1 node scripts/scroll-clips.mjs c`, it keeps finished clips).
 
 - Story data `src/scroll/stories/hospital-bilink.ts` (copy approved: false), recorded timeline
-  `hospital-bilink.timeline.json` (`npm run scroll:record` regenerates it; a unit test checks it matches a fresh
-  recording), pure `storyState` (`src/scroll/state.ts`), `ScrollController` (easing, tap, auto-find).
-- 3D stage in vanilla three (`src/scroll/three/`: looks, ward crop, props, effects, reflective floor, stage with
-  bloom, desktop depth of field, vignette). Detection and fallbacks (`detect.ts`, `media.ts`), text overlay
-  (`overlay.ts`), app (`app.ts`), styles, pages `scroll/`, `home-preview/` (+ `src/home/`), `embed-test/`,
-  loader `src/scroll/loader.ts` (own IIFE build `vite.loader.config.ts`), story build `vite.scroll.config.ts`.
-- Clip script `scripts/scroll-clips.mjs` (capture mode + ffmpeg) writes `public/scroll-media/<look>/<orientation>/`.
-- Budget script `scripts/check-scroll.mjs` (runs in `npm run build`).
-- Dev helpers: `?capture=1` (window.__scrollCapture), window.__scrollStory (state, key, settled, mode, clip).
+  `hospital-bilink.timeline.json` (`npm run scroll:record`; a unit test checks it matches a fresh recording),
+  pure `storyState` (`src/scroll/state.ts`), `ScrollController` (easing, tap, auto-find, 0.25 s frame cap).
+- 3D stage in vanilla three (`src/scroll/three/`: looks, ward crop, props, effects, reflective floor, stage).
+  Detection and fallbacks (`detect.ts`, `media.ts`; the probe starts on first view), overlay, app, styles,
+  pages `scroll/`, `home-preview/` (+ `src/home/`), `embed-test/`, loader `src/scroll/loader.ts` (IIFE build
+  `vite.loader.config.ts`), story build `vite.scroll.config.ts` (relative base; runtime URLs via `paths.ts`).
+- Clip script `scripts/scroll-clips.mjs` (capture mode + ffmpeg, bitrate ceilings), budget script
+  `scripts/check-scroll.mjs` (in `npm run build`).
+- Tests: unit (`src/scroll/__tests__`), e2e `e2e/scroll.spec.ts`, `e2e/preview.spec.ts` (live /home-preview/
+  check, payload per look with E2E_BASE_URL). EMBED.md, DECISIONS 122 to 139, README section.
+- Local results: unit 22 files / 129 tests pass; existing desktop e2e 53 pass; scroll e2e looks A, B (both
+  viewports), C mobile, stage selection, determinism and embed pass (C desktop needed the frame cap, rerun
+  pending). Measured payload on the build: A and B 0.26 MB, C 3.03 MB (desktop and phone).
 
-Also done: e2e `e2e/scroll.spec.ts` (looks x desktop/mobile on /home-preview/, force modes, no-WebGL2,
-low memory, reduced motion, determinism, embed host with CLS and lazy-load checks, wheel over the iframe),
-`e2e/preview.spec.ts` live /home-preview/ check and payload per look (only with E2E_BASE_URL), EMBED.md,
-DECISIONS 122 to 138, README section, `src/scroll/paths.ts` (site root for runtime URLs, relative base).
-Passed locally so far: stage selection (3 tests), embed, look A desktop.
-
-Next: wait for `node scripts/scroll-clips.mjs` (writes public/scroll-media), `npm run build` (budgets), full
-e2e, commit and push, CI green, Pages deploy and live check, final report. While the clip script runs, do
-not edit files the story page imports (the dev server reloads the capture page).
+Next: finish look C portrait clips, `npm run build`, full scroll e2e (refreshes docs/screenshots/scroll),
+commit and push, CI green, Pages deploy and live check, final report.
 
 ## Next
 
